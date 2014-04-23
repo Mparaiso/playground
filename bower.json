@@ -1,0 +1,23 @@
+{
+  "name": "js-playground",
+  "version": "0.0.0",
+  "authors": [
+    "mparaiso <aikah@free.fr>"
+  ],
+  "description": "a playgroup for javascript experiments",
+  "main": "index.js",
+  "keywords": [
+    "jsfiddle",
+    "codepen"
+  ],
+  "license": "GPL",
+  "homepage": "https://mparaiso.github.io/playground",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
