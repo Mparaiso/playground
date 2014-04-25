@@ -1,4 +1,0 @@
-[submodule "emmet-plugin"]
-	path= "emmet-plugin"
-	url= git@github.com:emmetio/codemirror.git
-	branch= cm4
