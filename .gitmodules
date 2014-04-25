@@ -1,3 +1,4 @@
 [submodule "emmet-plugin"]
 	path= "emmet-plugin"
-	url= git@github.com:Mparaiso/playground.git
+	url= git@github.com:emmetio/codemirror.git
+	branch= cm4
