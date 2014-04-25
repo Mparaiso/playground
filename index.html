@@ -1,10 +1,60 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Playground</title>
-</head>
-<body>
-	
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Playground</title>
+		<link rel="stylesheet" href="css/styles.css" media="all">
+		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css"/>
+		<link rel="stylesheet" href="bower_components/codemirror/theme/monokai.css"/>
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/codemirror/lib/codemirror.js"></script>
+		<script src="emmet-plugin/codemirror/dist/emmet.min.js"></script>
+		<script src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
+		<script src="bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+		<script src="bower_components/codemirror/mode/xml/xml.js"></script>
+		<script src="bower_components/codemirror/mode/css/css.js"></script>
+		<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
+		<script src="javascript/playground.js"></script>
+		<link href='//fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse" role="navigation">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Playground</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				</div>
+			</div>
+		</nav>
+		<main class="container-fluid main  clearfix">
+			<article class="row">
+				<section class="col-md-6 left-side">
+					<button class="btn btn-default" id="lint">Format html</button>
+					<button class="btn btn-default">Help</button>
+					<detail>
+						<summary></summary>
+					</detail>
+					<p>&nbsp;</p>
+					<textarea id="code" class="code"><!--start coding here with html tags. 
+You can include style or script tags too--></textarea>
+				</section>
+				<section class="col-md-6 right-side">
+					<button class="btn btn-default" id='renderButton'>Render</button>
+					<p>&nbsp;</p>
+					<div class="output" id="output"></div>
+				</section>
+			</article>
+		</main>
+	</body>
 </html>
