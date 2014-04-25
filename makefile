@@ -5,4 +5,6 @@ commit:
 	@git commit -am"$(message) `date`" | :
 push: commit
 	@git push origin master
-.PHONY: start commit push
+pages: commit
+	@git push origin gh-pages
+.PHONY: start commit push pages
