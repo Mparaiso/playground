@@ -1,24 +1,66 @@
-body{
-	height: 100%;
-	font-family: 'Droid Sans', 'sans-serif';
-}
-.left-side{
-	height: 768px;
-}
-.right-side{
-	height: 768px;
+body {
+    height: 100%;
+    font-family: 'Droid Sans', 'sans-serif';
+    background-color: #E5ECF6;
+    color: #424147;
 }
 
-.CodeMirror{
-	font-size: 1.1em;
-	font-family: 'Ubuntu Mono', monospace;
+.output {
+    background-color: #fff;
+    min-height: 480px;
+    width: 100%;
+    border: 1px solid #424147;
 }
-.output{
-	width:100%;
-	height: 100%;
-	border: 1px solid #666;
+
+.navbar, .btn {
+    border-radius: 0;
 }
-.output iframe{
-	width:100%;
-	height:100%;
+
+.brand {
+    font-family: 'Francois One', 'sans-serif';
+    color: #FD6B5C !important;
+}
+
+.navbar-inverse {
+    background-color: #424147;
+}
+
+.left-side {
+    height: 100%;
+}
+
+.right-side {
+    height: 100%;
+}
+
+.CodeMirror {
+    min-height: 480px;
+    font-size: 1.1em;
+    font-family: 'Ubuntu Mono', monospace;
+}
+
+.output iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.text-small {
+    font-size: 0.9em;
+}
+
+.icon-github {
+    background-image: url('../images/glyphicons_social_21_github.png');
+    height: 1.2em;
+    margin-bottom: -3px;
+    width: 1.2em;
+    border-right: none;
+    display: inline-block;
+    background-color: gray;
+    -webkit-background-size: cover;
+    background-size: cover;
+    border-radius:10px;
+}
+a:hover .icon-github{
+    background-color: white;
+
 }

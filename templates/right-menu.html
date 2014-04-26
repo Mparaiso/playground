@@ -1,0 +1,13 @@
+<% if (!client.isAuthenticated()){ %>
+<li>
+    <a id="signin" href="#/">
+        <i class="icon-github"></i>
+        Signin with github
+    </a>
+</li>
+<% }else{ %>
+<li><a id="youraccount" href="#/">Your account</a></li>
+<li><a id="signout" href="#/">Signout</a></li>
+<% } %>
+<li><a href="#/help">Help</a></li>
+<li><a href="#/about">About</a></li>

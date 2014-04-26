@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>gh3</title>
+    
+</head>
+<body>
+    <ul id="user"></ul>
+
+    <script src="../vendors/jquery-2.1.0.min.js"></script>
+    <script src="../vendors/underscore-min.js"></script>
+    <script src="../gh3.js"></script>
+    <script>
+
+      var k33g = new Gh3.User("k33g")
+        ,	userInfos = $("#user");
+
+      k33g.fetch(function (err, resUser){
+
+        if(err) {
+          throw "outch ..."
+        }
+
+        console.log(k33g, resUser);
+
+        _.each(_.keys(resUser), function (prop) {
+          userInfos.append(
+            $('<li>').append(prop+" : "+resUser[prop])
+          );
+        });
+
+      });
+
+    </script>
+</body>
+
+</html>
