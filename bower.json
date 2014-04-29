@@ -26,13 +26,10 @@
     "codemirror": "*",
     "js-beautify": "~1.5.1",
     "underscore": "~1.6.0",
-    "marionette": "~1.8.3",
     "requirejs-text": "~2.0.12",
     "codemirror-emmet": "*",
-    "ractive": "~0.4.0",
-    "backbone": "~1.1.2",
-    "requirejs": "~2.1.11",
-    "ractive-transitions-fade": "~0.1.2",
-    "jasmine": "~2.0.0"
+    "angular": "~1.2.16",
+    "angular-route": "~1.2.16",
+    "es5-shim": "~3.0.2"
   }
 }

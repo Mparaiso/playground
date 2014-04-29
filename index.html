@@ -1,21 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="playground" ng-controller="MainCtrl">
 <head>
     <meta charset="UTF-8">
     <title>Playground</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.png"/>
+    <script defer src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script defer src="bower_components/codemirror/lib/codemirror.js"></script>
+    <script defer src="emmet/codemirror/dist/emmet.min.js"></script>
+    <script defer src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
+    <script defer src="bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script defer src="bower_components/codemirror/mode/xml/xml.js"></script>
+    <script defer src="bower_components/codemirror/mode/css/css.js"></script>
+    <script defer src="bower_components/codemirror/mode/javascript/javascript.js"></script>
+    <script defer src="bower_components/angular/angular.min.js"></script>
+    <script defer src="bower_components/angular-route/angular-route.min.js"></script>
+    <script defer src="javascript/playground.js"></script>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css"/>
     <link rel="stylesheet" href="bower_components/codemirror/theme/monokai.css"/>
-    <script src="bower_components/codemirror/lib/codemirror.js"></script>
-    <script src="emmet/codemirror/dist/emmet.min.js"></script>
-    <script src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
-    <script src="bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="bower_components/codemirror/mode/xml/xml.js"></script>
-    <script src="bower_components/codemirror/mode/css/css.js"></script>
-    <script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
     <link href='//fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
@@ -52,6 +56,5 @@
         </div>
     </div>
 </footer>
-<script src="bower_components/requirejs/require.js" data-main="javascript/playground.js"></script>
 </body>
 </html>
