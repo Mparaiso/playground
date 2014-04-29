@@ -1,15 +1,13 @@
+/**
+    @scheme
+
+        lightgray:#545861
+
+*/
 body {
-    height: 100%;
     font-family: 'Droid Sans', 'sans-serif';
     background-color: #E5ECF6;
     color: #424147;
-}
-
-.output {
-    background-color: #fff;
-    min-height: 480px;
-    width: 100%;
-    border: 1px solid #424147;
 }
 
 .navbar, .btn {
@@ -25,6 +23,19 @@ body {
     background-color: #424147;
 }
 
+.file-explorer {
+    background: white;
+    min-height: 480px;
+}
+
+.file-explorer ul {
+    padding-top: 5px;
+}
+
+.file-explorer li {
+    padding-left: 3px;
+}
+
 .left-side {
     height: 100%;
 }
@@ -33,12 +44,21 @@ body {
     height: 100%;
 }
 
+
+
+.output {
+    background-color: #fff;
+    border: 1px solid #AAA;
+}
+
+.editor {
+    height: 100%;
+}
 .CodeMirror {
-    min-height: 480px;
+    height: 100%;
     font-size: 1.1em;
     font-family: 'Ubuntu Mono', monospace;
 }
-
 .output iframe {
     width: 100%;
     height: 100%;
@@ -58,9 +78,33 @@ body {
     background-color: gray;
     -webkit-background-size: cover;
     background-size: cover;
-    border-radius:10px;
+    border-radius: 10px;
 }
-a:hover .icon-github{
+
+a:hover .icon-github {
     background-color: white;
 
 }
+
+@media (min-width: 768px) {
+    .no-padding {
+        padding: 0;
+    }
+}
+.view{
+    height: 480px;
+}
+.view-container{
+    height: 100%;
+}
+/*
+.splitter_panel {
+    height: 600px;
+}
+
+.splitter_panel .vsplitter {
+    width: 9px;
+    background-color: #545861;
+    z-index: 1000;
+}
+*/

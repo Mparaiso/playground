@@ -24,10 +24,15 @@
     "jquery": "~2.1.0",
     "bootstrap": "~3.1.1",
     "codemirror": "*",
-    "js-beautify": "~1.4.2",
+    "js-beautify": "~1.5.1",
     "underscore": "~1.6.0",
     "marionette": "~1.8.3",
     "requirejs-text": "~2.0.12",
-    "codemirror-emmet": "*"
+    "codemirror-emmet": "*",
+    "ractive": "~0.4.0",
+    "backbone": "~1.1.2",
+    "requirejs": "~2.1.11",
+    "ractive-transitions-fade": "~0.1.2",
+    "jasmine": "~2.0.0"
   }
 }

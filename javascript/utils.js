@@ -1,4 +1,4 @@
-/*global define*/
+/*global define,console*/
 /**
  * javascript/database.js
  */
@@ -19,6 +19,10 @@ define(function (require, exports, module) {
             doc.open();
             doc.writeln(content);
             doc.close();
+            doc.onerror=function(){
+                console.warn('script error',e);
+                return false;
+            };
         }
     };
 });

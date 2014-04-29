@@ -33,27 +33,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand brand" href="#">&lt;Playground&gt;</a>
+            <a class="navbar-brand brand" href="#/">&lt;Playground&gt;</a>
         </div>
-        <div class="navbar-header">
-            <ul class="navbar-nav nav" id="leftMenu"></ul>
-        </div>
-        <div class="collapse navbar-collapse" id="navigation-collapsed">
-            <ul class="navbar-nav nav navbar-right" id="rightMenu"></ul>
-        </div>
+        <span id="menu"></span>
     </div>
 
 </nav>
-<main class="container-fluid main  clearfix">
-    <article class="row">
-        <section class="col-md-6 left-side">
-            <textarea id="code" class="code">
-                <!--start coding here with html tags.
-                 You can include style or script tags too--></textarea>
-        </section>
-        <section class="col-md-6 right-side">
-            <div id="output"></div>
-        </section>
+<main class="container-fluid">
+    <article class="view" id="view">
     </article>
 </main>
 <footer class="container-fluid text-small">
@@ -66,27 +53,5 @@
     </div>
 </footer>
 <script src="bower_components/requirejs/require.js" data-main="javascript/playground.js"></script>
-<script>
-    /*@note @requirejs RequireJS Text Plugin installed with Bower
-     * http://stackoverflow.com/questions/16514254/requirejs-text-plugin-installed-with-bower
-     */
-    requirejs.config({
-        paths: {
-            text: '../bower_components/requirejs-text/text',
-            Backbone: '../bower_components/backbone/backbone',
-            underscore: '../bower_components/underscore/underscore',
-            jQuery: '../bower_components/jquery/dist/jquery.min',
-            bootstrap:'../bower_components/bootstrap/dist/js/bootstrap.min'
-        },
-        /**
-         * @note @requirejs shims http://stackoverflow.com/questions/22142989/configuration-of-requirejs-and-shim
-         */
-        shim: {
-            jQuery:{exports:'jQuery'},
-            Backbone: ['underscore', 'jQuery'],
-            bootstrap:['jQuery']
-        }
-    });
-</script>
 </body>
 </html>

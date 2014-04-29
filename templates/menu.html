@@ -1,0 +1,30 @@
+<div class="navbar-header">
+    <ul class="navbar-nav nav" id="leftMenu">
+        <li><a on-click="lint" href="javascript:void 0;">Lint</a></li>
+        <li><a on-click="format" href="javascript:void 0;">Format</a></li>
+        <li><a on-click="run" href="javascript:void 0;">Run</a></li>
+        {{#user}}
+        <li><a on-click="save" href="javascript:void 0;">Save</a>
+        <li><a on-click="fork" href="javascript:void 0;">Fork</a></li>
+        {{/user}}
+    </ul>
+</div>
+<div class="collapse navbar-collapse" id="navigation-collapsed">
+    <ul class="navbar-nav nav navbar-right" id="rightMenu">
+        {{^user}}
+        <li>
+            <a id="signin" on-click="signIn" href="javascript:void 0;">
+                <i class="icon-github"></i>
+                Signin with github
+            </a>
+        </li>
+        {{/user}}
+        {{#user}}
+        <li><a href="#/gist">Gists</a></li>
+        <li><a id="youraccount" href="#/account">Welcome back {{user.username}}</a></li>
+        <li><a id="signout" on-click="signOut" href="javascript:void 0;">Signout</a></li>
+        {{/user}}
+        <li><a href="#/help">Help</a></li>
+        <li><a href="#/about">About</a></li>
+    </ul>
+</div>

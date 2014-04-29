@@ -1,3 +1,5 @@
+test:
+	@npm test &
 start:
 	@npm start &
 commit:
@@ -7,4 +9,4 @@ push: commit
 	@git push origin master
 pages: commit
 	@git push origin gh-pages
-.PHONY: start commit push pages
+.PHONY: start commit push pages test

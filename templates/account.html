@@ -1,0 +1,16 @@
+<h2>Your account</h2>
+<hr/>
+<div class="row">
+    <aside class="col-sm-1">
+        <img class="thumbnail" src="{{user.thirdPartyUserData.avatar_url}}" width="100" alt="avatar"/>
+    </aside>
+    <article class="col-sm-11">
+        <div class="lead">Username: <a target="_blank" href="{{user.thirdPartyUserData.html_url}}">{{user
+            .username}}</a></div>
+        <h4> {{user.thirdPartyUserData.bio}}</h4>
+        <h4>{{user.thirdPartyUserData.followers}} followers</h4>
+        <h4>{{user.thirdPartyUserData.following}} followed</h4>
+    </article>
+</div>
+
+
