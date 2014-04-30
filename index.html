@@ -6,17 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon.png"/>
+    <script defer src="https://cdn.firebase.com/js/client/1.0.11/firebase.js"></script>
+    <script defer src="https://cdn.firebase.com/js/simple-login/1.3.2/firebase-simple-login.js"></script>
+    <script defer src="bower_components/js-beautify/js/lib/beautify.js"></script>
+    <script defer src="bower_components/js-beautify/js/lib/beautify-html.js"></script>
+    <script defer src="bower_components/js-beautify/js/lib/beautify-css.js"></script>
     <script defer src="bower_components/jquery/dist/jquery.min.js"></script>
     <script defer src="bower_components/codemirror/lib/codemirror.js"></script>
     <script defer src="emmet/codemirror/dist/emmet.min.js"></script>
     <script defer src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
+    <script defer src="bower_components/codemirror/addon/display/placeholder.js"></script>
     <script defer src="bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
     <script defer src="bower_components/codemirror/mode/xml/xml.js"></script>
     <script defer src="bower_components/codemirror/mode/css/css.js"></script>
     <script defer src="bower_components/codemirror/mode/javascript/javascript.js"></script>
+    <script defer src="bower_components/codemirror/addon/search/match-highlighter.js"></script>
+    <script defer src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
+    <script defer src="bower_components/codemirror/addon/display/fullscreen.js"></script>
+    <script defer src="bower_components/codemirror/addon/fold/xml-fold.js"></script>
+    <script defer src="bower_components/codemirror/addon/edit/matchtags.js"></script>
     <script defer src="bower_components/angular/angular.min.js"></script>
     <script defer src="bower_components/angular-route/angular-route.min.js"></script>
+    <script defer src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script defer src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script defer src="javascript/playground.js"></script>
+    <script defer src="javascript/editor.js"></script>
+    <script defer src="javascript/renderer.js"></script>
+    <script defer src="javascript/api.js"></script>
+    <script defer src="javascript/repository.js"></script>
+    <script defer src="javascript/utils.js"></script>
+    <link rel="stylesheet" href="bower_components/codemirror/addon/display/fullscreen.css"/>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css"/>
     <link rel="stylesheet" href="bower_components/codemirror/theme/monokai.css"/>
@@ -39,12 +58,12 @@
             </button>
             <a class="navbar-brand brand" href="#/">&lt;Playground&gt;</a>
         </div>
-        <span id="menu"></span>
+        <span ng-controller="MenuCtrl" ng-include='"templates/menu.html"'></span>
     </div>
 
 </nav>
 <main class="container-fluid">
-    <article class="view" id="view">
+    <article ng-view class="view">
     </article>
 </main>
 <footer class="container-fluid text-small">
@@ -56,5 +75,6 @@
         </div>
     </div>
 </footer>
+<div class="bottom">&nbsp;</div>
 </body>
 </html>

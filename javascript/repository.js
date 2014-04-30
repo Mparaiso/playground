@@ -1,36 +1,45 @@
-define(function (require, exports) {
-    var config = require('./config');
-    var jQuery = require('jQuery');
-    var Backbone = require('Backbone');
-    var window = require('./window');
-    var token;
-//http://stackoverflow.com/questions/6351593/jquery-ajax-custom-header
-    Backbone.$(window).ajaxSend(function (event, request, settings) {
-        console.log('ajax send');
-        if (token) {
-            console.log('token', token);
-            request.setRequestHeader("Authorization"," token " + token);
-        }
+/*global angular*/
+angular.module('repository', ['ngResource'])
+/** deals with fetching/persisting gists from github gist api */
+    .provider('GithubService', function () {
+        "use strict";
+        var githubUrl, githubToken;
+        return {
+            /** set github api url */
+            setGithubApiUrl: function (value) {
+                githubUrl = value;
+            },
+            $get: function ($resource) {
+                return {
+                    /** set github access token */
+                    setToken: function (value) {
+                        githubToken = value;
+                    },
+                    /** get github access token */
+                    getToken: function () {
+                        return githubToken;
+                    },
+                    /** get github gist api url */
+                    getGistUrl: function () {
+                        return githubUrl + "gists";
+                    },
+                    /** get github gist api as resource  */
+                    getGistResource: function () {
+                        if (!this._resource) {
+                            var self = this;
+                            this._resource = $resource(this.getGistUrl() + "/:id/:fork",
+                                { /*default params*/
+                                    access_token: (function () {
+                                        return this.getToken();
+                                    }).bind(this)
+                                },
+                                { /*custom actions */
+                                    edit: {method: 'PATCH'}
+                                });
+                        }
+                        return this._resource;
+                    }
+                };
+            }
+        };
     });
-
-    exports.Gist = Backbone.Model.extend({
-        idAttributemodel: 'id'
-    });
-    exports.Gists = Backbone.Collection.extend({
-        url: [config.github.gist_api_url, 'gists'].join(''),
-        model: exports.Gist,
-        setToken: function (value) {
-            token = value;
-        },
-        getToken: function () {
-            return token;
-        },
-        set userId(value) {
-            this._userId = value;
-        },
-        get userId() {
-            return this._userId;
-        }
-    });
-
-});

@@ -2,14 +2,57 @@
     @scheme
 
         lightgray:#545861
+        lightblue:#E5ECF6
+        black:#424147
+        red:#FD6B5C
+
 
 */
 body {
     font-family: 'Droid Sans', 'sans-serif';
     background-color: #E5ECF6;
     color: #424147;
+    height: 768px;
+    width:100%;
+    max-height: 100%;
+    /*overflow: hidden;*/
+    clear: both;
+    position: relative;
 }
-
+a[ng-click]{
+    cursor:pointer;
+}
+    .navbar-inverse {
+        background-color: #424147;
+        margin-bottom: 0;
+    }
+    main{
+        height: 100%;
+    }
+        .view{
+        height: 100%;
+        }
+        .view .row{
+            height: 100%;
+            padding:0;
+            margin:-1;
+        }
+            .left-side {
+                height: 100%;
+            }
+            .right-side {
+                height: 100%;
+            }
+            .output { background-color: #fff; }
+            .editor {
+                background-color: #424147;
+                height: 80%;
+            }
+                .CodeMirror pre.CodeMirror-placeholder { color: #999; }
+.bottom{
+    position: absolute;
+    bottom:0;
+}
 .navbar, .btn {
     border-radius: 0;
 }
@@ -19,9 +62,7 @@ body {
     color: #FD6B5C !important;
 }
 
-.navbar-inverse {
-    background-color: #424147;
-}
+
 
 .file-explorer {
     background: white;
@@ -36,24 +77,11 @@ body {
     padding-left: 3px;
 }
 
-.left-side {
-    height: 100%;
-}
-
-.right-side {
-    height: 100%;
-}
 
 
 
-.output {
-    background-color: #fff;
-    border: 1px solid #AAA;
-}
 
-.editor {
-    height: 100%;
-}
+
 .CodeMirror {
     height: 100%;
     font-size: 1.1em;
@@ -89,22 +117,17 @@ a:hover .icon-github {
 @media (min-width: 768px) {
     .no-padding {
         padding: 0;
+        margin:0;
+        border:none;
     }
-}
-.view{
-    height: 480px;
-}
-.view-container{
-    height: 100%;
-}
-/*
-.splitter_panel {
-    height: 600px;
+    .left-side {
+        display: inline-block;
+        width:50%;
+    }
+    .right-side {
+        display: inline-block;
+        width:49.5%;
+    }
+
 }
 
-.splitter_panel .vsplitter {
-    width: 9px;
-    background-color: #545861;
-    z-index: 1000;
-}
-*/
