@@ -4,8 +4,8 @@ angular.module('codeMirror', [])
         "use strict";
         this.editor = {
             value: '',
-            placeholder:"<!--start coding here-->",
-            currentPage:{},
+            placeholder: "<!--start coding here-->",
+            currentPage: {},
             script: {value: "", type: ''},
             html: {value: '', type: ''},
             css: {value: '', type: ''}
@@ -13,11 +13,14 @@ angular.module('codeMirror', [])
     })
     .directive('cmEditor', function ($timeout, $compile) {
         "use strict";
+        CodeMirror.commands.autocomplete = function (cm) {
+            CodeMirror.showHint(cm, CodeMirror.hint.anyword);
+        };
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function ($scope, el, attr, ngModel) {
-                console.log(arguments);
+                //console.log(arguments);
                 var editor, timeout;
                 $timeout(function () {
                     editor = CodeMirror.fromTextArea(el.get(0), {
@@ -27,7 +30,8 @@ angular.module('codeMirror', [])
                         profile: 'html',
                         matchBrackets: true,
                         matchTags: true,
-                        highlightSelectionMatches: true
+                        highlightSelectionMatches: true,
+                        extraKeys: {"Ctrl-Space": "autocomplete", "Ctrl-K": 'autocomplete'}
                     });
                     editor.on('change', function (editor, changeObj) {
                         $timeout.cancel(timeout);
@@ -35,13 +39,15 @@ angular.module('codeMirror', [])
                             ngModel.$setViewValue(editor.getValue());
                         }, 500);
                     });
-                    ngModel.$render=function(){
+                    ngModel.$render = function () {
                         editor.setValue(ngModel.$viewValue);
                     };
                     $scope.$on('format', function () {
+                        var cursorPosition = editor.getCursor();
                         editor.setValue(html_beautify(editor.getValue()));
+                        editor.setCursor(cursorPosition);
                     });
-                });
+                }, 100);
             }
         };
     });

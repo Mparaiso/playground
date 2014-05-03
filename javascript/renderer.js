@@ -26,7 +26,7 @@ angular.module('renderer', [])
             restrict: 'A',
             link: function ($scope, el, attr) {
                 $scope.$on('run', function (event,content) {
-                    console.log('run', arguments);
+                   // console.log('run', arguments);
                     RendererService.renderHTML(el.get(0), content);
                 });
             }

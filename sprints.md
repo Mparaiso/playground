@@ -3,6 +3,8 @@ Requirements:
 - the application uses angularjs
 - the application uses gists api as a repository for gists
 
+Scrum
+=====
 
 Sprint 1:
 
@@ -14,8 +16,14 @@ Sprint 1:
 
 Sprint 2:
 
--[X] a user can save a note
--[X] a user can load a note
+-[ ] a user can save a note
+-[ ] a user can load a note
 
 Sprint 3:
 -[ ] a user can share the url of a note
+
+
+Notes
+=====
+
+api url : https://api.github.com/

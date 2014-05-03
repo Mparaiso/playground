@@ -1,13 +1,5 @@
-<% if (!client.isAuthenticated()){ %>
-<li>
-    <a id="signin" href="#/">
-        <i class="icon-github"></i>
-        Signin with github
-    </a>
+<li><a ng-click="format()" >Format</a></li>
+<li><a ng-click="run()" >Run</a></li>
+<li  ng-show="User.isAuthenticated()">
+	<a ng-click="save()" ng-class="{'text-warning':'diff'}">Save</a>
 </li>
-<% }else{ %>
-<li><a id="youraccount" href="#/">Your account</a></li>
-<li><a id="signout" href="#/">Signout</a></li>
-<% } %>
-<li><a href="#/help">Help</a></li>
-<li><a href="#/about">About</a></li>

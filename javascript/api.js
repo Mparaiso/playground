@@ -1,54 +1,118 @@
 /*global angular,Firebase,FirebaseSimpleLogin */
-angular.module('api', ['repository'])
-    .constant('Firebase', Firebase)
-    .constant('FirebaseSimpleLogin', FirebaseSimpleLogin)
-    .provider('Client', function() {
+angular.module('api', ['repository', 'utils'])
+    .provider('GistRepository', function () {
+        "use strict";
+        return {
+            $get: function ($q, $timeout) {
+                return {
+                    setAccountInfo: function (accountInfo) {
+                        this._accountInfo = accountInfo;
+                    },
+                    getAccountInfo: function () {
+                        return this._accountInfo;
+                    },
+                    findLatestGists: function () {
+                        var d = $q.defer();
+                        var query = this._gistRef.limit(100);
+                        query.once('value', function (res) {
+                            console.log(res);
+                            d.resolve(res.val());
+                        }, function (err) {
+                            d.reject(err);
+                        });
+                        return d.promise;
+                    },
+                    findGistById: function (id) {
+                        var d = $q.defer();
+                        var query = this._gistRef.startAt(null, id).limit(1);
+                        query.once('value', function (res) {
+                            d.resolve(res.val()[id]);
+                        }, function (err) {
+                            d.reject(err);
+                        });
+                        return d.promise;
+                    },
+                    findGistsByUserId: function (userId) {
+
+                    },
+                    createGist: function (gist) {
+                        var d = $q.defer();
+                        var r = this._gistRef.push(gist, function (err) {
+                            if (err) {
+                                d.reject(err);
+                            } else {
+                                d.resolve(r);
+                            }
+                        });
+                        return d.promise;
+                    },
+                    deleteGist: function (gist) {
+
+                    },
+                    deleteGistById: function (id) {
+
+                    },
+                    updateGist: function (id, gist) {
+                        var d = $q.defer();
+                        var r = this._gistRef.child(id).update(gist, function (err) {
+                            if (err) {
+                                d.reject(err);
+                            } else {
+                                d.resolve(r);
+                            }
+                        });
+                        return d.promise;
+                    }
+                };
+            }
+        };
+    })
+    .provider('Client', function () {
         "use strict";
         var firebaseUrl;
         return {
-            setFireBaseUrl: function(value) {
+            setFireBaseUrl: function (value) {
                 firebaseUrl = value;
             },
-            $get: function(GithubService, Firebase, FirebaseSimpleLogin, $rootScope,$q) {
+            $get: function (GistRepository, $rootScope, $q) {
                 var accountInfo, dbRef, auth, user;
-                dbRef = new Firebase(firebaseUrl);
-
+                dbRef = {};
                 return {
                     get isAuthenticated() {
                         return user;
                     },
-                    signIn: function() {
+                    signIn: function () {
                         auth.login('github', {
                             rememberMe: true,
-                            scope: 'user,gist',
+                            scope: 'user',
                             debug: true
                         });
                     },
-                    signOut: function() {
-                        auth.signOut();
+                    signOut: function () {
+                        auth.logout();
                         user = null;
                     },
-                    getAccountInfo: function() {
+                    getAccountInfo: function () {
                         return user;
                     },
-                    authenticate: function() {
+                    authenticate: function () {
                         var deferred = $q.defer();
                         var self = this;
-                        auth = new FirebaseSimpleLogin(dbRef, function(err, _user) {
+                        auth = new FirebaseSimpleLogin(dbRef, function (err, _user) {
                             if (err) {
-                                console.warn('error authenticating user', err);
-                                $q.reject(err);
-                            }else if (_user) {
-                                console.log('user',_user);
+                                console.log('error authenticating user', err);
+                                deferred.reject(err);
+                            } else if (_user) {
+                                console.log('user', _user);
                                 user = _user;
-                                GithubService.setToken(user.accessToken);
+                                GistRepository.setAccountInfo(user);
                                 deferred.resolve(user);
                             }
                         });
                         return deferred.promise;
                     },
-                    getGistResource: function() {
-                        return GithubService.getGistResource();
+                    getGistRepository: function () {
+                        return GistRepository;
                     }
                 };
             }

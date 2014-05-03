@@ -1,0 +1,24 @@
+<h2>&nbsp;</h2>
+<div class="row">
+	<form ng-submit="signUp()" name="credentials" class="signup page-center center-block" >
+		<fieldset>
+			<legend>Please Sign Up</legend>
+			<div class="form-group">
+				<input placeholder="Username" ng-minlength="4" ng-model="credentials.username" class="form-control" autocomplete="on" required>
+			</div>
+			<div class="form-group">
+				<input placeholder="Email" class="form-control" type="email" ng-model="credentials.email" required ng-minlenght="6">
+			</div>
+			<div class="form-group">
+				<input placeholder="Password" ng-minlength="4"  type="password" ng-model="credentials.password" class="form-control" required >
+			</div>
+			<div class="form-group">
+				<input placeholder="Confirm Password" minlength="4" type="password" ng-model="credentials.password_confirm" class="form-control" required>
+			</div>
+			<div class="form-group">
+				<input type="reset" class="btn btn-default">
+				<input type="submit" class="btn btn-primary" ng-disabled="!credentials.$valid">
+			</div>
+		</fieldset>
+	</form>
+</div>

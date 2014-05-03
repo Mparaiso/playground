@@ -1,0 +1,58 @@
+{
+  "!name": "jasmine.js",
+  "expect": {
+    "!type": "fn(obj) -> expect ",
+    "not": {
+      "!type": "expect"
+    },
+    "toMatch": {
+      "!type": "fn(obj:string|regexp)"
+    },
+    "toBe": {
+      "!type": "fn(obj)"
+    },
+    "toBeDefined": {
+      "!type": "fn()"
+    },
+    "toBeUndefined": {
+      "!type": "fn()"
+    },
+    "toBeTruthy": {
+      "!type": "fn()"
+    },
+    "toBeFasly": {
+      "!type": "fn()"
+    },
+    "toEqual": {
+      "!type": "fn(obj:?)"
+    }
+  },
+  "describe": {
+    "!type": "fn(string: string,callback: Function)"
+  },
+  "it": {
+    "!type": "fn(strings: string,callback: Function)"
+  },
+  "beforeEach": {
+    "!type": "fn(callback:Function)"
+  },
+  "jasmine": {
+    "createSpyObj": {
+      "!type": "fn(obj:string,methods:[string]) -> JasmineSpyObj "
+    }
+  },
+  "spyOn": {
+    "!type": "fn(obj,method:string) -> JasmineSpyMethod",
+    "and": {
+      "callThrough": {
+        "!type": "fn()"
+      },
+      "callFake": {
+        "!type": "fn(callback:Function)"
+      },
+      "returnValue": {
+        "!type": "fn(obj)"
+      }
+    }
+  }
+}

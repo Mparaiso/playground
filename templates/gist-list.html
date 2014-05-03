@@ -1,0 +1,17 @@
+<hr>
+<h1>Your Gists</h1>
+<h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
+<section class="row">
+    <article ng-show="gists.length>0" class="col-md-12">
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>name</th>
+        </tr>
+        <tr ng-repeat="(id,gist) in gists track by $index">
+            <td>{{$index}}</td>
+            <td><a href="#/gist/{{gist.id}}">{{gist.description}}</a></td>
+        </tr>
+    </table>
+    </article>
+</section>

@@ -1,30 +1,23 @@
-<!--<div class="navbar-header">
-</div>-->
+<!-- menu.html -->
 <div class="collapse navbar-collapse" id="navigation-collapsed">
-    <ul class="navbar-nav nav" id="leftMenu">
-        <!--<li><a ng-click="lint" href="javascript:void 0;">Lint</a></li>-->
-        <li><a ng-click="format()" >Format</a></li>
-        <li><a ng-click="run()" >Run</a></li>
-        <li  ng-show="Client.isAuthenticated">
-            <a ng-click="save()" >Save</a>
-        <li ng-show="Client.isAuthenticated" >
-            <!--<a  ng-click="fork" >Fork</a>-->
-        </li>
+    <ul class="navbar-nav nav" id="leftMenu" ng-include="rightMenuTemplate">
     </ul>
     <ul class="navbar-nav nav navbar-right" id="rightMenu">
-        <li ng-show="!Client.isAuthenticated">
-            <a id="signin" ng-click="signIn()" href="javascript:void 0;">
-                <i class="icon-github"></i>
-                Signin with github
-            </a>
+        <li class="navbar-text" ng-class="Notification.current.type">{{Notification.current.text}}&nbsp;<span 
+            ng-show="Notification.notifications.length>2" class="badge">{{Notification.notifications.length}}</span>
         </li>
-        <li ng-show="Client.isAuthenticated">
-            <a href="#/gist">Gists</a></li>
-        <li ng-show="Client.isAuthenticated">
-            <a id="youraccount" href="#/account">Welcome back {{Client.getAccountInfo().username}}</a></li>
-        <li  ng-show="Client.isAuthenticated">
-            <a id="signout" ng-click="signOut" href="javascript:void 0;">Signout</a></li>
-        <!--<li><a href="#/help">Help</a></li>-->
-        <!--<li><a href="#/about">About</a></li>-->
+        <li><a href="#/">New</a></li>
+        <li ng-show="!User.isAuthenticated()">
+            <a id="signin" href="#/signin">Signin</a>
+        </li>
+        <li ng-show="!User.isAuthenticated()">
+            <a id="signup" href="#/signup">Signup</a>
+        </li>
+        <li ng-show="User.isAuthenticated()">
+        <a href="#/gist">Gists</a></li>
+        <li ng-show="User.isAuthenticated()">
+        <a id="youraccount" href="#/account">Welcome back {{user.username}}</a></li>
+        <li  ng-show="User.isAuthenticated()">
+        <a id="signout" ng-click="signOut()" href="javascript:void 0;">Signout</a></li>
     </ul>
 </div>

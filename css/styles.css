@@ -9,50 +9,69 @@
 
 */
 body {
-    font-family: 'Droid Sans', 'sans-serif';
+    padding-top: 51px;
+    font-family: 'Droid Sans', Arial, sans-serif;
     background-color: #E5ECF6;
     color: #424147;
     height: 768px;
-    width:100%;
+    width: 100%;
     max-height: 100%;
     /*overflow: hidden;*/
     clear: both;
     position: relative;
 }
-a[ng-click]{
-    cursor:pointer;
+.signup{
+    width:330px;
 }
-    .navbar-inverse {
-        background-color: #424147;
-        margin-bottom: 0;
-    }
-    main{
-        height: 100%;
-    }
-        .view{
-        height: 100%;
-        }
-        .view .row{
-            height: 100%;
-            padding:0;
-            margin:-1;
-        }
-            .left-side {
-                height: 100%;
-            }
-            .right-side {
-                height: 100%;
-            }
-            .output { background-color: #fff; }
-            .editor {
-                background-color: #424147;
-                height: 80%;
-            }
-                .CodeMirror pre.CodeMirror-placeholder { color: #999; }
-.bottom{
+a[ng-click] {
+    cursor: pointer;
+}
+
+.navbar-inverse {
+    background-color: #424147;
+    margin-bottom: 0;
+}
+
+main {
+    height: 100%;
+}
+
+.view {
+    height: 100%;
+}
+
+.view .row {
+    height: 100%;
+    padding: 0;
+    margin: -1;
+}
+
+.left-side {
+    height: 100%;
+}
+
+.right-side {
+    height: 100%;
+}
+
+.output {
+    background-color: #fff;
+}
+
+.editor {
+    background-color: #424147;
+    height: 80%;
+}
+
+.CodeMirror pre.CodeMirror-placeholder {
+    color: #999;
+}
+
+.bottom {
     position: absolute;
-    bottom:0;
+    bottom: 0;
 }
+
 .navbar, .btn {
     border-radius: 0;
 }
@@ -61,8 +80,6 @@ a[ng-click]{
     font-family: 'Francois One', 'sans-serif';
     color: #FD6B5C !important;
 }
-
-
 
 .file-explorer {
     background: white;
@@ -77,16 +94,12 @@ a[ng-click]{
     padding-left: 3px;
 }
 
-
-
-
-
-
 .CodeMirror {
     height: 100%;
     font-size: 1.1em;
     font-family: 'Ubuntu Mono', monospace;
 }
+
 .output iframe {
     width: 100%;
     height: 100%;
@@ -117,17 +130,40 @@ a:hover .icon-github {
 @media (min-width: 768px) {
     .no-padding {
         padding: 0;
-        margin:0;
-        border:none;
+        margin: 0;
+        border: none;
     }
+
     .left-side {
         display: inline-block;
-        width:50%;
+        width: 50%;
     }
+
     .right-side {
         display: inline-block;
-        width:49.5%;
+        width: 49.5%;
     }
 
 }
 
+/**
+ * angular overloads
+ */
+
+input.ng-valid{
+    color:green;
+    border-color: inherit;
+}
+input.ng-invalid{
+    color:red;
+    border-color: inherit;
+}
+.text-success{
+    color:#A3C6C2!important;
+}
+.text-error{
+    color:#EB866A!important;
+}
+.text-warning{
+    color:#F2B701!important;
+}
