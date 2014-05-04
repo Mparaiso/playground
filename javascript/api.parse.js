@@ -2,10 +2,10 @@
 /*global angular,Parse*/
 angular.module('api.parse', [])
 	.constant('PARSE_APPID', 'swulsuJQGERVpgCuDw7l4lvc2ClWEnzbMiDxgLqC')
-	.constant('PARRSE_CLIENTID', 'fSsqxQQ9cZZOzTtq2rU6QC89aAZE7xGVilYccMhN')
-	.factory('Parse', function(PARSE_APPID, PARRSE_CLIENTID) {
+	.constant('PARSE_CLIENTID', 'fSsqxQQ9cZZOzTtq2rU6QC89aAZE7xGVilYccMhN')
+	.factory('Parse', function(PARSE_APPID, PARSE_CLIENTID) {
 		"use strict";
-		Parse.initialize(PARSE_APPID, PARRSE_CLIENTID);
+		Parse.initialize(PARSE_APPID, PARSE_CLIENTID);
 		return Parse;
 	})
 	.service('Gist', function(Parse, User) {
@@ -44,9 +44,13 @@ angular.module('api.parse', [])
 		};
 		/** create a new gist */
 		this.create = function(gist) {
-			var _gist = new Gist(gist);
-			_gist.set('user', Parse.User.current());
-			_gist.setACL(new Parse.ACL(Parse.User.current()));
+			var acl, user, _gist;
+			_gist = new Gist(gist);
+			user = Parse.User.current();
+			acl = new Parse.ACL(user);
+			acl.setPublicReadAccess(gist.public);
+			_gist.set('user', user);
+			_gist.setACL(acl);
 			return _gist.save();
 		};
 		/** update a gist */

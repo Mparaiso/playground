@@ -27,11 +27,12 @@
     "js-beautify": "~1.5.1",
     "underscore": "~1.6.0",
     "requirejs-text": "~2.0.12",
-    "codemirror-emmet": "*",
     "angular": "~1.2.16",
     "angular-route": "~1.2.16",
     "es5-shim": "~3.0.2",
     "angular-resource": "~1.2.16",
-    "js-md5": "~1.1.0"
+    "js-md5": "~1.1.0",
+    "coffee-script": "~1.7.1",
+    "angular-mocks": "~1.2.16"
   }
 }

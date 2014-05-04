@@ -3,15 +3,28 @@
 <h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
 <section class="row">
     <article ng-show="gists.length>0" class="col-md-12">
-    <table class="table">
-        <tr>
-            <th>#</th>
-            <th>name</th>
-        </tr>
-        <tr ng-repeat="(id,gist) in gists track by $index">
-            <td>{{$index}}</td>
-            <td><a href="#/gist/{{gist.id}}">{{gist.description}}</a></td>
-        </tr>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>description</th>
+                <th>languages</th>
+                <th>date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(id,gist) in gists track by $index">
+                <td>{{gist.id}}</td>
+                <td><a href="#/gist/{{gist.id}}">{{gist.description}}</a></td>
+                <td>
+                    <span ng-repeat="file in gist.files">
+                    {{file.language}}
+                    <span ng-show="!$last"> ,</span>
+                    </span>
+                </td>
+                <td>{{gist.updatedAt|date}}</td>
+            </tr>
+        </tbody>
     </table>
     </article>
 </section>

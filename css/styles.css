@@ -20,6 +20,9 @@ body {
     clear: both;
     position: relative;
 }
+form{
+    height: 100%;
+}
 .signup{
     width:330px;
 }
@@ -75,7 +78,6 @@ main {
 .navbar, .btn {
     border-radius: 0;
 }
-
 .brand {
     font-family: 'Francois One', 'sans-serif';
     color: #FD6B5C !important;
@@ -158,6 +160,7 @@ input.ng-invalid{
     color:red;
     border-color: inherit;
 }
+/**bootstrap overloads*/
 .text-success{
     color:#A3C6C2!important;
 }
@@ -165,5 +168,9 @@ input.ng-invalid{
     color:#EB866A!important;
 }
 .text-warning{
-    color:#F2B701!important;
+    color:#EA8768!important;
+}
+.btn-primary,.btn-primary:hover{
+    background-color: #067B82!important;
+    border-color: #05757A!important;
 }

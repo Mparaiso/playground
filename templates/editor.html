@@ -1,11 +1,38 @@
 <!-- template/index.html-->
 <div class="row">
-    <section class="left-side no-padding" ng-cloak>
-        <form class="form" name="form" style="display:inline;">
-            <textarea ng-model="editor.value" data-cm-editor placeholder="{{editor.placeholder}}"
-            class="editor"></textarea>
-        </form>
-    </section>
-    <section renderer class="output right-side no-padding">
-    </section>
+	<!-- EDITOR TABS -->
+	<ul class="nav mp-nav-tabs" ng-controller="EditorMenuCtrl">
+		<!-- Split button -->
+		<li class="btn-group" ng-repeat='menu in Editor.editorMenus'>
+			<button ng-click="Editor.selected=menu.type" type="button"
+			data-toggle="tab"
+			ng-class='{"btn-primary": Editor.selected==menu.type ,"btn-link":Editor.selected != menu.type}'
+			class="btn" >
+			{{ Editor.editors[$index].language}}
+			</button>
+			<button type="button"
+			ng-class='{"btn-primary":Editor.selected==menu.type,"btn-link":Editor.selected != menu.type}'
+			class="btn dropdown-toggle" data-toggle="dropdown">
+			<span class="caret mp-dropdown"></span>
+			<span class="sr-only">Toggle Dropdown</span>
+			</button>
+			<!-- list of languages availables into a type -->
+			<ul class="dropdown-menu" role="menu">
+				<li ng-repeat="submenu in menu.submenus">
+					<a ng-click="Editor.editors[$parent.$index].language=submenu.language">{{submenu.language}}</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<!-- TAB CONTENT -->
+	<div class="left-side no-padding tab-content"  ng-controller="EditorCtrl">
+		<form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
+			ng-cloakname="form"
+			ng-repeat="editor in Editor.editors">
+			<textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
+			class="code-editor"></textarea>
+		</form>
+	</div>
+	<section renderer class="output right-side no-padding">
+	</section>
 </div>

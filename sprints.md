@@ -16,14 +16,17 @@ Sprint 1:
 
 Sprint 2:
 
--[ ] a user can save a note
--[ ] a user can load a note
+-[X] a user can save a gist
+-[X] a user can load a gist
+-[X] a gist is composed of 3 parts, tags,scripts,styles
+-[X] each part of a gist is polymorphic , 
+     and support different languages that compile to standard web languages
 
 Sprint 3:
--[ ] a user can share the url of a note
+-[ ] a user can share the url of a gist
 
 
-Notes
+gists
 =====
 
 api url : https://api.github.com/
