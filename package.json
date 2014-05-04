@@ -1,13 +1,13 @@
 {
     "name": "playground",
-    "version": "0.0.0",
+    "version": "0.0.3",
     "description": "",
     "main": "index.js",
     "scripts": {
         "start": "node bin/server.js",
         "test": "karma start test/karma.conf.js"
     },
-    "author": "",
+    "author": "mparaiso <mparaiso@online.fr>",
     "license": "GPL",
     "devDependencies": {
         "express": "~4.0.0",
