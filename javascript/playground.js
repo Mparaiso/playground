@@ -78,11 +78,11 @@
                 .addAppendScriptStrategy("traceur", function(html, value) {
                     var traceurScript =
                         '<script src="https://traceur-compiler.googlecode.com/git/bin/traceur.js"\
-                        type="text/javascript"></script>\
+                        type="text/javascript"></script>\n\
                     <script src="https://traceur-compiler.googlecode.com/git/src/bootstrap.js"\
-                        type="text/javascript"></script>';
+                        type="text/javascript"></script>\n';
                     var optionScript = '<script>traceur.options.experimental = true;</script>';
-                    var userScript = '<script type="module">\n' + value + '</script>';
+                    var userScript = '<script type="module">\n' + value + '\n</script>';
                     html.innerHTML += traceurScript + optionScript + userScript;
                 });
         })
