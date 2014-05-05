@@ -33,6 +33,9 @@
     "angular-resource": "~1.2.16",
     "js-md5": "~1.1.0",
     "coffee-script": "~1.7.1",
-    "angular-mocks": "~1.2.16"
+    "angular-mocks": "~1.2.16",
+    "less": "~1.7.0",
+    "markdown": "~0.5.0",
+    "Keypress": "~2.0.2"
   }
 }

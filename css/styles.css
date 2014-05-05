@@ -1,13 +1,14 @@
 /**
-    @scheme
+@scheme
 
-        lightgray:#545861
-        lightblue:#E5ECF6
-        black:#424147
-        red:#FD6B5C
+lightgray:#545861
+lightblue:#E5ECF6
+black:#424147
+red:#FD6B5C
 
 
 */
+
 body {
     padding-top: 51px;
     font-family: 'Droid Sans', Arial, sans-serif;
@@ -63,7 +64,9 @@ main {
 
 .editor {
     background-color: #424147;
+    /*height: 600px;*/
     height: 80%;
+    /*min-height:300px;*/
 }
 
 .CodeMirror pre.CodeMirror-placeholder {
@@ -97,6 +100,7 @@ main {
 }
 
 .CodeMirror {
+    /*min-height: 500px;*/
     height: 100%;
     font-size: 1.1em;
     font-family: 'Ubuntu Mono', monospace;
@@ -143,7 +147,7 @@ a:hover .icon-github {
 
     .right-side {
         display: inline-block;
-        width: 49.5%;
+        width: 49.6%;
     }
 
 }
@@ -152,7 +156,7 @@ a:hover .icon-github {
  * angular overloads
  */
 
-input.ng-valid{
+ input.ng-valid{
     color:green;
     border-color: inherit;
 }
@@ -173,4 +177,16 @@ input.ng-invalid{
 .btn-primary,.btn-primary:hover{
     background-color: #067B82!important;
     border-color: #05757A!important;
+}
+.navbar-inverse .btn-link{
+    color: #999;
+}
+.navbar-inverse .btn-link:hover,.navbar-inverse .btn-link:focus{
+    color: #fff;
+    text-decoration: none;
+}
+.dropdown-header form{
+    font-family: inherit !important;
+    font-size: inherit!important;
+    font-weight: inherit!important;
 }

@@ -6,3 +6,18 @@
 <li ng-show="User.isAuthenticated()">
 	<a ng-click="fork()" >Fork</a>
 </li>
+<li ng-show="User.isAuthenticated()" class="navbar-btn" ng-controller="EditorMenuCtrl">
+	<button class="btn btn-link btn-md dropdown-toggle" data-toggle="dropdown">
+	Gist Options
+	<b class="caret mp-dropdown" ignore-click="true"></b>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+		<li class="dropdown-header" >
+			<form>
+				<label>Gist Description : 
+					<textarea ng-model="Gist.current.description" rows="4"  cols="30" rows="10"></textarea>
+				</label>
+			</form>
+		</li>
+	</ul>
+</li>

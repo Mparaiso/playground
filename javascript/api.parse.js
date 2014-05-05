@@ -1,5 +1,10 @@
 /*jslint es5:true*/
 /*global angular,Parse*/
+/**
+ * @description playground the web tech playground
+ * @copyright 2014 mparaiso <mparaiso@online.fr>
+ * @license GPL
+ */
 angular.module('api.parse', [])
 	.constant('PARSE_APPID', 'swulsuJQGERVpgCuDw7l4lvc2ClWEnzbMiDxgLqC')
 	.constant('PARSE_CLIENTID', 'fSsqxQQ9cZZOzTtq2rU6QC89aAZE7xGVilYccMhN')
@@ -11,8 +16,9 @@ angular.module('api.parse', [])
 	.service('Gist', function(Parse, User) {
 		"use strict";
 		var Gist = Parse.Object.extend('Gist', {
-			initialize: function() {
-				this.set('description', 'playground-gist-' + Date.now() + '-html');
+			initialize: function(params) {
+				params = params || {};
+				this.set('description', params.description || 'playground-gist-' + Date.now() + '-html');
 			},
 			defaults: {
 				public: true,

@@ -1,4 +1,9 @@
 /*global angular*/
+/**
+ * @description playground the web tech playground
+ * @copyright 2014 mparaiso <mparaiso@online.fr>
+ * @license GPL
+ */
 (function() {
 	"use strict";
 	angular.module('notification', [])
@@ -7,7 +12,7 @@
 			/**
 			 * manage notifications
 			 */
-			var onNotificationTimeEnd ;
+			var onNotificationTimeEnd;
 			this.type = {
 				'SUCCESS': 'text-success',
 				'ERROR': 'text-error',
@@ -15,27 +20,27 @@
 			};
 			this.timeout = null;
 			this.current = null;
-			this.notifications=[];
+			this.notifications = [];
 			/**
 			 * queue app notifications
 			 * @param  {Object} notif
 			 * @return {Promise}
 			 */
 			this.notify = function(notif) {
-				if(notif){
+				if (notif) {
 					this.notifications.push(notif);
 				}
-				if(!this.current){
+				if (!this.current) {
 					this.current = this.notifications.pop();
 				}
-				if(!this.timeout){
-					this.timeout=$timeout(onNotificationTimeEnd.bind(this), NOTIFICATION_TIME);					
+				if (!this.timeout) {
+					this.timeout = $timeout(onNotificationTimeEnd.bind(this), NOTIFICATION_TIME);
 				}
 			};
-			onNotificationTimeEnd = function(){
-				this.current=null;
-				this.timeout=null;
-				if(this.notifications.length>0){
+			onNotificationTimeEnd = function() {
+				this.current = null;
+				this.timeout = null;
+				if (this.notifications.length > 0) {
 					this.notify();
 				}
 			};

@@ -1,4 +1,4 @@
-/*global angular,CoffeeScript*/
+/*global angular,CoffeeScript,less,markdown */
 /**
  * @description playground the web tech playground
  * @copyright 2014 mparaiso <mparaiso@online.fr>
@@ -7,7 +7,7 @@
 (function() {
     "use strict";
     angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler',
-        'api.parse', 'utils', 'notification', 'mp.widgets'],
+        'api.parse', 'notification', 'mp.widgets', 'shortcuts'],
         function($routeProvider, $httpProvider, CompilerProvider) {
             $routeProvider
                 .when("/", {
@@ -41,7 +41,7 @@
                     controller: 'GistEditCtrl',
                     templateUrl: 'templates/editor.html',
                     rightMenuTemplate: 'templates/right-menu.html',
-                    mustBeAuthenticated: true,
+                    // mustBeAuthenticated: true,
                     resolve: {
                         gist: function(Gist, $route) {
                             return Gist.findGistById($route.current.params.id);
@@ -58,8 +58,32 @@
             });
             $httpProvider.defaults.useXDomain = true;
             CompilerProvider
+                .addScriptCompiler('markdown', function(value) {
+                    return markdown.toHTML(value);
+                })
                 .addScriptCompiler('coffeescript', function(value) {
                     return CoffeeScript.compile(value);
+                })
+                .addStyleCompiler('less', function(value) {
+                    var result;
+                    var parser = new less.Parser();
+                    parser.parse(value, function(a, b) {
+                        result = b.toCSS();
+                    });
+                    return result;
+                })
+                .addTagCompiler('markdown', function(value) {
+                    return markdown.toHTML(value);
+                })
+                .addAppendScriptStrategy("traceur", function(html, value) {
+                    var traceurScript =
+                        '<script src="https://traceur-compiler.googlecode.com/git/bin/traceur.js"\
+                        type="text/javascript"></script>\
+                    <script src="https://traceur-compiler.googlecode.com/git/src/bootstrap.js"\
+                        type="text/javascript"></script>';
+                    var optionScript = '<script>traceur.options.experimental = true;</script>';
+                    var userScript = '<script type="module">\n' + value + '</script>';
+                    html.innerHTML += traceurScript + optionScript + userScript;
                 });
         })
         .controller('MainCtrl', function($scope, Editor, $route, User, Notification) {
@@ -67,6 +91,9 @@
             $scope.$on('$routeChangeSuccess', function(event, route) {
                 $scope.rightMenuTemplate = route.rightMenuTemplate;
                 $scope.diff = false;
+            });
+            $scope.$on('doRun', function() {
+                $scope.run();
             });
             $scope.User = User;
             $scope.format = function() {
@@ -78,7 +105,7 @@
             $scope.save = function() {
                 $scope.$broadcast('save');
             };
-            $scope.fork=function(){
+            $scope.fork = function() {
                 $scope.$broadcast('fork');
             };
         })
@@ -98,11 +125,16 @@
                     .then(function(user) {
                         Notification.notify({
                             type: Notification.type.SUCCESS,
-                            text: 'Signup Successfull'
+                            text: 'Signup Successfull.'
                         });
                         $scope.$apply($location.path.bind($location, '/gist'));
                     })
-                    .fail(function(err) {});
+                    .fail(function(err) {
+                        Notification.notify({
+                            type: Notification.type.ERROR,
+                            text: 'Signup Error,please try again later.'
+                        });
+                    });
             };
         })
         .controller('SignInCtrl', function($scope, User, $location, Notification) {
@@ -135,13 +167,14 @@
         })
         .controller('GistCreateCtrl', function($scope, Editor, Gist, $location, Notification, $window, $document) {
             $scope.Editor = Editor;
+            Gist.current = {
+                public: true
+            };
             $scope.Editor.editors = Editor.getDefaultEditorValues();
             $scope.$on('save', function(event) {
                 if (!Editor.isEmpty()) {
-                    Gist.create({
-                        files: angular.copy(Editor.editors),
-                        public: true
-                    }).then(function(gist) {
+                    Gist.current.files = angular.copy(Editor.editors);
+                    Gist.create(Gist.current).then(function(gist) {
                         Notification.notify({
                             type: Notification.type.SUCCESS,
                             text: 'Gist created Successfully'
@@ -158,10 +191,13 @@
         })
         .controller('GistEditCtrl', function($scope, Editor, Gist, Utility, gist, $location, $routeParams, Notification) {
             $scope.Editor = Editor;
+            $scope.Gist = Gist;
+            Gist.current = gist;
             Editor.editors = gist.files;
             $scope.$on('fork', function(event) {
                 if (!Editor.isEmpty()) {
                     Gist.create({
+                        description: Gist.current.description,
                         files: angular.copy(Editor.editors),
                         public: true
                     })
@@ -172,11 +208,11 @@
                             }));
                         })
                         .then(function(g) {
+                            $location.path('/gist/' + g.id);
                             $scope.$apply(Notification.notify.bind(Notification, {
                                 type: Notification.type.SUCCESS,
                                 text: 'Gist forked Successfully'
                             }));
-                            $location.path('/gist/' + g.id);
                         });
                 }
             });
@@ -209,9 +245,15 @@
         })
         .controller('EditorCtrl', function($scope, Editor) {
             $scope.Editor = Editor;
+            $scope.$watch('Editor.selected', function(newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    $scope.$broadcast('change_selected', newValue);
+                }
+            }, true);
         })
-        .controller('EditorMenuCtrl', function($scope, Editor) {
+        .controller('EditorMenuCtrl', function($scope, Gist, Editor) {
             $scope.Editor = Editor;
+            $scope.Gist = Gist;
         })
         .run(function(User, $rootScope, $location) {
             $rootScope.$on('$routeChangeStart', function(event, route) {

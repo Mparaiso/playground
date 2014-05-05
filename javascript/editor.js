@@ -31,7 +31,7 @@ angular.module('editor', [])
         };
         this.isEmpty = function() {
             return this.editors.every(function(editor) {
-                return editor.value==='';
+                return editor.value === '';
             });
         };
         /**
@@ -42,8 +42,6 @@ angular.module('editor', [])
                 type: "tags",
                 submenus: [{
                     language: "html",
-                    }, {
-                    language: 'jade'
                     }, {
                     language: "markdown"
                     }]
@@ -62,8 +60,6 @@ angular.module('editor', [])
                     language: 'css'
                     }, {
                     language: 'less'
-                    }, {
-                    language: 'sass'
                     }]
                 }];
         this.editor = {
@@ -90,7 +86,7 @@ angular.module('editor', [])
                 placeholder: "="
             },
             link: function($scope, el, attr, ngModel) {
-                var editor, timeout, types = {
+                var change_selected, editor, timeout, types = {
                         javascript: 'javascript',
                         css: 'css',
                         less: 'text/x-less',
@@ -106,13 +102,11 @@ angular.module('editor', [])
                 $timeout(function() {
                     editor = CodeMirror.fromTextArea(el.get(0), {
                         mode: types[$scope.language],
-                        syntax: $scope.language,
+                        syntax: types[$scope.language],
                         placeholder: $scope.placeholder,
-                        // syntax: 'html',
                         lineNumbers: true,
                         theme: 'monokai',
                         profile: $scope.language,
-                        // profile: 'html',
                         matchBrackets: true,
                         matchTags: true,
                         highlightSelectionMatches: true,
@@ -131,6 +125,14 @@ angular.module('editor', [])
                     ngModel.$render = function() {
                         editor.setValue(ngModel.$viewValue);
                     };
+                    //refresh editor once when showed , to avoid a codeMirror bug
+                    //@see http://stackoverflow.com/questions/8349571/codemirror-editor-is-not-loading-content-until-clicked
+                    change_selected = $scope.$on('change_selected', function(e, value) {
+                        if (value === $scope.type) {
+                            $timeout(editor.refresh.bind(editor));
+                            change_selected();
+                        }
+                    });
                     /** watch for language change , modify editor mode accordingly */
                     $scope.$watch('language', function(newValue, oldValue) {
                         //console.log(arguments);
@@ -144,20 +146,21 @@ angular.module('editor', [])
                     /** on format event , format the editor content */
                     $scope.$on('format', function() {
                         var cursorPosition = editor.getCursor();
-                        switch (editor.options.syntax) {
+                        switch (editor.getOption('syntax')) {
                             case 'html':
                                 editor.setValue(html_beautify(editor.getValue()));
                                 break;
                             case 'javascript':
                                 editor.setValue(js_beautify(editor.getValue()));
                                 break;
+                            case 'less':
                             case 'css':
                                 editor.setValue(css_beautify(editor.getValue()));
                                 break;
                         }
                         editor.setCursor(cursorPosition);
                     });
-                }, 100);
+                });
             }
         };
     });

@@ -23,10 +23,11 @@ Sprint 2:
      and support different languages that compile to standard web languages
 
 Sprint 3:
+
+-[X] a gist support Javascript ,Traceur, or CoffeeScript
+-[X] a gist supports css or less
+-[X] a gist supports html or markdown
+
+Sprint 4:
+
 -[ ] a user can share the url of a gist
-
-
-gists
-=====
-
-api url : https://api.github.com/

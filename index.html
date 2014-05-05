@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="playground" ng-controller="MainCtrl">
+<html lang="en" >
     <head>
         <meta charset="UTF-8">
         <title>Playground</title>
@@ -32,10 +32,13 @@
         <script defer src="bower_components/codemirror/addon/hint/show-hint.js"></script>
         <script defer src="bower_components/codemirror/addon/hint/anyword-hint.js"></script>
         <script defer src="bower_components/coffee-script/extras/coffee-script.js"></script>
+        <script defer src="bower_components/markdown/lib/markdown.js"></script>
+        <script defer src="bower_components/less/dist/less-1.7.0.min.js"></script>
         <script defer src="bower_components/angular/angular.min.js"></script>
         <script defer src="bower_components/angular-route/angular-route.min.js"></script>
         <script defer src="bower_components/angular-resource/angular-resource.min.js"></script>
         <script defer src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/Keypress/keypress.js"></script>
         <script defer src="javascript/playground.js"></script>
         <script defer src="javascript/editor.js"></script>
         <script defer src="javascript/renderer.js"></script>
@@ -44,6 +47,7 @@
         <script defer src="javascript/mp.widgets.js"></script>
         <script defer src="javascript/utils.js"></script>
         <script defer src="javascript/notification.js"></script>
+        <script defer src="javascript/shortcuts.js"></script>
         <link rel="stylesheet" href="bower_components/codemirror/addon/display/fullscreen.css"/>
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css"/>
@@ -54,7 +58,7 @@
         <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="css/styles.css" media="all">
     </head>
-    <body>
+    <body ng-app="playground" ng-controller="MainCtrl">
         <!-- NAVIGATION -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
@@ -73,10 +77,11 @@
             </div>
         </nav>
         <!-- END NAVIGATION -->
-        <main class="container-fluid">
-        <article ng-view class="view">
+        <main class="container-fluid clearfix clear-fix">
+        <article ng-view class="view shortcuts">
         </article>
         </main>
+        <hr>
         <footer class="container-fluid text-small">
             <div class="row">
                 <p>&nbsp;</p>
