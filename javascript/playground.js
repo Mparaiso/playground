@@ -189,7 +189,7 @@
                 }
             });
         })
-        .controller('GistEditCtrl', function($scope, Editor, Gist, Utility, gist, $location, $routeParams, Notification) {
+        .controller('GistEditCtrl', function($scope, Editor, Gist, gist, $location, $routeParams, Notification) {
             $scope.Editor = Editor;
             $scope.Gist = Gist;
             Gist.current = gist;
