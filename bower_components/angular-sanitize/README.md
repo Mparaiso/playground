@@ -1,38 +1,39 @@
-# Angular pane splitter
+# bower-angular-sanitize
 
-Simple pane splitter for angular.js 
+This repo is for distribution on `bower`. The source for this module is in the
+[main AngularJS repo](https://github.com/angular/angular.js/tree/master/src/ngSanitize).
+Please file issues and pull requests against that repo.
 
-## Sample
+## Install
 
-HTML:
+Install with `bower`:
+
+```shell
+bower install angular-sanitize
+```
+
+Add a `<script>` to your `index.html`:
+
 ```html
-<bg-splitter orientation="horizontal">
-	<bg-pane min-size="100">Pane 1</bg-pane>
-	<bg-pane min-size="150">
-	  <bg-splitter orientation="vertical">
-	    <bg-pane min-size="50">Pane 2</bg-pane>
-	    <bg-pane min-size="50">Pane 3</bg-pane>
-	  </bg-splitter>
-	</bg-pane>
-</bg-splitter>
+<script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
 ```
 
-Javascript:
+And add `ngSanitize` as a dependency for your app:
+
 ```javascript
-var app = angular.module('myApp', ['bgDirectives']);
+angular.module('myApp', ['ngSanitize']);
 ```
 
-## Install using bower
+## Documentation
 
-```
-bower install bg-splitter
-```
+Documentation is available on the
+[AngularJS docs site](http://docs.angularjs.org/api/ngSanitize).
 
-## Licence
+## License
 
 The MIT License
 
-Copyright (c) 2013 blackgate, https://github.com/blackgate
+Copyright (c) 2010-2012 Google, Inc. http://angularjs.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

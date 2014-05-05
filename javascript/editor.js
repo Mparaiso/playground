@@ -60,7 +60,10 @@ angular.module('editor', [])
                     }, {
                     language: 'coffeescript',
                     hint:'coffeescript'
-                    }, {
+                    },{
+                        language:'typescript',
+                        hint:'typescript '
+                    } ,{
                     language: 'traceur',
                     hint:'ecmascript 6'
                     },{
@@ -107,7 +110,7 @@ angular.module('editor', [])
                         less: 'text/x-less',
                         html: 'htmlmixed',
                         coffeescript: 'coffeescript',
-                        typescript: 'typscript',
+                        typescript: 'text/typescript',
                         markdown: 'markdown',
                         jade: "jade",
                         haml: 'haml',
@@ -144,7 +147,7 @@ angular.module('editor', [])
                     //refresh editor once when showed , to avoid a codeMirror bug
                     //@see http://stackoverflow.com/questions/8349571/codemirror-editor-is-not-loading-content-until-clicked
                     change_selected = $scope.$on('change_selected', function(e, value) {
-                        console.log(arguments);
+                        // console.log(arguments);
                         if (value === $scope.type) {
                             $timeout(editor.refresh.bind(editor));
                             change_selected();
@@ -162,15 +165,18 @@ angular.module('editor', [])
                     }, true);
                     /** on format event , format the editor content */
                     $scope.$on('format', function() {
+                        console.log('format',editor.getOption('syntax'));
                         var cursorPosition = editor.getCursor();
                         switch (editor.getOption('syntax')) {
                             case 'html':
                                 editor.setValue(html_beautify(editor.getValue()));
                                 break;
+                            case 'traceur':
+                            case 'text/typescript':
                             case 'javascript':
                                 editor.setValue(js_beautify(editor.getValue()));
                                 break;
-                            case 'less':
+                            case 'text/x-less':
                             case 'css':
                                 editor.setValue(css_beautify(editor.getValue()));
                                 break;

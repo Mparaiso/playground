@@ -68,7 +68,9 @@ main {
     height: 80%;
     /*min-height:300px;*/
 }
-
+.gist-list{
+    height: auto!important;
+}
 .CodeMirror pre.CodeMirror-placeholder {
     color: #999;
 }

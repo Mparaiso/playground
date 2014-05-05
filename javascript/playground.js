@@ -7,7 +7,7 @@
 (function() {
     "use strict";
     angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler',
-        'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives'],
+        'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives', 'prettify','ngSanitize'],
         function($routeProvider, $httpProvider, CompilerProvider) {
             $routeProvider
                 .when("/", {
@@ -77,9 +77,9 @@
                 })
                 .addAppendScriptStrategy("traceur", function(html, value) {
                     var traceurScript =
-                        '<script src="https://traceur-compiler.googlecode.com/git/bin/traceur.js"\
+                        '<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"\
                         type="text/javascript"></script>\n\
-                    <script src="https://traceur-compiler.googlecode.com/git/src/bootstrap.js"\
+                    <script src="//traceur-compiler.googlecode.com/git/src/bootstrap.js"\
                         type="text/javascript"></script>\n';
                     var optionScript = '<script>traceur.options.experimental = true;</script>';
                     var userScript = '<script type="module">\n' + value + '\n</script>';
@@ -90,6 +90,11 @@
                         '<script src="vendor/opal-parser.js"></script>\n' +
                         '<script type="text/ruby">\n' + value + '\n</script>';
                     html.innerHTML += script;
+                })
+                .addAppendScriptStrategy('typescript', function(html,value){
+                    html.innerHTML += '<script type="text/typescript">\n'+value+'\n</script>\n'+
+                    '<script src="//niutech.github.io/typescript-compile/js/typescript.min.js"></script>'+
+                    '<script src="//niutech.github.io/typescript-compile/js/typescript.compile.min.js"></script>';
                 });
         })
         .controller('MainCtrl', function($rootScope, $scope, Editor, $route, User, Notification) {
