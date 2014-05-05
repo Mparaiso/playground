@@ -1,4 +1,9 @@
 /*global angular,define,CodeMirror,js_beautify,css_beautify,html_beautify */
+/**
+ * @description playground the web tech playground
+ * @copyright 2014 mparaiso <mparaiso@online.fr>
+ * @license GPL
+ */
 angular.module('editor', [])
     .service('Editor', function() {
         "use strict";
@@ -42,24 +47,34 @@ angular.module('editor', [])
                 type: "tags",
                 submenus: [{
                     language: "html",
+                    hint:'HTML5'
                     }, {
-                    language: "markdown"
+                    language: "markdown",
+                    hint:'markdown'
                     }]
                 }, {
                 type: "script",
                 submenus: [{
-                    language: 'javascript'
+                    language: 'javascript',
+                    hint:'ecmascript 5'
                     }, {
-                    language: 'coffeescript'
+                    language: 'coffeescript',
+                    hint:'coffeescript'
                     }, {
-                    language: 'traceur'
+                    language: 'traceur',
+                    hint:'ecmascript 6'
+                    },{
+                    language: 'opal',
+                    hint:'a implementation of the ruby language'
                     }]
                 }, {
                 type: 'style',
                 submenus: [{
-                    language: 'css'
+                    language: 'css',
+                    hint:'cascading stylesheets'
                     }, {
-                    language: 'less'
+                    language: 'less',
+                    hint:'lesscss a language that compiles to css'
                     }]
                 }];
         this.editor = {
@@ -96,6 +111,7 @@ angular.module('editor', [])
                         markdown: 'markdown',
                         jade: "jade",
                         haml: 'haml',
+                        opal:'ruby',
                         traceur: 'javascript',
                         sass: 'sass'
                     };
@@ -128,6 +144,7 @@ angular.module('editor', [])
                     //refresh editor once when showed , to avoid a codeMirror bug
                     //@see http://stackoverflow.com/questions/8349571/codemirror-editor-is-not-loading-content-until-clicked
                     change_selected = $scope.$on('change_selected', function(e, value) {
+                        console.log(arguments);
                         if (value === $scope.type) {
                             $timeout(editor.refresh.bind(editor));
                             change_selected();

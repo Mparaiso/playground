@@ -1,4 +1,9 @@
 /*global angular,keypress*/
+/**
+ * @description playground the web tech playground
+ * @copyright 2014 mparaiso <mparaiso@online.fr>
+ * @license GPL
+ */
 angular.module('shortcuts', [])
 	.directive('shortcuts', function($rootScope, $timeout, $window) {
 		"use strict";
@@ -8,9 +13,9 @@ angular.module('shortcuts', [])
 				$timeout(function() {
 					var listener = new keypress.Listener();
 					listener.simple_combo("ctrl s", function(e) {
-						$rootScope.$broadcast('save');
+						$rootScope.$broadcast('doSave');
 					});
-						listener.simple_combo("ctrl r", function(e) {
+					listener.simple_combo("ctrl r", function(e) {
 						$rootScope.$broadcast('doRun');
 					});
 				});

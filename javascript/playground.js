@@ -7,7 +7,7 @@
 (function() {
     "use strict";
     angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler',
-        'api.parse', 'notification', 'mp.widgets', 'shortcuts'],
+        'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives'],
         function($routeProvider, $httpProvider, CompilerProvider) {
             $routeProvider
                 .when("/", {
@@ -84,9 +84,15 @@
                     var optionScript = '<script>traceur.options.experimental = true;</script>';
                     var userScript = '<script type="module">\n' + value + '\n</script>';
                     html.innerHTML += traceurScript + optionScript + userScript;
+                })
+                .addAppendScriptStrategy('opal', function(html, value) {
+                    var script = '<script src="vendor/opal.js"></script>\n' +
+                        '<script src="vendor/opal-parser.js"></script>\n' +
+                        '<script type="text/ruby">\n' + value + '\n</script>';
+                    html.innerHTML += script;
                 });
         })
-        .controller('MainCtrl', function($scope, Editor, $route, User, Notification) {
+        .controller('MainCtrl', function($rootScope, $scope, Editor, $route, User, Notification) {
             $scope.Notification = Notification;
             $scope.$on('$routeChangeSuccess', function(event, route) {
                 $scope.rightMenuTemplate = route.rightMenuTemplate;
@@ -95,18 +101,21 @@
             $scope.$on('doRun', function() {
                 $scope.run();
             });
+            $scope.$on('doSave', function() {
+                $scope.save();
+            });
             $scope.User = User;
             $scope.format = function() {
-                $scope.$broadcast('format');
+                $rootScope.$broadcast('format');
             };
             $scope.run = function() {
-                $scope.$broadcast('run', Editor.editors);
+                $rootScope.$broadcast('run', Editor.editors);
             };
             $scope.save = function() {
-                $scope.$broadcast('save');
+                $rootScope.$broadcast('save');
             };
             $scope.fork = function() {
-                $scope.$broadcast('fork');
+                $rootScope.$broadcast('fork');
             };
         })
         .controller('SignUpCtrl', function($scope, User, $location, Notification) {
@@ -243,11 +252,12 @@
         .controller('AccountCtrl', function($scope, User) {
             $scope.user = User.getCurrentUser();
         })
-        .controller('EditorCtrl', function($scope, Editor) {
+        .controller('EditorCtrl', function($scope, $rootScope, Editor) {
             $scope.Editor = Editor;
             $scope.$watch('Editor.selected', function(newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    $scope.$broadcast('change_selected', newValue);
+                    console.info(arguments);
+                    $rootScope.$broadcast('change_selected', newValue);
                 }
             }, true);
         })

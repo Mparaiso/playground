@@ -36,6 +36,7 @@
     "angular-mocks": "~1.2.16",
     "less": "~1.7.0",
     "markdown": "~0.5.0",
-    "Keypress": "~2.0.2"
+    "Keypress": "~2.0.2",
+    "bg-splitter": "*"
   }
 }

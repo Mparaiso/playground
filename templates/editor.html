@@ -8,7 +8,7 @@
 			data-toggle="tab"
 			ng-class='{"btn-primary": Editor.selected==menu.type ,"btn-link":Editor.selected != menu.type}'
 			class="btn" >
-			{{ Editor.editors[$index].language}}
+				{{ Editor.editors[$index].language}}
 			</button>
 			<button type="button"
 			ng-class='{"btn-primary":Editor.selected==menu.type,"btn-link":Editor.selected != menu.type}'
@@ -18,21 +18,25 @@
 			</button>
 			<!-- list of languages availables into a type -->
 			<ul class="dropdown-menu" role="menu">
-				<li ng-repeat="submenu in menu.submenus">
+				<li ng-repeat="submenu in menu.submenus" title="{{submenu.hint}}" mp-tooltip>
 					<a ng-click="Editor.editors[$parent.$index].language=submenu.language">{{submenu.language}}</a>
 				</li>
 			</ul>
 		</li>
 	</ul>
 	<!-- TAB CONTENT -->
-	<div class="left-side no-padding tab-content"  ng-controller="EditorCtrl">
-		<form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
-			ng-cloakname="form"
-			ng-repeat="editor in Editor.editors">
-			<textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
-			class="code-editor"></textarea>
-		</form>
+	<article style="position:relative;height:100%;">
+	<div bg-splitter orientation="horizontal" class="row">
+		<section bg-pane min-size="200" class="left-side no-padding tab-content"  ng-controller="EditorCtrl">
+			<form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
+				ng-cloakname="form"
+				ng-repeat="editor in Editor.editors">
+				<textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
+				class="code-editor"></textarea>
+			</form>
+		</section>
+		<section bg-pane min-size="200" renderer class="output right-side no-padding">
+		</section>
 	</div>
-	<section renderer class="output right-side no-padding">
-	</section>
+	</article>
 </div>

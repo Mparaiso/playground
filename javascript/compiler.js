@@ -35,6 +35,7 @@ angular.module('compiler', [])
 			 */
 			addAppendScriptStrategy: function(language, _function) {
 				appendScriptStrategies[language] = _function;
+                return this;
 			},
 			/**
 			 * add a strategy to append styles
@@ -43,6 +44,7 @@ angular.module('compiler', [])
 			 */
 			addAppendStyleStrategy: function(language, _function) {
 				appendStyleStrategies[language] = _function;
+                return this;
 			},
 			$get: function($document, $rootScope) {
 				var document = $document.get(0);

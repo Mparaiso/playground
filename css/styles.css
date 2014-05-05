@@ -105,8 +105,10 @@ main {
     font-size: 1.1em;
     font-family: 'Ubuntu Mono', monospace;
 }
-
+.output{
+}
 .output iframe {
+    z-index: -10;
     width: 100%;
     height: 100%;
 }
@@ -141,17 +143,22 @@ a:hover .icon-github {
     }
 
     .left-side {
-        display: inline-block;
-        width: 50%;
+        /*display: inline-block;*/
+        /*width: 50%;*/
     }
 
     .right-side {
-        display: inline-block;
-        width: 49.6%;
+        /*display: inline-block;*/
+        /*width: 40%;*/
     }
 
 }
-
+/**
+ * splitter
+ */
+.mp-splitter{
+    height:100%!important;
+}
 /**
  * angular overloads
  */
