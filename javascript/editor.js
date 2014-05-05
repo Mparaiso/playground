@@ -5,6 +5,10 @@
  * @license GPL
  */
 angular.module('editor', [])
+    .constant('EditorEvent', {
+        CURRENT_EDITOR_CHANGE: 'CURRENT_EDITOR_CHANGE',
+        FORMAT: 'FORMAT'
+    })
     .service('Editor', function() {
         "use strict";
         /**
@@ -47,37 +51,37 @@ angular.module('editor', [])
                 type: "tags",
                 submenus: [{
                     language: "html",
-                    hint:'HTML5'
+                    hint: 'HTML5'
                     }, {
                     language: "markdown",
-                    hint:'markdown'
+                    hint: 'markdown'
                     }]
                 }, {
                 type: "script",
                 submenus: [{
                     language: 'javascript',
-                    hint:'ecmascript 5'
+                    hint: 'ecmascript 5'
                     }, {
                     language: 'coffeescript',
-                    hint:'coffeescript'
-                    },{
-                        language:'typescript',
-                        hint:'typescript '
-                    } ,{
+                    hint: 'coffeescript'
+                    }, {
+                    language: 'typescript',
+                    hint: 'typescript '
+                    }, {
                     language: 'traceur',
-                    hint:'ecmascript 6'
-                    },{
+                    hint: 'ecmascript 6'
+                    }, {
                     language: 'opal',
-                    hint:'a implementation of the ruby language'
+                    hint: 'a implementation of the ruby language'
                     }]
                 }, {
                 type: 'style',
                 submenus: [{
                     language: 'css',
-                    hint:'cascading stylesheets'
+                    hint: 'cascading stylesheets'
                     }, {
                     language: 'less',
-                    hint:'lesscss a language that compiles to css'
+                    hint: 'lesscss a language that compiles to css'
                     }]
                 }];
         this.editor = {
@@ -86,7 +90,7 @@ angular.module('editor', [])
         };
 
     })
-    .directive('codeEditor', function($timeout, $compile) {
+    .directive('codeEditor', function($timeout, $compile, EditorEvent, Editor) {
         "use strict";
         /**
          * DIRECTIVE FOR CODEMIRROR EDITOR
@@ -114,10 +118,14 @@ angular.module('editor', [])
                         markdown: 'markdown',
                         jade: "jade",
                         haml: 'haml',
-                        opal:'ruby',
+                        opal: 'ruby',
                         traceur: 'javascript',
                         sass: 'sass'
                     };
+
+                function isCurrentEditor() {
+                    return Editor.selected === $scope.type;
+                }
                 $timeout(function() {
                     editor = CodeMirror.fromTextArea(el.get(0), {
                         mode: types[$scope.language],
@@ -146,7 +154,7 @@ angular.module('editor', [])
                     };
                     //refresh editor once when showed , to avoid a codeMirror bug
                     //@see http://stackoverflow.com/questions/8349571/codemirror-editor-is-not-loading-content-until-clicked
-                    change_selected = $scope.$on('change_selected', function(e, value) {
+                    change_selected = $scope.$on(EditorEvent.CURRENT_EDITOR_CHANGE, function(e, value) {
                         // console.log(arguments);
                         if (value === $scope.type) {
                             $timeout(editor.refresh.bind(editor));
@@ -164,10 +172,14 @@ angular.module('editor', [])
                         }
                     }, true);
                     /** on format event , format the editor content */
-                    $scope.$on('format', function() {
-                        console.log('format',editor.getOption('syntax'));
+                    $scope.$on(EditorEvent.FORMAT, function() {
+                        if (!isCurrentEditor()) {
+                            return;
+                        }
+                        console.log('format', editor.getOption('syntax'));
                         var cursorPosition = editor.getCursor();
                         switch (editor.getOption('syntax')) {
+                            case 'htmlmixed':
                             case 'html':
                                 editor.setValue(html_beautify(editor.getValue()));
                                 break;

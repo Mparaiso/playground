@@ -116,7 +116,8 @@ main {
 }
 
 .text-small {
-    font-size: 0.9em;
+    font-size: 0.86em;
+    line-height: 1.8em;
 }
 
 .icon-github {

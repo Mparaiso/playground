@@ -1,9 +1,7 @@
 <!-- menu.html -->
 <div class="collapse navbar-collapse" id="navigation-collapsed">
-    <ul class="navbar-nav nav" id="leftMenu" ng-include="rightMenuTemplate">
-    </ul>
     <ul class="navbar-nav nav navbar-right" id="rightMenu">
-        <li class="navbar-text" ng-class="Notification.current.type">{{Notification.current.text}}&nbsp;<span 
+        <li class="navbar-text text-small" ng-class="Notification.current.type">{{Notification.current.text}}&nbsp;<span
             ng-show="Notification.notifications.length>2" class="badge">{{Notification.notifications.length}}</span>
         </li>
         <li><a href="#/">New</a></li>
@@ -19,5 +17,7 @@
         <a id="youraccount" href="#/account">Welcome back {{user.username}}</a></li>
         <li  ng-show="User.isAuthenticated()">
         <a id="signout" ng-click="signOut()" href="javascript:void 0;">Signout</a></li>
+    </ul>
+    <ul class="navbar-nav nav navbar-left" id="leftMenu" ng-include="rightMenuTemplate">
     </ul>
 </div>

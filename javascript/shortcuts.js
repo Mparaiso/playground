@@ -13,10 +13,10 @@ angular.module('shortcuts', [])
 				$timeout(function() {
 					var listener = new keypress.Listener();
 					listener.simple_combo("ctrl s", function(e) {
-						$rootScope.$broadcast('doSave');
+						$rootScope.$emit('doSave');
 					});
 					listener.simple_combo("ctrl r", function(e) {
-						$rootScope.$broadcast('doRun');
+						$rootScope.$emit('doRun');
 					});
 				});
 

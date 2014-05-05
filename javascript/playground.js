@@ -7,7 +7,7 @@
 (function() {
     "use strict";
     angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler',
-        'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives', 'prettify','ngSanitize'],
+        'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives', 'prettify', 'ngSanitize'],
         function($routeProvider, $httpProvider, CompilerProvider) {
             $routeProvider
                 .when("/", {
@@ -91,27 +91,33 @@
                         '<script type="text/ruby">\n' + value + '\n</script>';
                     html.innerHTML += script;
                 })
-                .addAppendScriptStrategy('typescript', function(html,value){
-                    html.innerHTML += '<script type="text/typescript">\n'+value+'\n</script>\n'+
-                    '<script src="//niutech.github.io/typescript-compile/js/typescript.min.js"></script>'+
-                    '<script src="//niutech.github.io/typescript-compile/js/typescript.compile.min.js"></script>';
+                .addAppendScriptStrategy('typescript', function(html, value) {
+                    html.innerHTML += '<script type="text/typescript">\n' + value + '\n</script>\n' +
+                        '<script src="//niutech.github.io/typescript-compile/js/typescript.min.js"></script>' +
+                        '<script src="//niutech.github.io/typescript-compile/js/typescript.compile.min.js"></script>';
                 });
         })
-        .controller('MainCtrl', function($rootScope, $scope, Editor, $route, User, Notification) {
+        .controller('MainCtrl', function($rootScope, $scope,EditorEvent, Editor, $route, User, Notification, RendererEvent) {
             $scope.Notification = Notification;
-            $scope.$on('$routeChangeSuccess', function(event, route) {
-                $scope.rightMenuTemplate = route.rightMenuTemplate;
-                $scope.diff = false;
+            $rootScope.$on(RendererEvent.COMPILATION_ERROR, function(event, message) {
+                console.log(arguments);
+                Notification.notify({
+                    text: ('compil error :' + message.toString()).substr(0, 100),
+                    type: Notification.type.ERROR
+                });
             });
-            $scope.$on('doRun', function() {
+            $rootScope.$on('$routeChangeSuccess', function(event, route) {
+                $scope.rightMenuTemplate = route.rightMenuTemplate;
+            });
+            $rootScope.$on('doRun', function() {
                 $scope.run();
             });
-            $scope.$on('doSave', function() {
+            $rootScope.$on('doSave', function() {
                 $scope.save();
             });
             $scope.User = User;
             $scope.format = function() {
-                $rootScope.$broadcast('format');
+                $rootScope.$broadcast(EditorEvent.FORMAT);
             };
             $scope.run = function() {
                 $rootScope.$broadcast('run', Editor.editors);
@@ -197,7 +203,7 @@
                     }).fail(function(e) {
                         $scope.$apply(Notification.notify(Notification, {
                             type: Notification.type.ERROR,
-                            text: 'Gist creation failed'
+                            text: 'Gist creation failed : ' + typeof(e) === 'string' ? e : ''
                         }));
                     });
                 }
@@ -215,10 +221,10 @@
                         files: angular.copy(Editor.editors),
                         public: true
                     })
-                        .fail(function(err) {
+                        .fail(function(e) {
                             $scope.$apply(Notification.notify.bind(Notification, {
                                 type: Notification.type.ERROR,
-                                text: 'Error forking gist'
+                                text: 'Error forking gist : ' + typeof(e) === 'string' ? e : ''
                             }));
                         })
                         .then(function(g) {
@@ -235,14 +241,13 @@
                     var id = $routeParams.id;
                     gist.files = angular.copy(Editor.editors);
                     Gist.update(id, gist)
-                        .fail(function(err) {
+                        .fail(function(e) {
                             $scope.$apply(Notification.notify.bind(Notification, {
                                 type: Notification.type.ERROR,
-                                text: 'Error saving gist'
+                                text: 'Error saving gist ' + typeof(e) === 'string' ? e : ''
                             }));
                         })
                         .done(function(g) {
-                            $scope.$emit('undiff');
                             $scope.$apply(Notification.notify.bind(Notification, {
                                 type: Notification.type.SUCCESS,
                                 text: 'Gist saved Successfully'
@@ -257,18 +262,24 @@
         .controller('AccountCtrl', function($scope, User) {
             $scope.user = User.getCurrentUser();
         })
-        .controller('EditorCtrl', function($scope, $rootScope, Editor) {
+        .controller('EditorCtrl', function($scope, $rootScope, Editor, EditorEvent) {
             $scope.Editor = Editor;
             $scope.$watch('Editor.selected', function(newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    console.info(arguments);
-                    $rootScope.$broadcast('change_selected', newValue);
+                    //console.info(arguments);
+                    $rootScope.$broadcast(EditorEvent.CURRENT_EDITOR_CHANGE, newValue);
                 }
             }, true);
         })
         .controller('EditorMenuCtrl', function($scope, Gist, Editor) {
             $scope.Editor = Editor;
             $scope.Gist = Gist;
+        })
+        .constant('AppEvent',{
+            SAVE_PRESSED:'SAVE_PRESSED',
+            RUN_PRESSED:'RUN_PRESSED',
+            FORK_PRESSED:'FORK_PRESSED',
+            FORMAT_PRESSED:'FORMAT_PRESSED'
         })
         .run(function(User, $rootScope, $location) {
             $rootScope.$on('$routeChangeStart', function(event, route) {

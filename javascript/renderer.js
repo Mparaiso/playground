@@ -5,7 +5,10 @@
  * @license GPL
  */
 angular.module('renderer', [])
-    .service('RendererService', function($document, $rootScope, Compiler) {
+    .constant('RendererEvent',{
+        COMPILATION_ERROR:'COMPILATION_ERROR'
+    })
+    .service('RendererService', function($document, $rootScope, Compiler,RendererEvent) {
         "use strict";
         /**
          * render an html string in an iframe
@@ -13,12 +16,13 @@ angular.module('renderer', [])
          * @param {editors} editors
          */
         this.renderHTML = function(output, editors) {
+            console.log('compile');
             var content, temp, doc;
             var _editors = angular.copy(editors);
             try {
                 content = Compiler.compile(_editors);
             } catch (error) {
-                $rootScope.$broadcast("compilation_error", error);
+                $rootScope.$broadcast(RendererEvent.COMPILATION_ERROR, error);
             }
             output.innerHTML = '<iframe sandbox="allow-same-origin allow-scripts " frameborder="0"></iframe>';
             temp = output.querySelector('iframe');
