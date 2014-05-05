@@ -8,7 +8,7 @@
 			data-toggle="tab"
 			ng-class='{"btn-primary": Editor.selected==menu.type ,"btn-link":Editor.selected != menu.type}'
 			class="btn" >
-				{{ Editor.editors[$index].language}}
+			{{ Editor.editors[$index].language}}
 			</button>
 			<button type="button"
 			ng-class='{"btn-primary":Editor.selected==menu.type,"btn-link":Editor.selected != menu.type}'
@@ -23,6 +23,14 @@
 				</li>
 			</ul>
 		</li>
+		<li class="btn-group">
+			<button class="btn-form btn btn-link "></button>
+			<button class="btn-form btn btn-link">
+			<label>Description :
+				&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
+				<input type="text" ng-model="Gist.current.description">
+			</label></button>
+		</li>
 	</ul>
 	<!-- TAB CONTENT -->
 	<article style="position:relative;height:100%;">
@@ -32,7 +40,8 @@
 				ng-cloakname="form"
 				ng-repeat="editor in Editor.editors">
 				<textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
-				class="code-editor"></textarea>
+				class="code-editor">
+				</textarea>
 			</form>
 		</section>
 		<section bg-pane min-size="200" renderer class="output right-side no-padding">

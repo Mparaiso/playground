@@ -1,20 +1,32 @@
 <hr>
-<h1>Your Gists</h1>
 <hr>
-<h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
-<article class="row gist-list " ng-show="gists.length>0" ng-repeat="(id,gist) in gists track by $index">
-<section  class="col-md-4">
-    <a class="lead" href="#/gist/{{gist.id}}">{{gist.description}}</a>
-    <div>{{gist.updatedAt|date}}</div>
-    <div class="text-muted">
-        <span ng-repeat="file in gist.files">
-        {{file.language}}
-        <span ng-show="!$last">, </span></span>
-    </div>
-</section>
-<section class="col-md-8">
+<div class="row">
+	<div class="col-md-9">
+		<h2>Your Gists</h2>
+		<h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
+		<article class="row gist-list " ng-show="gists.length>0" ng-repeat="(id,gist) in gists track by $index">
+		<section  class="col-md-4">
+			<a class="lead" href="#/gist/{{gist.id}}">{{gist.description}}</a>
+			<div>{{gist.updatedAt|date}}</div>
+			<div class="text-muted">
+				<span ng-repeat="file in gist.files">
+				{{file.language}}
+				<span ng-show="!$last">, </span></span>
+			</div>
+		</section>
+		<section class="col-md-8">
 <pre ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
 <code>{{ file.value|limitTo:50}}</code></pre>
-</section>
-<h3>&nbsp;</h3>
-</article>
+		</section>
+		<h3>&nbsp;</h3>
+		</article>
+	</div>
+	<div class="col-md-3">
+		<h2>Your account</h2>
+		<img class="thumbnail" src="http://www.gravatar.com/avatar/{{md5(user.email)}}?s=120&monsterid" alt="avatar">
+		<adress>
+		{{user.username}}<br>
+		{{user.email}}
+		</address>
+	</div>
+</div>

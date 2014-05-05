@@ -12,9 +12,7 @@
             <a id="signup" href="#/signup">Signup</a>
         </li>
         <li ng-show="User.isAuthenticated()">
-        <a href="#/gist">Gists</a></li>
-        <li ng-show="User.isAuthenticated()">
-        <a id="youraccount" href="#/account">Welcome back {{user.username}}</a></li>
+        <a id="youraccount" href="#/gist">Your gists, {{user.username|limitTo:30}}</a></li>
         <li  ng-show="User.isAuthenticated()">
         <a id="signout" ng-click="signOut()" href="javascript:void 0;">Signout</a></li>
     </ul>

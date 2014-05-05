@@ -116,26 +116,28 @@ main {
 }
 
 .text-small {
-    font-size: 0.86em;
-    line-height: 1.8em;
+    font-size: 0.88em;
+    line-height: 1.7em;
 }
 
-.icon-github {
-    background-image: url('../images/glyphicons_social_21_github.png');
-    height: 1.2em;
-    margin-bottom: -3px;
-    width: 1.2em;
-    border-right: none;
-    display: inline-block;
-    background-color: gray;
-    -webkit-background-size: cover;
-    background-size: cover;
-    border-radius: 10px;
+.btn-form{
+    width:auto;
 }
-
-a:hover .icon-github {
-    background-color: white;
-
+.btn-form:hover{
+    text-decoration: inherit;
+}
+.btn-form input{
+    background-color: inherit;
+    min-width: 300px;
+    width:auto;
+    line-height: inherit;
+    height: auto;
+    margin:auto;
+    padding:0;
+    border:none;
+}
+.btn-form label{
+    font-weight: normal;
 }
 
 @media (min-width: 768px) {

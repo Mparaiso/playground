@@ -1,4 +1,4 @@
-/*global angular,CoffeeScript,less,markdown */
+/*global angular,CoffeeScript,less,markdown,md5 */
 /**
  * @description playground the web tech playground
  * @copyright 2014 mparaiso <mparaiso@online.fr>
@@ -256,7 +256,11 @@
                 }
             });
         })
-        .controller('GistListCtrl', function($scope, gists) {
+        .controller('GistListCtrl', function($scope, gists,User) {
+            $scope.user = User.getCurrentUser();
+            $scope.md5 = function(string){
+                return md5(string);
+            };
             $scope.gists = gists;
         })
         .controller('AccountCtrl', function($scope, User) {
