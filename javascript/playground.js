@@ -85,7 +85,7 @@
                     var userScript = '<script type="module">\n' + value + '\n</script>';
                     html.innerHTML += traceurScript + optionScript + userScript;
                 })
-                .addAppendScriptStrategy('opal', function(html, value) {
+                .addAppendScriptStrategy('ruby', function(html, value) {
                     var script = '<script src="vendor/opal.js"></script>\n' +
                         '<script src="vendor/opal-parser.js"></script>\n' +
                         '<script type="text/ruby">\n' + value + '\n</script>';
@@ -95,27 +95,36 @@
                     html.innerHTML += '<script type="text/typescript">\n' + value + '\n</script>\n' +
                         '<script src="//niutech.github.io/typescript-compile/js/typescript.min.js"></script>' +
                         '<script src="//niutech.github.io/typescript-compile/js/typescript.compile.min.js"></script>';
+                })
+                .addAppendScriptStrategy('lisp', function(html, value) {
+                    html.innerHTML += '<script type="text/lisp">\n' + value + '\n</script>' +
+                        '<script src="vendor/oppo.js"></script>' +
+                        '<script src="vendor/oppo-eval.js"></script>';
                 });
         })
-        .controller('MainCtrl', function($rootScope, $scope, EditorEvent, Editor, $route, User, Notification, RendererEvent) {
+        .controller('MainCtrl', function($rootScope, $scope, EditorEvent, Editor, $route,
+            User, Notification, RendererEvent, ShortCutsEvent) {
             $scope.Notification = Notification;
+            $scope.User = User;
+            $rootScope.$on(ShortCutsEvent.SHORTCUTS_SAVE, function(event, message) {
+                $scope.save();
+            });
+            $rootScope.$on(ShortCutsEvent.SHORTCUTS_RUN, function(event, message) {
+                $scope.run();
+            });
+            $rootScope.$on(ShortCutsEvent.SHORTCUTS_FORMAT, function(event, message) {
+                $scope.format();
+            });
+            $rootScope.$on(RendererEvent.RENDERER_ERROR, function(event, message) {
+                Notification.error('renderer error =>' + message);
+            });
             $rootScope.$on(RendererEvent.COMPILATION_ERROR, function(event, message) {
-                console.log(arguments);
-                Notification.notify({
-                    text: ('compil error :' + message.toString()).substr(0, 100),
-                    type: Notification.type.ERROR
-                });
+                // console.log(arguments);
+                Notification.error(('compil error =>' + message.toString()).substr(0, 100));
             });
             $rootScope.$on('$routeChangeSuccess', function(event, route) {
                 $scope.rightMenuTemplate = route.rightMenuTemplate;
             });
-            $rootScope.$on('doRun', function() {
-                $scope.run();
-            });
-            $rootScope.$on('doSave', function() {
-                $scope.save();
-            });
-            $scope.User = User;
             $scope.format = function() {
                 $rootScope.$broadcast(EditorEvent.FORMAT);
             };
@@ -143,17 +152,11 @@
             $scope.signUp = function() {
                 User.signUp($scope.credentials)
                     .then(function(user) {
-                        Notification.notify({
-                            type: Notification.type.SUCCESS,
-                            text: 'Signup Successfull.'
-                        });
+                        Notification.success('Signup Successfull.');
                         $scope.$apply($location.path.bind($location, '/gist'));
                     })
                     .fail(function(err) {
-                        Notification.notify({
-                            type: Notification.type.ERROR,
-                            text: 'Signup Error,please try again later.'
-                        });
+                        Notification.success('Signup Error,please try again later.');
                     });
             };
         })
@@ -163,10 +166,7 @@
             $scope.signIn = function() {
                 $scope.sending = true;
                 User.signIn($scope.credentials).then(function() {
-                    Notification.notify({
-                        type: Notification.type.SUCCESS,
-                        text: 'Sign in successfull'
-                    });
+                    Notification.success('Sign in successfull');
                     $scope.$apply($location.path.bind($location, '/gist'));
                 }).fail(function(err) {
                     $scope.sending = false;
@@ -186,36 +186,36 @@
             $scope.user = User.getCurrentUser();
         })
         .controller('GistCreateCtrl', function($scope, Editor, Gist, $location, Notification, $window, $document) {
+            var saving = false;
             $scope.Editor = Editor;
             Gist.current = {
                 public: true
             };
             $scope.Editor.editors = Editor.getDefaultEditorValues();
             $scope.$on('save', function(event) {
-                if (!Editor.isEmpty()) {
+                if (!Editor.isEmpty() && !saving) {
+                    saving = true;
                     Gist.current.files = angular.copy(Editor.editors);
                     Gist.create(Gist.current).then(function(gist) {
-                        Notification.notify({
-                            type: Notification.type.SUCCESS,
-                            text: 'Gist created Successfully'
-                        });
+                        Notification.success('Gist created Successfully');
                         $scope.$apply($location.path.bind($location, '/gist/' + gist.id));
                     }, function(e) {
-                        $scope.$apply(Notification.notify(Notification, {
-                            type: Notification.type.ERROR,
-                            text: 'Gist creation failed : ' + typeof(e) === 'string' ? e : ''
-                        }));
+                        $scope.$apply(Notification.error.bind(Notification, 'Gist creation failed : ' + typeof e === 'string' ? e : ''));
+                    }).done(function() {
+                        saving = false;
                     });
                 }
             });
         })
         .controller('GistEditCtrl', function($scope, Editor, Gist, gist, $location, $routeParams, Notification) {
+            var saving = false;
             $scope.Editor = Editor;
             $scope.Gist = Gist;
             Gist.current = gist;
             Editor.editors = gist.files;
             $scope.$on('fork', function(event) {
-                if (!Editor.isEmpty()) {
+                if (!Editor.isEmpty() && !saving) {
+                    saving = true;
                     Gist.create({
                         description: Gist.current.description,
                         files: angular.copy(Editor.editors),
@@ -223,39 +223,42 @@
                     })
                         .then(function(g) {
                             $location.path('/gist/' + g.id);
-                            $scope.$apply(Notification.notify.bind(Notification, {
-                                type: Notification.type.SUCCESS,
-                                text: 'Gist forked Successfully'
-                            }));
+                            $scope.$apply(Notification.success.bind(Notification, 'Gist forked Successfully'));
                         }, function(e) {
-                            $scope.$apply(Notification.notify.bind(Notification, {
-                                type: Notification.type.ERROR,
-                                text: 'Error forking gist : ' + typeof(e) === 'string' ? e : ''
-                            }));
+                            $scope.$apply(Notification.error.bind(Notification, 'Error forking gist : ' + typeof e === 'string' ? e : ''));
+                        }).done(function() {
+                            saving = false;
                         });
                 }
             });
             $scope.$on('save', function(event) {
-                if (!Editor.isEmpty()) {
+                if (!Editor.isEmpty() && !saving) {
+                    saving = true;
                     var id = $routeParams.id;
                     gist.files = angular.copy(Editor.editors);
                     Gist.update(id, gist)
                         .then(function(g) {
-                            $scope.$apply(Notification.notify.bind(Notification, {
-                                type: Notification.type.SUCCESS,
-                                text: 'Gist saved Successfully'
-                            }));
+                            return $scope.$apply(Notification.success.bind(Notification, 'Gist saved Successfully'));
                         }, function(e) {
-                            $scope.$apply(Notification.notify.bind(Notification, {
-                                type: Notification.type.ERROR,
-                                text: 'Error saving gist ' + typeof(e) === 'string' ? e : ''
-                            }));
+                            return $scope.$apply(Notification.error.bind(Notification, 'Error saving gist ' + typeof e === 'string' ? e : ''));
+                        }).done(function() {
+                            saving = false;
                         });
                 }
             });
         })
-        .controller('GistListCtrl', function($scope, gists, User) {
+        .controller('GistListCtrl', function($scope, gists, Gist, Notification, User) {
             $scope.user = User.getCurrentUser();
+            $scope.remove = function(gist) {
+                Gist.deleteById(gist.id).then(function() {
+                    var index = $scope.gists.indexOf(gist);
+                    $scope.gists.splice(index, 1);
+                    Notification.success('gist removed!');
+                    $scope.$apply('gists');
+                }, function(error) {
+                    Notification.error(error);
+                });
+            };
             $scope.md5 = function(string) {
                 return md5(string);
             };

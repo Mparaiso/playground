@@ -1,3 +1,8 @@
+<!--
+	@description playground the web tech playground
+	@copyright 2014 mparaiso <mparaiso@online.fr>
+	@license GPL
+-->
 <hr>
 <hr>
 <div class="row">
@@ -5,8 +10,15 @@
 		<h2>Your Gists</h2>
 		<h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
 		<article class="row gist-list " ng-show="gists.length>0" ng-repeat="(id,gist) in gists track by $index">
-		<section  class="col-md-4">
-			<a class="lead" href="#/gist/{{gist.id}}">{{gist.description}}</a>
+		<section  class="col-md-5">
+			<h4 >
+				<button class="btn btn-link btn-xs" ng-click="remove(gist)">
+				<i class="glyphicon glyphicon-trash"></i>
+				</button>&nbsp;<a  href="#/gist/{{gist.id}}">
+				{{gist.description}}
+				</a>
+				
+			</h4>
 			<div>{{gist.updatedAt|date}}</div>
 			<div class="text-muted">
 				<span ng-repeat="file in gist.files">
@@ -14,7 +26,7 @@
 				<span ng-show="!$last">, </span></span>
 			</div>
 		</section>
-		<section class="col-md-8">
+		<section class="col-md-7">
 <pre ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
 <code>{{ file.value|limitTo:50}}</code></pre>
 		</section>

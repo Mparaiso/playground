@@ -9,7 +9,7 @@ angular.module('compiler', [])
 		"use strict";
 		/** compile scripts,styles and styles */
 		var tagCompilers = {}, scriptCompilers = {}, styleCompilers = {},
-			appendScriptStrategies = {}, appendStyleStrategies = {};
+			appendScriptStrategies = {}, appendStyleStrategies = {}, appendTagsStrategies = {};
 		return {
 			/**
 			 * addTagCompiler
@@ -28,6 +28,15 @@ angular.module('compiler', [])
 				styleCompilers[language] = _function;
 				return this;
 			},
+			/** 
+			 * add a strategy to append tags
+			 * @param {String} language
+			 * @param {function(html:Element,value:String)} _function
+			 */
+			addAppendTagsStrategy: function(language, _function) {
+				appendTagsStrategies[language] = _function;
+				return this;
+			},
 			/**
 			 * add a strategy to append scripts
 			 * @param {String} language
@@ -35,7 +44,7 @@ angular.module('compiler', [])
 			 */
 			addAppendScriptStrategy: function(language, _function) {
 				appendScriptStrategies[language] = _function;
-                return this;
+				return this;
 			},
 			/**
 			 * add a strategy to append styles
@@ -44,7 +53,7 @@ angular.module('compiler', [])
 			 */
 			addAppendStyleStrategy: function(language, _function) {
 				appendStyleStrategies[language] = _function;
-                return this;
+				return this;
 			},
 			$get: function($document, $rootScope) {
 				var document = $document.get(0);
@@ -62,7 +71,24 @@ angular.module('compiler', [])
 						return styleCompilers[language] ? styleCompilers[language](value) : value;
 					},
 					/**
-					 * manage how scripts are appends
+					 * manage how html tags are appended
+					 * @param  {String} language
+					 * @param  {Element} htmlElement
+					 * @param  {String} value
+					 * @return {Void}
+					 */
+					appendTags: function(language, htmlElement, value) {
+						// console.log(arguments);
+						if (appendTagsStrategies[language]) {
+							appendTagsStrategies[language](htmlElement, value);
+						} else {
+							htmlElement.normalize();
+							htmlElement.innerHTML+=value;
+							htmlElement.normalize();
+						}
+					},
+					/**
+					 * manage how scripts are appended
 					 * @param  {String} language
 					 * @param  {Element} htmlElement
 					 * @param  {String} value
@@ -107,7 +133,7 @@ angular.module('compiler', [])
 							switch (editor.type) {
 								case 'tags':
 									tags = this.compileTags(editor.language, editor.value);
-									html.innerHTML += tags;
+									this.appendTags(editor.language, html, tags);
 									html.normalize();
 									break;
 								case 'script':

@@ -44,6 +44,23 @@
 					this.notify();
 				}
 			};
-			$window.notifiy = this.notify.bind(this);
+			this.error = function(message) {
+				return this.notify({
+					text: message,
+					type: this.type.ERROR
+				});
+			};
+			this.info = function(message) {
+				return this.notify({
+					text: message,
+					type: this.type.INFO
+				});
+			};
+			this.success = function(message) {
+				return this.notify({
+					text: message,
+					type: this.type.SUCCESS
+				});
+			};
 		});
 }());

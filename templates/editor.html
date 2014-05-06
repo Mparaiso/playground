@@ -1,4 +1,9 @@
 <!-- template/index.html-->
+<!--
+	@description playground the web tech playground
+	@copyright 2014 mparaiso <mparaiso@online.fr>
+	@license GPL
+-->
 <div class="row">
 	<!-- EDITOR TABS -->
 	<ul class="nav mp-nav-tabs" ng-controller="EditorMenuCtrl">
@@ -13,7 +18,8 @@
 			<button type="button"
 			ng-class='{"btn-primary":Editor.selected==menu.type,"btn-link":Editor.selected != menu.type}'
 			class="btn dropdown-toggle" data-toggle="dropdown">
-			<span class="caret mp-dropdown"></span>
+			<!-- <span class="caret mp-dropdown"></span> -->
+			<i class="glyphicon glyphicon-chevron-down text-micro"></i>
 			<span class="sr-only">Toggle Dropdown</span>
 			</button>
 			<!-- list of languages availables into a type -->

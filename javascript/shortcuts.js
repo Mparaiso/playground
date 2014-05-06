@@ -5,7 +5,12 @@
  * @license GPL
  */
 angular.module('shortcuts', [])
-	.directive('shortcuts', function($rootScope, $timeout, $window) {
+	.constant('ShortCutsEvent', {
+		SHORTCUTS_SAVE: 'SHORTCUTS_SAVE',
+		SHORTCUTS_RUN: 'SHORTCUTS_RUN',
+		SHORTCUTS_FORMAT: 'SHORTCUTS_FORMAT'
+	})
+	.directive('shortcuts', function($rootScope, ShortCutsEvent, $timeout, $window) {
 		"use strict";
 		return {
 			restrict: 'AEC',
@@ -13,10 +18,13 @@ angular.module('shortcuts', [])
 				$timeout(function() {
 					var listener = new keypress.Listener();
 					listener.simple_combo("ctrl s", function(e) {
-						$rootScope.$emit('doSave');
+						$rootScope.$emit(ShortCutsEvent.SHORTCUTS_SAVE);
 					});
 					listener.simple_combo("ctrl r", function(e) {
-						$rootScope.$emit('doRun');
+						$rootScope.$emit(ShortCutsEvent.SHORTCUTS_RUN);
+					});
+					listener.simple_combo("ctrl shift f", function(e) {
+						$rootScope.$emit(ShortCutsEvent.SHORTCUTS_FORMAT);
 					});
 				});
 

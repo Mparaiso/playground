@@ -17,7 +17,6 @@ body {
     height: 768px;
     width: 100%;
     max-height: 100%;
-    /*overflow: hidden;*/
     clear: both;
     position: relative;
 }
@@ -104,7 +103,7 @@ main {
 .CodeMirror {
     /*min-height: 500px;*/
     height: 100%;
-    font-size: 1.1em;
+    font-size: 1.15em;
     font-family: 'Ubuntu Mono', monospace;
 }
 .output{
@@ -118,6 +117,10 @@ main {
 .text-small {
     font-size: 0.88em;
     line-height: 1.7em;
+}
+.text-micro {
+    font-size: 0.6em;
+    /*line-height: 1.7em;*/
 }
 
 .btn-form{
@@ -177,7 +180,12 @@ input.ng-invalid{
     color:red;
     border-color: inherit;
 }
-/**bootstrap overloads*/
+/**
+ * bootstrap overloads
+ */
+.caret{
+    z-index:-1;
+}
 .text-success{
     color:#A3C6C2!important;
 }

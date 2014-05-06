@@ -13,7 +13,7 @@ angular.module('api.parse', [])
 		Parse.initialize(PARSE_APPID, PARSE_CLIENTID);
 		return Parse;
 	})
-	.service('Gist', function(Parse, User,$q) {
+	.service('Gist', function(Parse, User, $q) {
 		"use strict";
 		/** Gist model definition */
 		var Gist = Parse.Object.extend('Gist', {
@@ -32,7 +32,7 @@ angular.module('api.parse', [])
 		});
 		/** find 50 latests gists */
 		this.findLatest = function() {
-			if(!User.isAuthenticated()){
+			if (!User.isAuthenticated()) {
 				return $q.reject('Please sigin or signup.');
 			}
 			var query = new Parse.Query(Gist);
@@ -56,7 +56,7 @@ angular.module('api.parse', [])
 		this.create = function(gist) {
 			var acl, user, _gist;
 			user = Parse.User.current();
-			if(!user){
+			if (!user) {
 				return $q.reject('Not authenticated,please signin or signup to save this gist');
 			}
 			_gist = new Gist(gist);
@@ -69,11 +69,21 @@ angular.module('api.parse', [])
 		/** update a gist */
 		this.update = function(id, newGistData) {
 			var query = new Parse.Query(Gist);
-			if(!User.isAuthenticated()){
+			if (!User.isAuthenticated()) {
 				return $q.reject('Not authenticated,please signin or signup to update this gist.');
 			}
 			return query.get(id).then(function(gist) {
 				return gist.set(newGistData).save();
+			});
+		};
+		/** delete a g by id */
+		this.deleteById = function(id) {
+			var query=new Parse.Query(Gist);
+			return query.get(id).then(function(gist) {
+				if (gist) {
+					return gist.destroy();
+				}
+				return Parse.Promise.error("gist with id " + id + " not found.");
 			});
 		};
 	})

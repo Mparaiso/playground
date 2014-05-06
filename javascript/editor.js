@@ -71,8 +71,11 @@ angular.module('editor', [])
                     language: 'traceur',
                     hint: 'ecmascript 6'
                     }, {
-                    language: 'opal',
-                    hint: 'a implementation of the ruby language'
+                    language: 'ruby',
+                    hint: 'through opal a ruby like language that compiles to js'
+                    }, {
+                    language: 'lisp',
+                    hint: 'through oppo a lisp like language that compiles to js'
                     }]
                 }, {
                 type: 'style',
@@ -84,11 +87,6 @@ angular.module('editor', [])
                     hint: 'lesscss a language that compiles to css'
                     }]
                 }];
-        this.editor = {
-            value: '',
-            placeholder: "<!--start coding here-->"
-        };
-
     })
     .directive('codeEditor', function($timeout, $compile, EditorEvent, Editor) {
         "use strict";
@@ -119,6 +117,8 @@ angular.module('editor', [])
                         jade: "jade",
                         haml: 'haml',
                         opal: 'ruby',
+                        ruby: 'ruby',
+                        lisp: 'scheme',
                         traceur: 'javascript',
                         sass: 'sass'
                     };
@@ -176,7 +176,7 @@ angular.module('editor', [])
                         if (!isCurrentEditor()) {
                             return;
                         }
-                        console.log('format', editor.getOption('syntax'));
+                        // console.log('format', editor.getOption('syntax'));
                         var cursorPosition = editor.getCursor();
                         switch (editor.getOption('syntax')) {
                             case 'htmlmixed':
