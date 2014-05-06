@@ -43,12 +43,6 @@ angular.module('mp.widgets', [])
             link: function(scope, element, attributes) {
                 $timeout(function() {
                     element.dropdown();
-                    if (scope.ignoreClick) {
-                        $('.dropdown-menu').on('click', function(e) {
-                            e.stopPropagation();
-                        });
-                    }
-
                 });
             }
         };

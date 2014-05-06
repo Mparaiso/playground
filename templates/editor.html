@@ -30,18 +30,18 @@
 			</ul>
 		</li>
 		<li class="btn-group">
-			<button class="btn-form btn btn-link "></button>
-			<button class="btn-form btn btn-link">
-			<label>Description 
-				&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
-				<input type="text" ng-model="Gist.current.description">
-			</label></button>
+			<div class="btn-form btn btn-link">
+				<label>Description
+					&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
+					<input type="text" ng-model="Gist.current.description">
+				</label>
+			</div>
 		</li>
 	</ul>
 	<!-- TAB CONTENT -->
-	<article style="position:relative;height:100%;">
+	<article style="position:relative;height:100%;" >
 	<div bg-splitter orientation="horizontal" class="row">
-		<section bg-pane min-size="200" class="left-side no-padding tab-content"  ng-controller="EditorCtrl">
+		<section bg-pane min-size="200" class="left-side tab-content"  ng-controller="EditorCtrl">
 			<form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
 				ng-cloakname="form"
 				ng-repeat="editor in Editor.editors">
@@ -50,7 +50,7 @@
 				</textarea>
 			</form>
 		</section>
-		<section bg-pane min-size="200" renderer class="output right-side no-padding">
+		<section bg-pane min-size="50" renderer class="output right-side">
 		</section>
 	</div>
 	</article>

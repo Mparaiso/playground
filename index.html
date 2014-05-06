@@ -18,6 +18,7 @@
         <script defer src="bower_components/js-beautify/js/lib/beautify-html.js"></script>
         <script defer src="bower_components/js-beautify/js/lib/beautify-css.js"></script>
         <script defer src="bower_components/codemirror/lib/codemirror.js"></script>
+        <script defer src="bower_components/codemirror/mode/css/css.js"></script>
         <script defer src="emmet/codemirror/dist/emmet.min.js"></script>
         <script defer src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
         <script defer src="bower_components/codemirror/addon/display/placeholder.js"></script>
@@ -104,6 +105,9 @@
                 </div>
             </div>
         </footer>
-        <div class="bottom">&nbsp;</div>
+        <nav class="navbar navbar-inverse navbar-fixed-bottom"
+            role="notifications" ng-show="Notification.current"
+            ng-include="'templates/footer.html'">
+        </nav>
     </body>
 </html>
