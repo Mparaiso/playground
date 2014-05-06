@@ -1,9 +1,9 @@
 <!doctype html>
 <!-- index.html -->
 <!--
-    @description playground the web tech playground
-    @copyright 2014 mparaiso <mparaiso@online.fr>
-    @license GPL
+@description playground the web tech playground
+@copyright 2014 mparaiso <mparaiso@online.fr>
+@license GPL
 -->
 <html lang="en" >
     <head>
@@ -21,17 +21,7 @@
         <script defer src="emmet/codemirror/dist/emmet.min.js"></script>
         <script defer src="bower_components/codemirror/addon/wrap/hardwrap.js"></script>
         <script defer src="bower_components/codemirror/addon/display/placeholder.js"></script>
-        <script defer src="bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-        <script defer src="bower_components/codemirror/mode/xml/xml.js"></script>
-        <script defer src="bower_components/codemirror/mode/css/css.js"></script>
-        <script defer src="bower_components/codemirror/mode/coffeescript/coffeescript.js"></script>
-        <script defer src="bower_components/codemirror/mode/markdown/markdown.js"></script>
-        <script defer src="bower_components/codemirror/mode/jade/jade.js"></script>
-        <script defer src="bower_components/codemirror/mode/haml/haml.js"></script>
-        <script defer src="bower_components/codemirror/mode/ruby/ruby.js"></script>
-        <script defer src="bower_components/codemirror/mode/sass/sass.js"></script>
-        <script defer src="bower_components/codemirror/mode/javascript/javascript.js"></script>
-        <script defer src="bower_components/codemirror/mode/scheme/scheme.js"></script>
+        <script defer src="bower_components/codemirror/addon/mode/loadmode.js"></script>
         <script defer src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
         <script defer src="bower_components/codemirror/addon/edit/closebrackets.js"></script>
         <script defer src="bower_components/codemirror/addon/display/fullscreen.js"></script>
@@ -75,7 +65,13 @@
     </head>
     <body ng-app="playground" ng-controller="MainCtrl">
         <noscript>
-            <h1 class="text-warn">Playground relies on javascript,please enable javascript.</h1>
+        <div class="container">
+            <h1 class="text-danger">Playground is an online scratchpad for web developpers
+            <small>that relies on javascript,please enable javascript.</small></h1>
+            <h2>Interactively create web pages right here!</h2>
+            <h3>Textpad supports javascript, coffeescript, lisp, ruby , ecmascript 6, typescript, less and css.
+            </h3>
+        </div>
         </noscript>
         <!-- NAVIGATION -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

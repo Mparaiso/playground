@@ -106,6 +106,9 @@ main {
     font-size: 1.15em;
     font-family: 'Ubuntu Mono', monospace;
 }
+textarea.code-editor{
+    display: none;
+}
 .output{
 }
 .output iframe {

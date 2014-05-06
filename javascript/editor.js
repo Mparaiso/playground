@@ -97,6 +97,23 @@ angular.module('editor', [])
         CodeMirror.commands.autocomplete = function(cm) {
             CodeMirror.showHint(cm, CodeMirror.hint.anyword);
         };
+        CodeMirror.modeURL = "bower_components/codemirror/mode/%N/%N.js";
+        var types = {
+            javascript: 'javascript',
+            css: 'css',
+            less: 'css',
+            html: 'htmlmixed',
+            coffeescript: 'coffeescript',
+            typescript: 'javascript',
+            markdown: 'markdown',
+            jade: "jade",
+            haml: 'haml',
+            opal: 'ruby',
+            ruby: 'ruby',
+            lisp: 'commonlisp',
+            traceur: 'javascript',
+            sass: 'sass'
+        };
         return {
             restrict: 'AEC',
             require: 'ngModel',
@@ -106,31 +123,17 @@ angular.module('editor', [])
                 placeholder: "="
             },
             link: function($scope, el, attr, ngModel) {
-                var change_selected, editor, timeout, types = {
-                        javascript: 'javascript',
-                        css: 'css',
-                        less: 'text/x-less',
-                        html: 'htmlmixed',
-                        coffeescript: 'coffeescript',
-                        typescript: 'text/typescript',
-                        markdown: 'markdown',
-                        jade: "jade",
-                        haml: 'haml',
-                        opal: 'ruby',
-                        ruby: 'ruby',
-                        lisp: 'scheme',
-                        traceur: 'javascript',
-                        sass: 'sass'
-                    };
+                var change_selected, editor, timeout;
 
                 function isCurrentEditor() {
                     return Editor.selected === $scope.type;
                 }
-                $timeout(function() {
+                $timeout(CodeMirror.requireMode.bind(CodeMirror, types[$scope.language], function() {
                     editor = CodeMirror.fromTextArea(el.get(0), {
                         mode: types[$scope.language],
                         syntax: types[$scope.language],
                         placeholder: $scope.placeholder,
+                        autoCloseBrackets: true,
                         lineNumbers: true,
                         theme: 'monokai',
                         profile: $scope.language,
@@ -165,6 +168,7 @@ angular.module('editor', [])
                     $scope.$watch('language', function(newValue, oldValue) {
                         //console.log(arguments);
                         if (newValue !== oldValue) {
+                            CodeMirror.autoLoadMode(editor, types[newValue]);
                             /** if change then configure the editor accordingly */
                             editor.setOption('mode', types[newValue]);
                             editor.setOption('syntax', types[newValue]);
@@ -195,7 +199,7 @@ angular.module('editor', [])
                         }
                         editor.setCursor(cursorPosition);
                     });
-                });
+                }));
             }
         };
     });

@@ -46,7 +46,7 @@
 				ng-cloakname="form"
 				ng-repeat="editor in Editor.editors">
 				<textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
-				class="code-editor">
+				class="code-editor" ng-cloak>
 				</textarea>
 			</form>
 		</section>
