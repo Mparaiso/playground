@@ -138,6 +138,7 @@ main {
 }
 .btn-form label{
     font-weight: normal;
+margin: 0;
 }
 
 @media (min-width: 768px) {

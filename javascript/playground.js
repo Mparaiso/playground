@@ -97,7 +97,7 @@
                         '<script src="//niutech.github.io/typescript-compile/js/typescript.compile.min.js"></script>';
                 });
         })
-        .controller('MainCtrl', function($rootScope, $scope,EditorEvent, Editor, $route, User, Notification, RendererEvent) {
+        .controller('MainCtrl', function($rootScope, $scope, EditorEvent, Editor, $route, User, Notification, RendererEvent) {
             $scope.Notification = Notification;
             $rootScope.$on(RendererEvent.COMPILATION_ERROR, function(event, message) {
                 console.log(arguments);
@@ -200,7 +200,7 @@
                             text: 'Gist created Successfully'
                         });
                         $scope.$apply($location.path.bind($location, '/gist/' + gist.id));
-                    }).fail(function(e) {
+                    }, function(e) {
                         $scope.$apply(Notification.notify(Notification, {
                             type: Notification.type.ERROR,
                             text: 'Gist creation failed : ' + typeof(e) === 'string' ? e : ''
@@ -221,17 +221,16 @@
                         files: angular.copy(Editor.editors),
                         public: true
                     })
-                        .fail(function(e) {
-                            $scope.$apply(Notification.notify.bind(Notification, {
-                                type: Notification.type.ERROR,
-                                text: 'Error forking gist : ' + typeof(e) === 'string' ? e : ''
-                            }));
-                        })
                         .then(function(g) {
                             $location.path('/gist/' + g.id);
                             $scope.$apply(Notification.notify.bind(Notification, {
                                 type: Notification.type.SUCCESS,
                                 text: 'Gist forked Successfully'
+                            }));
+                        }, function(e) {
+                            $scope.$apply(Notification.notify.bind(Notification, {
+                                type: Notification.type.ERROR,
+                                text: 'Error forking gist : ' + typeof(e) === 'string' ? e : ''
                             }));
                         });
                 }
@@ -241,24 +240,23 @@
                     var id = $routeParams.id;
                     gist.files = angular.copy(Editor.editors);
                     Gist.update(id, gist)
-                        .fail(function(e) {
-                            $scope.$apply(Notification.notify.bind(Notification, {
-                                type: Notification.type.ERROR,
-                                text: 'Error saving gist ' + typeof(e) === 'string' ? e : ''
-                            }));
-                        })
-                        .done(function(g) {
+                        .then(function(g) {
                             $scope.$apply(Notification.notify.bind(Notification, {
                                 type: Notification.type.SUCCESS,
                                 text: 'Gist saved Successfully'
+                            }));
+                        }, function(e) {
+                            $scope.$apply(Notification.notify.bind(Notification, {
+                                type: Notification.type.ERROR,
+                                text: 'Error saving gist ' + typeof(e) === 'string' ? e : ''
                             }));
                         });
                 }
             });
         })
-        .controller('GistListCtrl', function($scope, gists,User) {
+        .controller('GistListCtrl', function($scope, gists, User) {
             $scope.user = User.getCurrentUser();
-            $scope.md5 = function(string){
+            $scope.md5 = function(string) {
                 return md5(string);
             };
             $scope.gists = gists;
@@ -279,11 +277,11 @@
             $scope.Editor = Editor;
             $scope.Gist = Gist;
         })
-        .constant('AppEvent',{
-            SAVE_PRESSED:'SAVE_PRESSED',
-            RUN_PRESSED:'RUN_PRESSED',
-            FORK_PRESSED:'FORK_PRESSED',
-            FORMAT_PRESSED:'FORMAT_PRESSED'
+        .constant('AppEvent', {
+            SAVE_PRESSED: 'SAVE_PRESSED',
+            RUN_PRESSED: 'RUN_PRESSED',
+            FORK_PRESSED: 'FORK_PRESSED',
+            FORMAT_PRESSED: 'FORMAT_PRESSED'
         })
         .run(function(User, $rootScope, $location) {
             $rootScope.$on('$routeChangeStart', function(event, route) {
