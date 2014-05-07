@@ -24,7 +24,10 @@
 			</button>
 			<!-- list of languages availables into a type -->
 			<ul class="dropdown-menu" role="menu">
-				<li ng-repeat="submenu in menu.submenus" title="{{submenu.hint}}" mp-tooltip>
+				<!-- filter submenus by language not selected -->
+				<li
+					ng-repeat="submenu in menu.submenus | filter: '!'+Editor.editors[$index].language "
+					title="{{submenu.hint}}" mp-tooltip>
 					<a ng-click="Editor.editors[$parent.$index].language=submenu.language">{{submenu.language}}</a>
 				</li>
 			</ul>

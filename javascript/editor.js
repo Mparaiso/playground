@@ -71,11 +71,8 @@ angular.module('editor', [])
                     language: 'traceur',
                     hint: 'ecmascript 6'
                     }, {
-                    language: 'ruby',
-                    hint: 'through opal a ruby like language that compiles to js'
-                    }, {
                     language: 'lisp',
-                    hint: 'through oppo a lisp like language that compiles to js'
+                    hint: 'lisp to js provided by oppo'
                     }]
                 }, {
                 type: 'style',
@@ -84,11 +81,11 @@ angular.module('editor', [])
                     hint: 'cascading stylesheets'
                     }, {
                     language: 'less',
-                    hint: 'lesscss a language that compiles to css'
+                    hint: 'less'
                     }]
                 }];
     })
-    .directive('codeEditor', function($timeout, $compile, EditorEvent, Editor) {
+    .directive('codeEditor', function($timeout, $compile, EditorEvent, Editor, EditorTypes) {
         "use strict";
         /**
          * DIRECTIVE FOR CODEMIRROR EDITOR
@@ -98,22 +95,6 @@ angular.module('editor', [])
             CodeMirror.showHint(cm, CodeMirror.hint.anyword);
         };
         CodeMirror.modeURL = "bower_components/codemirror/mode/%N/%N.js";
-        var types = {
-            javascript: 'javascript',
-            css: 'css',
-            less: 'css',
-            html: 'htmlmixed',
-            coffeescript: 'coffeescript',
-            typescript: 'javascript',
-            markdown: 'markdown',
-            jade: "jade",
-            haml: 'haml',
-            opal: 'ruby',
-            ruby: 'ruby',
-            lisp: 'commonlisp',
-            traceur: 'javascript',
-            sass: 'sass'
-        };
         return {
             restrict: 'AEC',
             require: 'ngModel',
@@ -128,15 +109,15 @@ angular.module('editor', [])
                 function isCurrentEditor() {
                     return Editor.selected === $scope.type;
                 }
-                $timeout(CodeMirror.requireMode.bind(CodeMirror, types[$scope.language], function() {
+                $timeout(CodeMirror.requireMode.bind(CodeMirror, EditorTypes[$scope.language].syntax, function() {
                     editor = CodeMirror.fromTextArea(el.get(0), {
-                        mode: types[$scope.language],
-                        syntax: types[$scope.language],
+                        mode: EditorTypes[$scope.language].mode,
+                        syntax: EditorTypes[$scope.language].syntax,
                         placeholder: $scope.placeholder,
                         autoCloseBrackets: true,
                         lineNumbers: true,
                         theme: 'monokai',
-                        profile: $scope.language,
+                        profile: EditorTypes[$scope.language].syntax,
                         matchBrackets: true,
                         matchTags: true,
                         highlightSelectionMatches: true,
@@ -168,11 +149,11 @@ angular.module('editor', [])
                     $scope.$watch('language', function(newValue, oldValue) {
                         //console.log(arguments);
                         if (newValue !== oldValue) {
-                            CodeMirror.autoLoadMode(editor, types[newValue]);
+                            CodeMirror.autoLoadMode(editor, EditorTypes[newValue].syntax);
                             /** if change then configure the editor accordingly */
-                            editor.setOption('mode', types[newValue]);
-                            editor.setOption('syntax', types[newValue]);
-                            editor.setOption('profile', types[newValue]);
+                            editor.setOption('mode', EditorTypes[newValue].mode);
+                            editor.setOption('syntax', EditorTypes[newValue].syntax);
+                            editor.setOption('profile', EditorTypes[newValue].syntax);
                         }
                     }, true);
                     /** on format event , format the editor content */
@@ -202,4 +183,59 @@ angular.module('editor', [])
                 }));
             }
         };
-    });
+    })
+/** match editor types with codeMirror syntax and modes */
+.constant('EditorTypes', {
+    javascript: {
+        syntax: 'javascript',
+        mode: 'text/typescript'
+    },
+    css: {
+        syntax: 'css',
+        mode: 'css'
+    },
+    less: {
+        syntax: 'css',
+        mode: "text/x-less"
+    },
+    html: {
+        syntax: 'htmlmixed',
+        mode: 'htmlmixed'
+    },
+    coffeescript: {
+        syntax: 'coffeescript',
+        mode: 'coffeescript'
+    },
+    typescript: {
+        syntax: 'javascript',
+        mode: 'javascript'
+    },
+    markdown: {
+        syntax: 'markdown',
+        mode: 'markdown'
+    },
+    jade: {
+        syntax: "jade",
+        mode: "jade"
+    },
+    haml: {
+        syntax: 'haml',
+        mode: 'haml'
+    },
+    ruby: {
+        syntax: 'ruby',
+        mode: 'ruby'
+    },
+    lisp: {
+        syntax: 'clojure',
+        mode: 'clojure'
+    },
+    traceur: {
+        syntax: 'javascript',
+        mode: 'javascript'
+    },
+    sass: {
+        syntax: 'sass',
+        mode: 'sass'
+    }
+});
