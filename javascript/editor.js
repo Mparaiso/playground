@@ -71,8 +71,8 @@ angular.module('editor', [])
                     language: 'traceur',
                     hint: 'ecmascript 6'
                     }, {
-                    language: 'lisp',
-                    hint: 'lisp to js provided by oppo'
+                    language: 'scheme',
+                    hint: 'scheme provided by biwascheme'
                     }]
                 }, {
                 type: 'style',
@@ -226,9 +226,9 @@ angular.module('editor', [])
         syntax: 'ruby',
         mode: 'ruby'
     },
-    lisp: {
-        syntax: 'clojure',
-        mode: 'clojure'
+    scheme: {
+        syntax: 'scheme',
+        mode: 'scheme'
     },
     traceur: {
         syntax: 'javascript',

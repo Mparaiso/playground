@@ -17,12 +17,27 @@ can prototype and experiment with web technologies right in the browser and no l
 	+ javascript
 	+ typescript
 	+ coffeescript
-	+ opal ( ruby to js )
-	+ wisp ( lisp to js )
+	+ scheme
+	+ ecmascript 6 
 
 - support the following css preprocessors
 	+ lesscss
 
+- support the following html preprocessors
+	+ markdown
+
+
+### Third party language documentations :
+
+typescript : http://www.typescriptlang.org/
+
+traceur: https://github.com/google/traceur-compiler
+
+scheme : https://github.com/jlongster/outlet
+
+less: http://lesscss.org/
+
+markdown: http://daringfireball.net/projects/markdown/syntax
 
 author mparaiso <mparaiso@online.fr>
 

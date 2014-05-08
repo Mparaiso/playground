@@ -8,15 +8,18 @@ red:#FD6B5C
 
 
 */
+html{
+    height: 100%;
+    width: 100%;
+}
 
 body {
     padding-top: 51px;
     font-family: 'Droid Sans', Arial, sans-serif;
     background-color: #E5ECF6;
     color: #424147;
-    height: 768px;
-    width: 100%;
-    max-height: 100%;
+    /*height: 700px;*/
+    height: 100%;
     clear: both;
     position: relative;
 }
@@ -40,7 +43,7 @@ main {
 }
 
 .view {
-    height: 100%;
+    height: 95%;
 }
 
 .view .row {
@@ -63,9 +66,7 @@ main {
 
 .editor {
     background-color: #424147;
-    /*height: 600px;*/
-    height: 80%;
-    /*min-height:300px;*/
+    height: 100%;
 }
 .gist-list{
     height: auto!important;
@@ -87,21 +88,8 @@ main {
     color: #FD6B5C !important;
 }
 
-.file-explorer {
-    background: white;
-    min-height: 480px;
-}
-
-.file-explorer ul {
-    padding-top: 5px;
-}
-
-.file-explorer li {
-    padding-left: 3px;
-}
 
 .CodeMirror {
-    /*min-height: 500px;*/
     height: 100%;
     font-size: 1.15em;
     font-family: 'Ubuntu Mono', monospace;
@@ -123,7 +111,6 @@ textarea.code-editor{
 }
 .text-micro {
     font-size: 0.6em;
-    /*line-height: 1.7em;*/
 }
 
 .btn-form{
@@ -144,7 +131,7 @@ textarea.code-editor{
 }
 .btn-form label{
     font-weight: normal;
-margin: 0;
+    margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -152,16 +139,6 @@ margin: 0;
         padding: 0;
         margin: 0;
         border: none;
-    }
-
-    .left-side {
-        /*display: inline-block;*/
-        /*width: 50%;*/
-    }
-
-    .right-side {
-        /*display: inline-block;*/
-        /*width: 40%;*/
     }
 
 }
@@ -182,6 +159,9 @@ margin: 0;
 input.ng-invalid{
     color:red;
     border-color: inherit;
+}
+.split-panes{
+    width:100%;
 }
 /**
  * bootstrap overloads

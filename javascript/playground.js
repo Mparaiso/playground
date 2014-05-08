@@ -96,10 +96,10 @@
                         '<script src="//niutech.github.io/typescript-compile/js/typescript.min.js"></script>' +
                         '<script src="//niutech.github.io/typescript-compile/js/typescript.compile.min.js"></script>';
                 })
-                .addAppendScriptStrategy('lisp', function(html, value) {
-                    html.innerHTML += '<script type="text/lisp">\n' + value + '\n</script>' +
-                        '<script src="vendor/oppo.js"></script>' +
-                        '<script src="vendor/oppo-eval.js"></script>';
+                .addAppendScriptStrategy('scheme', function(html, value) {
+                    html.innerHTML += '<script type="text/scheme">'+value+'</script>';
+                    html.innerHTML += '<script src="vendor/outlet.js"></script>';
+                    html.innerHTML += '<script src="vendor/outlet-eval.js"></script>';
                 });
         })
         .controller('MainCtrl', function($rootScope, $scope, EditorEvent, Editor, $route,
