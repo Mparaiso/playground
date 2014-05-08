@@ -7,7 +7,7 @@
 angular.module('editor', [])
     .constant('EditorEvent', {
         CURRENT_EDITOR_CHANGE: 'CURRENT_EDITOR_CHANGE',
-        FORMAT: 'FORMAT'
+        CURRENT_EDITOR_FORMAT: 'FORMAT'
     })
     .service('Editor', function() {
         "use strict";
@@ -157,7 +157,8 @@ angular.module('editor', [])
                         }
                     }, true);
                     /** on format event , format the editor content */
-                    $scope.$on(EditorEvent.FORMAT, function() {
+                    $scope.$on(EditorEvent.CURRENT_EDITOR_FORMAT, function() {
+                        console.log('format');
                         if (!isCurrentEditor()) {
                             return;
                         }

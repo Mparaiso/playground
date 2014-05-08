@@ -27,7 +27,7 @@
 			</div>
 		</section>
 		<section class="col-md-7">
-<pre ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
+<pre ng-show="file.value" ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
 <code>{{ file.value|limitTo:50}}</code></pre>
 		</section>
 		<h3>&nbsp;</h3>

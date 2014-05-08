@@ -126,7 +126,7 @@
                 $scope.rightMenuTemplate = route.rightMenuTemplate;
             });
             $scope.format = function() {
-                $rootScope.$broadcast(EditorEvent.FORMAT);
+                $rootScope.$broadcast(EditorEvent.CURRENT_EDITOR_FORMAT);
             };
             $scope.run = function() {
                 $rootScope.$broadcast('run', Editor.editors);
