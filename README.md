@@ -1,6 +1,8 @@
 {Playground}
 ============
 
+[![Build Status](https://travis-ci.org/Mparaiso/playground.svg?branch=angularjs)](https://travis-ci.org/Mparaiso/playground)
+
 a collaborative code playground for html,js,css,coffeescript less and sass 
 --------------------------------------------------------------------------
 
