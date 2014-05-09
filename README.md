@@ -3,13 +3,15 @@
 
 [![Build Status](https://travis-ci.org/Mparaiso/playground.svg?branch=master)](https://travis-ci.org/Mparaiso/playground)
 
+###https://mparaiso.github.io/playground/
+
 a collaborative code playground for html,js,css,coffeescript less and sass 
 --------------------------------------------------------------------------
 
-####Playround helps developpers experiment with web technologies. With Playground developpers 
-can prototype and experiment with web technologies right in the browser and no longer need to open a desktop IDE to code for the web. Playground is written in html,css and javascript.
+####Playround helps developpers experiment with web technologies. 
 
-###https://mparaiso.github.io/playground/
+With Playground developpers can prototype and experiment with web technologies right in the browser and no longer need to open a desktop IDE to code for the web. Playground is written in html,css and javascript.
+
 
 ### Features
 

@@ -1,5 +1,5 @@
 test:
-	@npm test &
+	@npm run test-continuous &
 start:
 	@npm start &
 commit:

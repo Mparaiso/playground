@@ -8,7 +8,7 @@
     "use strict";
     angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler',
         'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives',
-        'prettify', 'ngSanitize','library'],
+        'prettify','library'],
         function($routeProvider, $httpProvider, CompilerProvider) {
             $routeProvider
                 .when("/", {
@@ -296,6 +296,7 @@
                         $scope.timeout=null;
                     });
                 },1000);
+                return $scope.timeout;
             };
         })
         .constant('AppEvent', {
