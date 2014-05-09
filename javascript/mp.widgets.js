@@ -5,6 +5,22 @@
  * @license GPL
  */
 angular.module('mp.widgets', [])
+    .directive('stopPropagation', function() {
+        "use strict";
+        return {
+            scope:{
+                stopPropagation:"@"
+            },
+            link: function(scope, element) {
+                console.log(scope.stopPropagation);
+                element.on(scope.stopPropagation,function(e){
+                        e.stopPropagation();
+                        e.preventDefault();
+                        return false;
+                });
+            }
+        };
+    })
     .directive('mpTooltip', function($timeout) {
         "use strict";
         return {

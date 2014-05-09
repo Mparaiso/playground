@@ -150,7 +150,7 @@ textarea.code-editor{
  * angular overloads
  */
 
- input.ng-valid{
+input.ng-valid{
     color:green;
     border-color: inherit;
 }
@@ -161,6 +161,13 @@ input.ng-invalid{
 .split-panes{
     width:100%;
 }
+.libraries{
+    width:auto;
+}
+input.search::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+
 /**
  * bootstrap overloads
  */
@@ -189,3 +196,4 @@ input.ng-invalid{
     font-size: inherit!important;
     font-weight: inherit!important;
 }
+

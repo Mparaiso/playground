@@ -72,7 +72,7 @@ angular.module('editor', [])
                     hint: 'ecmascript 6'
                     }, {
                     language: 'scheme',
-                    hint: 'scheme provided by biwascheme'
+                    hint: 'scheme provided by outlet'
                     }]
                 }, {
                 type: 'style',

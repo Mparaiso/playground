@@ -1,5 +1,5 @@
 /*global describe,beforeEach,inject,expect,spyOn,jasmine,angular,module,it,beforeEach*/
-describe("api.parse", function() {
+xdescribe("api.parse", function() {
 	"use strict";
 	console.log("jasmine version", jasmine.version);
 	beforeEach(function() {

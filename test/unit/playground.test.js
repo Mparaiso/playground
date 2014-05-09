@@ -1,5 +1,5 @@
 /*global describe,angular,it,inject,expect,jasmine,beforeEach */
-describe("playground", function() {
+xdescribe("playground", function() {
 	"use strict";
 	beforeEach(function() {
 		angular.module('test', ['playground','Parse.mock']);

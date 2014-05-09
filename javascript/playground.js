@@ -7,7 +7,8 @@
 (function() {
     "use strict";
     angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler',
-        'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives', 'prettify', 'ngSanitize'],
+        'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives',
+        'prettify', 'ngSanitize','library'],
         function($routeProvider, $httpProvider, CompilerProvider) {
             $routeProvider
                 .when("/", {
@@ -56,6 +57,7 @@
             $routeProvider.otherwise({
                 redirectTo: '/'
             });
+            //@note @angular enabling CORS requests
             $httpProvider.defaults.useXDomain = true;
             CompilerProvider
                 .addScriptCompiler('markdown', function(value) {
@@ -76,11 +78,10 @@
                     return markdown.toHTML(value);
                 })
                 .addAppendScriptStrategy("traceur", function(html, value) {
-                    var traceurScript =
-                        '<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"\
-                        type="text/javascript"></script>\n\
-                    <script src="//traceur-compiler.googlecode.com/git/src/bootstrap.js"\
-                        type="text/javascript"></script>\n';
+                    var traceurScript ='<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"'+
+                        'type="text/javascript"></script>\n'+
+                        '<script src="//traceur-compiler.googlecode.com/git/src/bootstrap.js"'+
+                        'type="text/javascript"></script>\n';
                     var optionScript = '<script>traceur.options.experimental = true;</script>';
                     var userScript = '<script type="module">\n' + value + '\n</script>';
                     html.innerHTML += traceurScript + optionScript + userScript;
@@ -279,6 +280,23 @@
         .controller('EditorMenuCtrl', function($scope, Gist, Editor) {
             $scope.Editor = Editor;
             $scope.Gist = Gist;
+        })
+        .controller('LibraryCtrl',function($scope,$timeout,Library){
+            $scope.q = null;
+            // search libraries ,returns library urls
+            $scope.query=function(query){
+                if(query.length<3){return;}
+                if($scope.timeout){
+                    $timeout.cancel($scope.timeout);
+                    $scope.timeout=null;
+                }
+                $scope.timeout = $timeout(function(){
+                    return Library.query(query).then(function(libraries){
+                        $scope.searchResults = libraries.slice(0,15);
+                        $scope.timeout=null;
+                    });
+                },1000);
+            };
         })
         .constant('AppEvent', {
             SAVE_PRESSED: 'SAVE_PRESSED',

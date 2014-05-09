@@ -1,5 +1,5 @@
 /*global inject,requirejs,describe,it,expect,beforeEach*/
-describe('repository', function() {
+xdescribe('repository', function() {
 	"use strict";
 	beforeEach(function() {
 		module('repository');

@@ -1,60 +1,89 @@
 <!-- template/index.html-->
 <!--
-	@description playground the web tech playground
-	@copyright 2014 mparaiso <mparaiso@online.fr>
-	@license GPL
+    @description playground the web tech playground
+    @copyright 2014 mparaiso <mparaiso@online.fr>
+    @license GPL
 -->
 <div class="row">
-	<!-- EDITOR TABS -->
-	<ul class="nav mp-nav-tabs" ng-controller="EditorMenuCtrl">
-		<!-- Split button -->
-		<li class="btn-group" ng-repeat='menu in Editor.editorMenus'>
-			<button ng-click="Editor.selected=menu.type" type="button"
-			data-toggle="tab"
-			ng-class='{"btn-primary": Editor.selected==menu.type ,"btn-link":Editor.selected != menu.type}'
-			class="btn" >
-			{{ Editor.editors[$index].language}}
-			</button>
-			<button type="button"
-			ng-class='{"btn-primary":Editor.selected==menu.type,"btn-link":Editor.selected != menu.type}'
-			class="btn dropdown-toggle" data-toggle="dropdown">
-			<!-- <span class="caret mp-dropdown"></span> -->
-			<i class="glyphicon glyphicon-chevron-down text-micro"></i>
-			<span class="sr-only">Toggle Dropdown</span>
-			</button>
-			<!-- list of languages availables into a type -->
-			<ul class="dropdown-menu" role="menu">
-				<!-- filter submenus by language not selected -->
-				<li
-					ng-repeat="submenu in menu.submenus | filter: '!'+Editor.editors[$index].language "
-					title="{{submenu.hint}}" mp-tooltip>
-					<a ng-click="Editor.editors[$parent.$index].language=submenu.language">{{submenu.language}}</a>
-				</li>
-			</ul>
-		</li>
-		<li class="btn-group">
-			<div class="btn-form btn btn-link">
-				<label>Description
-					&nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
-					<input type="text" ng-model="Gist.current.description">
-				</label>
-			</div>
-		</li>
-	</ul>
-	<!-- TAB CONTENT -->
-	<article style="position:relative;height:100%;" >
-	<div bg-splitter orientation="horizontal" class="row">
-		<section bg-pane min-size="200" class="left-side tab-content"  ng-controller="EditorCtrl">
-			<form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
-				ng-cloakname="form"
-				ng-repeat="editor in Editor.editors">
-				<textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
-				class="code-editor" ng-cloak>
-				</textarea>
-			</form>
-		</section>
-		<section bg-pane min-size="50" renderer class="output right-side">
-		</section>
-	</div>
-	</article>
+    <!-- EDITOR TABS -->
+    <ul class="nav mp-nav-tabs" ng-controller="EditorMenuCtrl">
+        <!-- Split button -->
+        <li class="btn-group" ng-repeat='menu in Editor.editorMenus'>
+        <button ng-click="Editor.selected=menu.type" type="button"
+            data-toggle="tab"
+            ng-class='{"btn-primary": Editor.selected==menu.type ,"btn-link":Editor.selected != menu.type}'
+            class="btn" >
+            {{ Editor.editors[$index].language}}
+        </button>
+        <button type="button"
+            ng-class='{"btn-primary":Editor.selected==menu.type,"btn-link":Editor.selected != menu.type}'
+            class="btn dropdown-toggle" data-toggle="dropdown">
+            <!-- <span class="caret mp-dropdown"></span> -->
+            <i class="glyphicon glyphicon-chevron-down text-micro"></i>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <!-- list of languages availables into a type -->
+        <ul class="dropdown-menu" role="menu">
+            <!-- filter submenus by language not selected -->
+            <li
+            ng-repeat="submenu in menu.submenus | filter: '!'+Editor.editors[$index].language "
+            title="{{submenu.hint}}" mp-tooltip>
+            <a ng-click="Editor.editors[$parent.$index].language=submenu.language">{{submenu.language}}</a>
+            </li>
+        </ul>
+        </li>
+        <!-- LIBRARIES -->
+        <li class="btn-group">
+        <button class="btn btn-link" class="btn dropdown-toggle" data-toggle="dropdown" mp-tooltip title="Search for js or css third party library urls on a cdn">
+            Libraries &nbsp;
+            <i class="glyphicon glyphicon-chevron-down text-micro"></i>
+        </button>
+        <ul  class="dropdown-menu" role="menu"  stop-propagation="click" style="min-width:600px;" >
+            <li class="dropdown-header libraries">
+            <form ng-controller="LibraryCtrl" role="form" class="form row">
+                <div class="col-xs-12">
+                    <label for="">Search for a library :
+                    </label>
+                    <input ng-change="query(q)" type="search" class="form-control input-sm" ng-model="q">
+                </div>
+                <h3>
+                    &nbsp;  
+                </h3>
+                <div class="col-xs-12" ng-show="searchResults.length===0">No result for library {{q}}</div> 
+                <div class="col-xs-12" ng-show="timeout">Searching for library {{q}}</div> 
+                <div class="col-xs-12" ng-show="searchResults.length>0 && !timeout">
+                    <label for="">Results :</label>
+                    <div type="text" class="form-control input-sm"  ng-repeat="searchResult in searchResults track by $index">{{searchResult}}</div>
+                </div>
+                <div readonly>&nbsp;</div>
+            </form>
+            </li>
+        </ul>
+        </li>
+        <!-- END LIBRARIES -->
+        <li class="btn-group">
+        <div class="btn-form btn btn-link">
+            <label>Description
+                &nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
+                <input type="text" ng-model="Gist.current.description">
+            </label>
+        </div>
+        </li>
+    </ul>
+    <!-- TAB CONTENT -->
+    <article style="position:relative;height:100%;" >
+        <div bg-splitter orientation="horizontal" class="row">
+            <section bg-pane min-size="200" class="left-side tab-content"  ng-controller="EditorCtrl">
+                <form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
+                    ng-cloakname="form"
+                    ng-repeat="editor in Editor.editors">
+                    <textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
+                        class="code-editor" ng-cloak>
+                    </textarea>
+                </form>
+            </section>
+            <section bg-pane min-size="50" renderer class="output right-side">
+            </section>
+        </div>
+    </article>
 </div>
