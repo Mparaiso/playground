@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node bin/server.js",
-        "test": "karma start test/karma.conf.js"
+        "test": "karma start test/karma.conf.js --single-run "
     },
     "author": "mparaiso <mparaiso@online.fr>",
     "license": "GPL",
