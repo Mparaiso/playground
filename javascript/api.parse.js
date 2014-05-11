@@ -102,9 +102,6 @@ angular.module('api.parse', [])
 				return u.toJSON();
 			}
 		};
-		this.isAuthenticated = function() {
-			return Parse.User.current();
-		};
 		this.signUp = function(credentials) {
 			var user = new Parse.User();
 			user.set('username', credentials.username);

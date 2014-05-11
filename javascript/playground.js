@@ -8,7 +8,7 @@
     "use strict";
     angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler',
         'api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives',
-        'prettify','library'],
+        'prettify', 'library'],
         function($routeProvider, $httpProvider, CompilerProvider) {
             $routeProvider
                 .when("/", {
@@ -42,17 +42,11 @@
                     controller: 'GistEditCtrl',
                     templateUrl: 'templates/editor.html',
                     rightMenuTemplate: 'templates/right-menu.html',
-                    // mustBeAuthenticated: true,
                     resolve: {
                         gist: function(Gist, $route) {
                             return Gist.findGistById($route.current.params.id);
                         }
                     }
-                })
-                .when('/account', {
-                    controller: 'AccountCtrl',
-                    templateUrl: 'templates/account.html',
-                    mustBeAuthenticated: true
                 });
             $routeProvider.otherwise({
                 redirectTo: '/'
@@ -78,9 +72,9 @@
                     return markdown.toHTML(value);
                 })
                 .addAppendScriptStrategy("traceur", function(html, value) {
-                    var traceurScript ='<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"'+
-                        'type="text/javascript"></script>\n'+
-                        '<script src="//traceur-compiler.googlecode.com/git/src/bootstrap.js"'+
+                    var traceurScript = '<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"' +
+                        'type="text/javascript"></script>\n' +
+                        '<script src="//traceur-compiler.googlecode.com/git/src/bootstrap.js"' +
                         'type="text/javascript"></script>\n';
                     var optionScript = '<script>traceur.options.experimental = true;</script>';
                     var userScript = '<script type="module">\n' + value + '\n</script>';
@@ -98,7 +92,7 @@
                         '<script src="//niutech.github.io/typescript-compile/js/typescript.compile.min.js"></script>';
                 })
                 .addAppendScriptStrategy('scheme', function(html, value) {
-                    html.innerHTML += '<script type="text/scheme">'+value+'</script>';
+                    html.innerHTML += '<script type="text/scheme">' + value + '</script>';
                     html.innerHTML += '<script src="vendor/outlet.js"></script>';
                     html.innerHTML += '<script src="vendor/outlet-eval.js"></script>';
                 });
@@ -281,21 +275,23 @@
             $scope.Editor = Editor;
             $scope.Gist = Gist;
         })
-        .controller('LibraryCtrl',function($scope,$timeout,Library){
+        .controller('LibraryCtrl', function($scope, $timeout, Library) {
             $scope.q = null;
             // search libraries ,returns library urls
-            $scope.query=function(query){
-                if(query.length<3){return;}
-                if($scope.timeout){
-                    $timeout.cancel($scope.timeout);
-                    $scope.timeout=null;
+            $scope.query = function(query) {
+                if (query.length < 3) {
+                    return;
                 }
-                $scope.timeout = $timeout(function(){
-                    return Library.query(query).then(function(libraries){
-                        $scope.searchResults = libraries.slice(0,15);
-                        $scope.timeout=null;
+                if ($scope.timeout) {
+                    $timeout.cancel($scope.timeout);
+                    $scope.timeout = null;
+                }
+                $scope.timeout = $timeout(function() {
+                    return Library.query(query).then(function(libraries) {
+                        $scope.searchResults = libraries.slice(0, 15);
+                        $scope.timeout = null;
                     });
-                },1000);
+                }, 1000);
                 return $scope.timeout;
             };
         })
@@ -306,6 +302,7 @@
             FORMAT_PRESSED: 'FORMAT_PRESSED'
         })
         .run(function(User, $rootScope, $location) {
+            //debugger
             $rootScope.$on('$routeChangeStart', function(event, route) {
                 if (!User.isAuthenticated()) {
                     //user exists but is has no valid session
@@ -316,7 +313,7 @@
                     $location.path('/');
                 } else if (route.mustBeAnonymous && User.isAuthenticated()) {
                     //user is authenticated by route requires anonymouse
-                    $location.path('/account');
+                    $location.path('/gist');
                 }
             });
         });

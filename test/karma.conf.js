@@ -22,23 +22,26 @@ module.exports = function(config) {
 
         browsers: ['PhantomJS'],
         plugins: [
- //            'karma-chrome-launcher',
- //            'karma-firefox-launcher',
+            //            'karma-chrome-launcher',
+            //            'karma-firefox-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine',
- //            'karma-requirejs'
- //            'karma-coverage'
+            //            'karma-requirejs'
+            'karma-coverage',
+            'karma-coveralls'
         ],
 
         junitReporter: {
             //            outputFile: 'test_out/unit.xml',
             //            suite: 'unit'
         },
-        reporters: ['progress'],
+        reporters: ['progress','coverage','coveralls'],
         preprocessors: {
-            //            "javascript/**/*.js":['coverage']
+            "javascript/*.js":['coverage']
         },
         coverageReporter: {
+            type:'lcov',
+            dir:'coverage/'
             //            type:'html',
             //            dir:'coverage/'
         }

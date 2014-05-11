@@ -41,7 +41,7 @@ angular.module('renderer', [])
             },false);
             doc.writeln(content);
             doc.close();
-            console.clear();
+            //sconsole.clear();
             console.log(content);
         };
     }).directive('renderer', function(RendererService) {

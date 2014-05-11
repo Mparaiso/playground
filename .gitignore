@@ -2,3 +2,5 @@ node_modules
 .idea
 project-documents
 *.sublime-*
+.coveralls.yml
+coverage
