@@ -29,5 +29,5 @@ Sprint 3:
 -[X] a gist supports html or markdown
 
 Sprint 4:
--[X] third party libraries are easily accessed in the application
+-[X] third party library urls are easily accessed in the application
 -[ ] a user can share the url of a gist

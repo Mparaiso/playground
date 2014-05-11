@@ -3,8 +3,7 @@
 
 [![Build Status](https://travis-ci.org/Mparaiso/playground.svg?branch=master)](https://travis-ci.org/Mparaiso/playground)
 
-
-[![Coverage Status](https://img.shields.io/coveralls/Mparaiso/playground.svg)](https://coveralls.io/r/Mparaiso/playground)
+[![Coverage Status](https://coveralls.io/repos/Mparaiso/playground/badge.png?branch=master)](https://coveralls.io/r/Mparaiso/playground?branch=master)
 
 ###https://mparaiso.github.io/playground/
 
