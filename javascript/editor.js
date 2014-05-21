@@ -1,4 +1,6 @@
+/*jslint eqeq:true,node:true,es5:true,white:true,plusplus:true,nomen:true,unparam:true,devel:true,regexp:true */
 /*global angular,define,CodeMirror,js_beautify,css_beautify,html_beautify */
+
 /**
  * @description playground the web tech playground
  * @copyright 2014 mparaiso <mparaiso@online.fr>
@@ -84,6 +86,10 @@ angular.module('editor', [])
             hint: 'less'
         }]
     }];
+    this.themes=[
+        "monokai","default","eclipse","twilight"
+    ].sort();
+    this.selectedTheme="default";
 })
 .directive('codeEditor', function($timeout, $compile, EditorEvent, Editor, EditorTypes) {
     "use strict";
@@ -184,6 +190,14 @@ angular.module('editor', [])
             }));
         }
     };
+})
+.service('EditorSettings',function(){
+    this.theme="default";
+    this.tabSize=4;
+    this.fontSize=15;
+    this.lineWrapping=false;
+    this.refreshInterval=2000;
+    this.autoRefresh=false;
 })
 /** match editor types with codeMirror syntax and modes */
 .constant('EditorTypes', {

@@ -273,6 +273,13 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         }
     }, true);
 })
+.controller('EditorSettingsCtrl',function  (EditorSettings,$scope) {
+  
+    $scope.EditorSettings=EditorSettings;
+  $scope.$watch('EditorSettings',function(newValue,oldValue){
+        console.log("EditorSettings",arguments);
+    },true);
+})
 .controller('EditorMenuCtrl', function($scope, Gist, Editor) {
     $scope.Editor = Editor;
     $scope.Gist = Gist;
