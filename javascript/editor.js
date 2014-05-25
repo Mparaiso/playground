@@ -6,13 +6,15 @@
  * @copyright 2014 mparaiso <mparaiso@online.fr>
  * @license GPL
  */
+"use strict";
 angular.module('editor', [])
 .constant('EditorEvent', {
     CURRENT_EDITOR_CHANGE: 'CURRENT_EDITOR_CHANGE',
     CURRENT_EDITOR_FORMAT: 'FORMAT'
 })
-.service('Editor', function() {
+.service('Editor', function(EditorSettings) {
     "use strict";
+    this.EditorSettings=EditorSettings;
     /**
     * Manage editor data
     */
@@ -87,7 +89,7 @@ angular.module('editor', [])
         }]
     }];
     this.themes=[
-        "monokai","default","eclipse","twilight"
+        "monokai","default","eclipse","twilight","night",'cobalt',"midnight"
     ].sort();
     this.selectedTheme="default";
 })
@@ -107,7 +109,8 @@ angular.module('editor', [])
         scope: {
             type: "=",
             language: "=",
-            placeholder: "="
+            placeholder: "=",
+            configuration:"="
         },
         link: function($scope, el, attr, ngModel) {
             var change_selected, editor, timeout;
@@ -150,6 +153,11 @@ angular.module('editor', [])
                         $timeout(editor.refresh.bind(editor));
                         change_selected();
                     }
+                });
+                /** watch configuration */
+                $scope.$on('EditorSettingsChange',function(event,args){
+                    editor.setOption('theme',args.theme);
+                    editor.getWrapperElement().style['fontSize']=args.fontSize+"px";
                 });
                 /** watch for language change , modify editor mode accordingly */
                 $scope.$watch('language', function(newValue, oldValue) {

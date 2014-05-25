@@ -37,9 +37,9 @@
             <button type="button" class="btn btn-link dropdown-toggle" mp-tooltip title="Editor settings" data-toggle="dropdown">
                 Settings <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" stop-propagation="click">
-                <li class="dropdown-header " style="min-width:500px;">
-                    <form class="form" name="editorSettingsForm" role="form" ng-controller="EditorSettingsCtrl">
+            <ul class="dropdown-menu" role="menu" >
+                <li class="dropdown-header " style="min-width:500px;"  stop-propagation="click">
+                    <form class="form" name="editorSettingsForm" role="form" ng-controller="EditorSettingsCtrl" >
                         <div class="form-group ">
                             <label>Editor Settings:</label>
                         </div>
@@ -117,12 +117,12 @@
                 <form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
                     ng-cloakname="form"
                     ng-repeat="editor in Editor.editors">
-                    <textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
+                    <textarea type="editor.type" language="editor.language" configuration="Editor.EditorSettings" ng-model="editor.value" placeholder="editor.placeholder"
                         class="code-editor" ng-cloak>
                     </textarea>
                 </form>
             </section>
-            <section bg-pane min-size="50" renderer class="output right-side">
+            <section bg-pane min-size="50" renderer class="output right-side" style="margin-right:-15px;">
             </section>
         </div>
     </article>

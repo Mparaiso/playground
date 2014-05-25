@@ -60,8 +60,8 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         return CoffeeScript.compile(value);
     })
     .addStyleCompiler('less', function(value) {
-        var result;
-        var parser = new less.Parser();
+        var parser,result;
+        parser = new less.Parser();
         parser.parse(value, function(a, b) {
             result = b.toCSS();
         });
@@ -71,12 +71,13 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         return markdown.toHTML(value);
     })
     .addAppendScriptStrategy("traceur", function(html, value) {
-        var traceurScript = '<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"' +
+        var traceurScript,optionScript,userScript;
+        traceurScript = '<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"' +
             'type="text/javascript"></script>\n' +
             '<script src="//traceur-compiler.googlecode.com/git/src/bootstrap.js"' +
             'type="text/javascript"></script>\n';
-        var optionScript = '<script>traceur.options.experimental = true;</script>';
-        var userScript = '<script type="module">\n' + value + '\n</script>';
+        optionScript = '<script>traceur.options.experimental = true;</script>';
+        userScript = '<script type="module">\n' + value + '\n</script>';
         html.innerHTML += traceurScript + optionScript + userScript;
     })
     .addAppendScriptStrategy('ruby', function(html, value) {
@@ -96,7 +97,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         html.innerHTML += '<script src="vendor/outlet-eval.js"></script>';
     });
 })
-.controller('MainCtrl', function($rootScope, $scope, EditorEvent, Editor, $route,User, Notification, RendererEvent, ShortCutsEvent) {
+.controller('MainCtrl', function($rootScope, $scope, EditorSettings,EditorEvent, Editor, $route,User, Notification, RendererEvent, ShortCutsEvent) {
     $scope.Notification = Notification;
     $scope.User = User;
     $rootScope.$on(ShortCutsEvent.SHORTCUTS_SAVE, function(event, message) {
@@ -178,7 +179,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     };
     $scope.user = User.getCurrentUser();
 })
-.controller('GistCreateCtrl', function($scope, Editor, Gist, $location, Notification, $window, $document) {
+.controller('GistCreateCtrl', function($scope, Editor, $timeout,Gist, $location, Notification, $window, $document) {
     var saving = false;
     $scope.Editor = Editor;
     Gist.current = {
@@ -192,9 +193,12 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
             Gist.create(Gist.current).then(function(gist) {
                 Notification.success('Gist created Successfully');
                 $scope.$apply($location.path.bind($location, '/gist/' + gist.id));
-            }, function(e) {
-                $scope.$apply(Notification.error.bind(Notification, 'Gist creation failed : ' + typeof e === 'string' ? e : ''));
-            }).done(function() {
+            }).catch(function(e) {
+                console.log('fail');
+                $timeout(function(){
+                    return Notification.error('Gist creation failed : ' + typeof e === 'string' ? e : '');
+                });
+            }).finally(function() {
                 saving = false;
             });
         }
@@ -264,7 +268,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
 .controller('AccountCtrl', function($scope, User) {
     $scope.user = User.getCurrentUser();
 })
-.controller('EditorCtrl', function($scope, $rootScope, Editor, EditorEvent) {
+.controller('EditorCtrl', function($scope, $rootScope,Editor, EditorEvent) {
     $scope.Editor = Editor;
     $scope.$watch('Editor.selected', function(newValue, oldValue) {
         if (newValue !== oldValue) {
@@ -273,11 +277,10 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         }
     }, true);
 })
-.controller('EditorSettingsCtrl',function  (EditorSettings,$scope) {
-  
+.controller('EditorSettingsCtrl',function  (EditorSettings,$scope,$rootScope) {
     $scope.EditorSettings=EditorSettings;
-  $scope.$watch('EditorSettings',function(newValue,oldValue){
-        console.log("EditorSettings",arguments);
+    $scope.$watch('EditorSettings',function(newValue,oldValue){
+        $rootScope.$broadcast('EditorSettingsChange',newValue);
     },true);
 })
 .controller('EditorMenuCtrl', function($scope, Gist, Editor) {

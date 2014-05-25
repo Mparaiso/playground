@@ -1,6 +1,7 @@
 /*global angular*/
 angular.module('library', [])
 .service('Library', function($http,$q) {
+    /** manage cdn integration */
     "use strict";
     var self=this;
     /** cdn url */

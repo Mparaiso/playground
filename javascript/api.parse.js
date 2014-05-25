@@ -1,4 +1,4 @@
-/*jslint es5:true*/
+/*jslint eqeq:true,node:true,es5:true,white:true,plusplus:true,nomen:true,unparam:true,devel:true,regexp:true */
 /*global angular,Parse*/
 /**
  * @description playground the web tech playground
@@ -87,9 +87,21 @@ angular.module('api.parse', [])
 			});
 		};
 	})
-	.service('User', function(Parse) {
-		"use strict";
-		this.isAuthenticated = function() {
+    .service('User', function(Parse,$q) {
+        "use strict";
+        /**
+         * @param {Object} settings
+         * @return {Promise}
+         */
+        this.updateSetings=function(settings){
+            if(this.isAuthenticated()){
+                var user=Parse.User.current();
+                user.set("settings",settings);
+                return user.save();
+            }     
+            return $q.reject(new Error("User not authenticated"));
+        };
+        this.isAuthenticated = function() {
 			var user = Parse.User.current();
 			if (user && user.authenticated()) {
 				return true;
