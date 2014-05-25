@@ -32,6 +32,46 @@
             </li>
         </ul>
         </li>
+        <!-- EditorSettings.-->
+        <li class="btn-group">
+            <button type="button" class="btn btn-link dropdown-toggle" mp-tooltip title="Editor settings" data-toggle="dropdown">
+                Settings <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" >
+                <li class="dropdown-header " style="min-width:500px;"  stop-propagation="click">
+                    <form class="form" name="editorSettingsForm" role="form" ng-controller="EditorSettingsCtrl" >
+                        <div class="form-group ">
+                            <label>Editor Settings:</label>
+                        </div>
+                        <div class="form-group ">
+                            <label >Theme:</label>
+                            <select  ng-model="EditorSettings.theme" ng-options="theme for theme in Editor.themes" class="form-control"> </select>
+                        </div>
+                        <div class="form-group " >
+                            <label for="">Tab size:</label>
+                            <input mix="1" max="8" class="form-control input-xs" type="number" ng-model="EditorSettings.tabSize"/>
+                        </div>
+                        <div class="form-group ">
+                            <label for="">Font size:</label>
+                            <input min="9" max="25" class="form-control input-xs" type="number" ng-model="EditorSettings.fontSize"/>
+                        </div>
+                        <div class="form-group ">
+                            <input type="checkbox" name="" ng-model="EditorSettings.lineWrapping"/>
+                           <label for="">Line wrapping</label> 
+                       </div>
+                       <div class="form-group">
+                           <label for="">Refresh interval</label>
+                           <input type="number" min="1000"  max="10000" class="form-control input-xs" ng-model="EditorSettings.refreshInterval"/>
+                       </div>
+                       <div class="form-group ">
+                           <input type="checkbox" ng-model="EditorSettings.autoRefresh" class=" input-xs"/>
+                           <label for="">Auto Refresh</label> 
+                       </div>
+                    </form>
+                </li>
+            </ul>
+        </li>
+            
         <!-- LIBRARIES -->
         <li class="btn-group">
         <button class="btn btn-link" class="btn dropdown-toggle" data-toggle="dropdown" mp-tooltip title="Search for js or css third party library urls on a cdn">
@@ -77,12 +117,12 @@
                 <form class="form tab-pane" ng-class="{'active':Editor.selected==editor.type}"
                     ng-cloakname="form"
                     ng-repeat="editor in Editor.editors">
-                    <textarea type="editor.type" language="editor.language" ng-model="editor.value" placeholder="editor.placeholder"
+                    <textarea type="editor.type" language="editor.language" configuration="Editor.EditorSettings" ng-model="editor.value" placeholder="editor.placeholder"
                         class="code-editor" ng-cloak>
                     </textarea>
                 </form>
             </section>
-            <section bg-pane min-size="50" renderer class="output right-side">
+            <section bg-pane min-size="50" renderer class="output right-side" style="margin-right:-15px;">
             </section>
         </div>
     </article>

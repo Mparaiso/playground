@@ -90,7 +90,7 @@ main {
 
 .CodeMirror {
     height: 100%;
-    font-size: 1.15em;
+    /*font-size: 1.15em;*/
     font-family: 'Ubuntu Mono', monospace;
 }
 textarea.code-editor{
