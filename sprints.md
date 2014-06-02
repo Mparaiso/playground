@@ -30,4 +30,5 @@ Sprint 3:
 
 Sprint 4:
 -[X] third party library urls are easily accessed in the application
+-[X] editor content can be folded
 -[ ] a user can share the url of a gist
