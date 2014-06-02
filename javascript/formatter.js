@@ -1,31 +1,33 @@
+/*jslint eqeq:true,node:true,es5:true,white:true,plusplus:true,nomen:true,unparam:true,devel:true,regexp:true */
 /*global angular,define,CodeMirror,js_beautify,css_beautify,html_beautify */
 /**
- * @description playground the web tech playground
- * @copyright 2014 mparaiso <mparaiso@online.fr>
- * @license GPL
+ * Copyright © 2014 mparaiso <mparaiso@online.fr>. All Rights Reserved.
  */
+/**
+* Manage prettifying process
+* */
 angular.module('formatter', [])
-	.service('Format', function(editor, isCurrentEditor) {
-		"use strict";
-		if (!isCurrentEditor()) {
-			return;
-		}
-		// console.log('format', editor.getOption('syntax'));
-		var cursorPosition = editor.getCursor();
-		switch (editor.getOption('syntax')) {
-			case 'htmlmixed':
-			case 'html':
-				editor.setValue(html_beautify(editor.getValue()));
-				break;
-			case 'traceur':
-			case 'text/typescript':
-			case 'javascript':
-				editor.setValue(js_beautify(editor.getValue()));
-				break;
-			case 'text/x-less':
-			case 'css':
-				editor.setValue(css_beautify(editor.getValue()));
-				break;
-		}
-		editor.setCursor(cursorPosition);
-	});
+.service('Formatter', function() {
+    "use strict";
+    /** 
+     * format a string
+     * @param {string} content
+     * @param {string} syntax
+     */
+    this.format=function(content,syntax){
+        switch (syntax) {
+            case 'htmlmixed':
+                case 'html':
+                return html_beautify(content);
+            case 'traceur':
+                case 'text/typescript':
+                case 'javascript':
+                return js_beautify(content);
+            case 'text/x-less':
+                case 'css':
+                return css_beautify(content);
+            default:
+                return content;
+        }
+    };
+});

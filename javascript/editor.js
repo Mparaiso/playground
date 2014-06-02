@@ -13,7 +13,6 @@ angular.module('editor', [])
     CURRENT_EDITOR_FORMAT: 'FORMAT'
 })
 .service('Editor', function(EditorSettings) {
-    "use strict";
     this.EditorSettings=EditorSettings;
     /**
     * Manage editor data
@@ -94,7 +93,6 @@ angular.module('editor', [])
     this.selectedTheme="default";
 })
 .directive('codeEditor', function($timeout, $compile, EditorEvent, Editor, EditorTypes) {
-    "use strict";
     /**
     * DIRECTIVE FOR CODEMIRROR EDITOR
     */
@@ -125,6 +123,8 @@ angular.module('editor', [])
                     placeholder: $scope.placeholder,
                     autoCloseBrackets: true,
                     lineNumbers: true,
+                    //lineWrapping:true,
+                    foldGutter:true,
                     theme: 'monokai',
                     profile: EditorTypes[$scope.language].syntax,
                     matchBrackets: true,
@@ -132,8 +132,10 @@ angular.module('editor', [])
                     highlightSelectionMatches: true,
                     extraKeys: {
                         "Ctrl-Space": "autocomplete",
-                        "Ctrl-K": 'autocomplete'
-                    }
+                        "Ctrl-K": 'autocomplete',
+                        "Ctrl-Q":'foldCode'
+                    },
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
                 });
                 /** on editor.value change modify the directive model */
                 editor.on('change', function(editor, changeObj) {
@@ -157,7 +159,7 @@ angular.module('editor', [])
                 /** watch configuration */
                 $scope.$on('EditorSettingsChange',function(event,args){
                     editor.setOption('theme',args.theme);
-                    editor.getWrapperElement().style['fontSize']=args.fontSize+"px";
+                    editor.getWrapperElement().style.fontSize=args.fontSize+"px";
                 });
                 /** watch for language change , modify editor mode accordingly */
                 $scope.$watch('language', function(newValue, oldValue) {

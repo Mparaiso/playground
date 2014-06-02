@@ -1,0 +1,1 @@
+- [ ] test for potential js errors on IE10

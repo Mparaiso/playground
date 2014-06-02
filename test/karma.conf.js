@@ -7,6 +7,10 @@ module.exports = function(config) {
 
         files: [
             'bower_components/es5-shim/es5-shim.js',
+            'bower_components/jquery/dist/jquery.min.js',
+            "bower_components/js-beautify/js/lib/beautify.js",
+            "bower_components/js-beautify/js/lib/beautify-html.js",
+            "bower_components/js-beautify/js/lib/beautify-css.js",
             'vendor/parse-1.2.18.js',
             'bower_components/angular/angular.js',
             'bower_components/angular-resource/angular-resource.js',
@@ -41,7 +45,7 @@ module.exports = function(config) {
             "javascript/*.js":['coverage']
         },
         coverageReporter: {
-            type:'lcov',
+            type:'text',
             dir:'coverage/'
             //            type:'html',
             //            dir:'coverage/'
