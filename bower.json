@@ -1,6 +1,6 @@
 {
   "name": "js-playground",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "authors": [
     "mparaiso <aikah@free.fr>"
   ],
@@ -32,11 +32,11 @@
     "es5-shim": "~3.0.2",
     "angular-resource": "~1.2.16",
     "js-md5": "~1.1.0",
-    "coffee-script": "~1.7.1",
     "angular-mocks": "~1.2.16",
     "less": "~1.7.0",
     "markdown": "~0.5.0",
     "Keypress": "~2.0.2",
-    "angular-sanitize": "~1.2.16"
+    "angular-sanitize": "~1.2.16",
+    "csslint": "csslint/csslint#~0.10.0"
   }
 }
