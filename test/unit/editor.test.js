@@ -42,6 +42,7 @@ describe('editor',function(){
             this.scope.$broadcast('EditorSettingsChange',{theme:'foo',fontSize:23});
             this.scope.foo="bar";
             this.scope.$digest();
+            this.$timeout.flush();
             console.log(this.el);
         });
     });
