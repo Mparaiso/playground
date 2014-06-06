@@ -37,6 +37,7 @@ describe("api.parse", function() {
         });
         describe('#create',function(){
             it('creates gist',function(done){
+                spyOn(Parse.User,'current').and.returnValue({});
                 this.Gist.create({id:'foo',public:true}).then(done)
             });
         });
