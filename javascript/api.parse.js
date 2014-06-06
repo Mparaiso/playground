@@ -50,23 +50,23 @@ angular.module('api.parse', [])
 			return query.get(id)
 				.then(function(gist) {
 					return gist.toJSON();
-				});
-		};
-		/** create a new gist */
-		this.create = function(gist) {
-			var acl, user, _gist;
-			user = User.getCurrentUser();
-			if (!user) {
-				return $q.reject('Not authenticated,please signin or signup to save this gist');
-			}
-			_gist = new Gist(gist);
-			acl = new Parse.ACL(user);
-			acl.setPublicReadAccess(gist.public);
-			_gist.set('user', user);
-			_gist.setACL(acl);
-			return _gist.save();
-		};
-		/** update a gist */
+                });
+        };
+        /** create a new gist */
+        this.create = function(gist) {
+            var acl, user, _gist;
+            user =Parse.User.current();
+            if (!user) {
+                return $q.reject('Not authenticated,please signin or signup to save this gist');
+            }
+            _gist = new Gist(gist);
+            acl = new Parse.ACL(user);
+            acl.setPublicReadAccess(gist.public);
+            _gist.set('user', user);
+            _gist.setACL(acl);
+            return _gist.save();
+        };
+        /** update a gist */
 		this.update = function(id, newGistData) {
 			var query = new Parse.Query(Gist);
 			if (!User.isAuthenticated()) {
