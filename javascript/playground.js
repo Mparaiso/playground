@@ -7,7 +7,7 @@
  * @license GPL
  */
 "use strict";
-angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler','api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives','prettify', 'library'])
+angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler','api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives','prettify', 'library','linter'])
 .config(function($routeProvider, $httpProvider, CompilerProvider) {
     $routeProvider
     .when("/", {
@@ -264,6 +264,9 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         return md5(string);
     };
     $scope.gists = gists;
+    $scope.orderByDate=function(gist){
+        return Date.parse(gist.createdAt);
+    }
 })
 .controller('AccountCtrl', function($scope, User) {
     $scope.user = User.getCurrentUser();

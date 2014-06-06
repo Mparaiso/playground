@@ -7,7 +7,7 @@
  * @license GPL
  */
 "use strict";
-angular.module('editor', [])
+angular.module('editor', ["linter",'formatter'])
 .constant('EditorEvent', {
     CURRENT_EDITOR_CHANGE: 'CURRENT_EDITOR_CHANGE',
     CURRENT_EDITOR_FORMAT: 'FORMAT'
@@ -92,7 +92,7 @@ angular.module('editor', [])
     ].sort();
     this.selectedTheme="default";
 })
-.directive('codeEditor', function($timeout, $compile, EditorEvent, Editor, EditorTypes) {
+.directive('codeEditor', function($timeout, $compile,Linter, Formatter,EditorEvent, Editor, EditorTypes) {
     /**
     * DIRECTIVE FOR CODEMIRROR EDITOR
     */
@@ -123,7 +123,7 @@ angular.module('editor', [])
                     placeholder: $scope.placeholder,
                     autoCloseBrackets: true,
                     lineNumbers: true,
-                    //lineWrapping:true,
+                    lint:Linter.getLinter(EditorTypes[$scope.language].lin),
                     foldGutter:true,
                     theme: 'monokai',
                     profile: EditorTypes[$scope.language].syntax,
@@ -135,7 +135,7 @@ angular.module('editor', [])
                         "Ctrl-K": 'autocomplete',
                         "Ctrl-Q":'foldCode'
                     },
-                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+                    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter","CodeMirror-lint-markers"]
                 });
                 /** on editor.value change modify the directive model */
                 editor.on('change', function(editor, changeObj) {
@@ -163,13 +163,13 @@ angular.module('editor', [])
                 });
                 /** watch for language change , modify editor mode accordingly */
                 $scope.$watch('language', function(newValue, oldValue) {
-                    //console.log(arguments);
                     if (newValue !== oldValue) {
                         CodeMirror.autoLoadMode(editor, EditorTypes[newValue].syntax);
                         /** if change then configure the editor accordingly */
                         editor.setOption('mode', EditorTypes[newValue].mode);
                         editor.setOption('syntax', EditorTypes[newValue].syntax);
                         editor.setOption('profile', EditorTypes[newValue].syntax);
+                        editor.setOption('lint',Linter.getLinter(EditorTypes[newValue].lint));
                     }
                 }, true);
                 /** on format event , format the editor content */
@@ -178,23 +178,8 @@ angular.module('editor', [])
                     if (!isCurrentEditor()) {
                         return;
                     }
-                    // console.log('format', editor.getOption('syntax'));
                     var cursorPosition = editor.getCursor();
-                    switch (editor.getOption('syntax')) {
-                        case 'htmlmixed':
-                            case 'html':
-                            editor.setValue(html_beautify(editor.getValue()));
-                        break;
-                        case 'traceur':
-                            case 'text/typescript':
-                            case 'javascript':
-                            editor.setValue(js_beautify(editor.getValue()));
-                        break;
-                        case 'text/x-less':
-                            case 'css':
-                            editor.setValue(css_beautify(editor.getValue()));
-                        break;
-                    }
+                    editor.setValue(Formatter.format(editor.getValue(),editor.getOption('syntax')));
                     editor.setCursor(cursorPosition);
                 });
             }));
@@ -213,7 +198,8 @@ angular.module('editor', [])
 .constant('EditorTypes', {
     javascript: {
         syntax: 'javascript',
-        mode: 'text/typescript'
+        mode: 'javascript',
+        lint:'javascript'
     },
     css: {
         syntax: 'css',
@@ -229,11 +215,13 @@ angular.module('editor', [])
     },
     coffeescript: {
         syntax: 'coffeescript',
-        mode: 'coffeescript'
+        mode: 'coffeescript',
+        lint:'coffeescript'
     },
     typescript: {
         syntax: 'javascript',
-        mode: 'javascript'
+        mode: 'javascript',
+        lint:'typescript'
     },
     markdown: {
         syntax: 'markdown',
@@ -257,7 +245,8 @@ angular.module('editor', [])
     },
     traceur: {
         syntax: 'javascript',
-        mode: 'javascript'
+        mode: 'javascript',
+        lint:"javascript"
     },
     sass: {
         syntax: 'sass',

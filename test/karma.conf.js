@@ -12,6 +12,7 @@ module.exports = function(config) {
             "bower_components/js-beautify/js/lib/beautify-html.js",
             "bower_components/js-beautify/js/lib/beautify-css.js",
             'vendor/parse-1.2.18.js',
+            'vendor/highlight.min.js',
             'bower_components/angular/angular.js',
             'bower_components/angular-resource/angular-resource.js',
             'bower_components/angular-mocks/angular-mocks.js',
