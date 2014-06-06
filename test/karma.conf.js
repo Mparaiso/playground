@@ -13,6 +13,10 @@ module.exports = function(config) {
             "bower_components/js-beautify/js/lib/beautify-css.js",
             'vendor/parse-1.2.18.js',
             'vendor/highlight.min.js',
+            'bower_components/codemirror/lib/codemirror.js',
+            'bower_components/codemirror/addon/mode/loadmode.js',
+            'bower_components/codemirror/addon/lint/lint.js',
+            'bower_components/codemirror/addon/lint/javascript-lint.js',
             'bower_components/angular/angular.js',
             'bower_components/angular-resource/angular-resource.js',
             'bower_components/angular-mocks/angular-mocks.js',
@@ -46,7 +50,7 @@ module.exports = function(config) {
             "javascript/*.js":['coverage']
         },
         coverageReporter: {
-            type:'text',
+            type:'lcov',
             dir:'coverage/'
             //            type:'html',
             //            dir:'coverage/'

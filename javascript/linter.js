@@ -2,15 +2,18 @@
 /*global angular,CodeMirror */
 angular.module('linter',[])
 .service('Linter',function(){
+    "use strict";
     this.getLinter=function(syntax){
         switch(syntax) {
             case 'javascript':
             case 'js':
-                return CodeMirror.lint.javascript
+                return CodeMirror.lint.javascript;
             case 'coffeescript':
-                return CodeMirror.lint.coffeescript
+                return CodeMirror.lint.coffeescript;
+            case 'css':
+                return CodeMirror.lint.css;
             default:
-                return false
+                return false;
         }
-    }
+    };
 });

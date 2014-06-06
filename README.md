@@ -14,6 +14,8 @@ a collaborative code playground for html,js,css,coffeescript less and sass
 
 With Playground developpers can prototype and experiment with web technologies right in the browser and no longer need to open a desktop IDE to code for the web. Playground is written in html,css and javascript.
 
+[![Build Status](https://travis-ci.org/Mparaiso/playground/images/playground-1.jpg)](https://mparaiso.github.io/playground/)
+[![Build Status](https://travis-ci.org/Mparaiso/playground/images/playground-2.jpg)](https://mparaiso.github.io/playground/)
 
 ### Features
 

@@ -55,7 +55,7 @@ angular.module('api.parse', [])
 		/** create a new gist */
 		this.create = function(gist) {
 			var acl, user, _gist;
-			user = Parse.User.current();
+			user = User.getCurrentUser();
 			if (!user) {
 				return $q.reject('Not authenticated,please signin or signup to save this gist');
 			}

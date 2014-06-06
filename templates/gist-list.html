@@ -10,7 +10,8 @@
         <h2>Your Gists</h2>
         <hr />
         <h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
-        <article class=" gist-list " ng-show="gists.length>0" ng-repeat="gist in gists |orderBy:orderByDate:true track by $index">
+        <div class="gist-list">
+        <article class="gist" ng-show="gists.length>0" ng-repeat="gist in gists |orderBy:orderByDate:true track by $index">
             <h4>
                 <a  href="#/gist/{{gist.id}}">
                 {{gist.description}}
@@ -28,8 +29,9 @@
             </div>
 <pre ng-show="file.value" ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
 <code>{{ file.value|limitLinesTo:5}}</code></pre>
-<h1>&nbsp;</h1>
-    </article>
+<hr />
+</article>
+</div>
 </div>
 <div class="col-md-3">
 		<h2>Your account</h2>

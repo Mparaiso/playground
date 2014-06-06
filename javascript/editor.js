@@ -112,7 +112,7 @@ angular.module('editor', ["linter",'formatter'])
         },
         link: function($scope, el, attr, ngModel) {
             var change_selected, editor, timeout;
-
+            console.log('editor');
             function isCurrentEditor() {
                 return Editor.selected === $scope.type;
             }
@@ -123,7 +123,7 @@ angular.module('editor', ["linter",'formatter'])
                     placeholder: $scope.placeholder,
                     autoCloseBrackets: true,
                     lineNumbers: true,
-                    lint:Linter.getLinter(EditorTypes[$scope.language].lin),
+                    lint:Linter.getLinter(EditorTypes[$scope.language].lint),
                     foldGutter:true,
                     theme: 'monokai',
                     profile: EditorTypes[$scope.language].syntax,
@@ -169,7 +169,9 @@ angular.module('editor', ["linter",'formatter'])
                         editor.setOption('mode', EditorTypes[newValue].mode);
                         editor.setOption('syntax', EditorTypes[newValue].syntax);
                         editor.setOption('profile', EditorTypes[newValue].syntax);
-                        editor.setOption('lint',Linter.getLinter(EditorTypes[newValue].lint));
+                        $timeout(function  () {
+                            editor.setOption('lint',Linter.getLinter(EditorTypes[newValue].lint));
+                        },1000);
                     }
                 }, true);
                 /** on format event , format the editor content */
@@ -203,7 +205,8 @@ angular.module('editor', ["linter",'formatter'])
     },
     css: {
         syntax: 'css',
-        mode: 'css'
+        mode: 'css',
+        lint:'css'
     },
     less: {
         syntax: 'css',

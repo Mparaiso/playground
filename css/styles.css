@@ -67,8 +67,27 @@ main {
     background-color: #424147;
     height: 100%;
 }
+/*@note @css columns/tiles http://demosthenes.info/blog/825/Pinterest-Style-Column-Layout-In-Pure-CSS */
 .gist-list{
-    height: auto!important;
+    -webkit-column-width:30em;
+    /* -webkit-column-count:2;*/
+    -webkit-column-min-width:20em;
+    -webkit-column-gap:2.5em;
+    -o-column-width:30em;
+    -o-column-gap:2.5em;
+    -ms-column-width:30em;
+    -ms-column-gap:2.5em;
+    -moz-column-width:30em;
+    -moz-column-gap:2.5em;
+    column-width:30em;
+    column-gap:2.5em;
+}
+.gist-list .gist{
+    -webkit-column-break-inside:avoid;
+    -moz-column-break-inside:avoid;
+    -ms-column-break-inside:avoid;
+    -o-column-break-inside:avoid;
+    column-break-inside:avoid;
 }
 .CodeMirror pre.CodeMirror-placeholder {
     color: #999;
