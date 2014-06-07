@@ -1,1 +1,1 @@
-- [ ] test for potential js errors on IE10
+- [X] test for potential js errors on IE10

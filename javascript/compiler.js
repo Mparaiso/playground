@@ -78,7 +78,6 @@ angular.module('compiler', [])
 					 * @return {Void}
 					 */
 					appendTags: function(language, htmlElement, value) {
-						// console.log(arguments);
 						if (appendTagsStrategies[language]) {
 							appendTagsStrategies[language](htmlElement, value);
 						} else {
@@ -95,15 +94,19 @@ angular.module('compiler', [])
 					 * @return {Void}
 					 */
 					appendScript: function(language, htmlElement, value) {
-						if (appendScriptStrategies[language]) {
-							appendScriptStrategies[language](htmlElement, value);
-						} else {
-							//default strategy
-							var body = htmlElement.querySelector('BODY');
-							var scriptElement = document.createElement('SCRIPT');
-							scriptElement.innerHTML = "\n" + value;
-							body.appendChild(scriptElement);
-						}
+                        if (appendScriptStrategies[language]) {
+                            appendScriptStrategies[language](htmlElement, value);
+                        } else {
+                            //default strategy
+                            var body = htmlElement.querySelector('BODY');
+                            if(!body){
+                                body= document.createElement('BODY');
+                                htmlElement.appendChild(body);
+                            }
+                            var scriptElement = document.createElement('SCRIPT');
+                            scriptElement.innerHTML = "\n" + value;
+                            body.appendChild(scriptElement);
+                        }
 					},
 					/**
 					 * manage how styles are appended
@@ -113,11 +116,16 @@ angular.module('compiler', [])
 					 * @return {Void}
 					 */
 					appendStyle: function(language, htmlElement, value) {
+                        var styleElement;
 						if (appendStyleStrategies[language]) {
 							appendStyleStrategies[language](htmlElement, value);
 						} else {
 							var head = htmlElement.querySelector('HEAD');
-							var styleElement = document.createElement('STYLE');
+                            if(!head){
+                                htmlElement.appendChild(document.createElement('HEAD'));
+                                head=htmlElement.querySelector('HEAD');
+                            }
+                            styleElement=document.createElement('STYLE');
 							styleElement.innerHTML = value;
 							head.appendChild(styleElement);
 						}

@@ -40,9 +40,13 @@ angular.module('renderer', [])
             /** listen for errors in the iframe @see  http://stackoverflow.com/questions/6327128/can-i-catch-exception-of-iframe-in-parent-window-of-iframe */
             $rootScope.$broadcast(RendererEvent.RENDERER_ERROR, [e.lineno, ':', e.colno, ' ', e.message].join(''));
         },false);
+        /* monkey patch console.err in the iframe */
+        iframe.contentWindow.console.error=function(e){
+            $rootScope.$broadcast(RendererEvent.RENDERER_ERROR,e);
+            console.error(e);
+        }
         doc.writeln(content);
         doc.close();
-        //sconsole.clear();
         console.log(content);
     };
 }).directive('renderer', function(RendererService) {

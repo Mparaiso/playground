@@ -193,7 +193,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
             Gist.create(Gist.current).then(function(gist) {
                 Notification.success('Gist created Successfully');
                 $scope.$apply($location.path.bind($location, '/gist/' + gist.id));
-            }).catch(function(e) {
+            }).fail(function(e) {
                 console.log('fail');
                 $timeout(function(){
                     return Notification.error('Gist creation failed : ' + typeof e === 'string' ? e : '');
