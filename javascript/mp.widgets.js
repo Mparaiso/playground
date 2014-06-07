@@ -43,18 +43,5 @@ angular.module('mp.widgets', [])
             });
         }
     };
-})
-.directive('mpDropdown', function($timeout) {
-    return {
-        transclude: true,
-        restrict: 'AEC',
-        scope: {
-            'ignoreClick': "@"
-        },
-        link: function(scope, element, attributes) {
-            $timeout(function() {
-                element.dropdown();
-            });
-        }
-    };
 });
+

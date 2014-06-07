@@ -4,10 +4,20 @@ describe("playground", function() {
     beforeEach(function() {
         angular.module('test', ['playground', 'Parse.mock']);
         module('test');
-        var self = this;
-        inject(function($injector, $controller) {
-            self.$injector = $injector;
-            self.$controller = $controller;
+        inject(function($injector, $controller,$rootScope) {
+            this.$injector = $injector;
+            this.$controller = $controller;
+            this.$rootScope=$rootScope;
+            this.scope=this.$rootScope.$new();
+        });
+    });
+    describe('MainCtrl',function(){
+        beforeEach(function(){
+            this.scope=this.$rootScope.$new();
+            this.MainCtrl=this.$controller('MainCtrl',{$scope:this.scope});
+        });
+        it('Notification is defined',function(){
+            expect(this.scope.Notification).toBeDefined();
         });
     });
     describe('SignUpCtrl', function() {
@@ -19,6 +29,24 @@ describe("playground", function() {
             it('is a function', function() {
                 expect(this.$scope.signUp instanceof Function).toBe(true);
             });
+        });
+    });
+    describe('SignInCtrl',function(){
+        beforeEach(inject(function($controller,$rootScope){
+            this.SignInCtrl=$controller('SignInCtrl',{$scope:this.scope});
+        }));
+        it('credentials',function(){
+            expect(this.scope.credentials).toBeDefined();
+        });
+    });
+    describe('MenuCtrl',function(){
+        beforeEach(function(){
+            this.User=this.$injector.get('User');
+            spyOn(this.User,'getCurrentUser').and.returnValue({});
+            this.MenuCtrl=this.$controller('MenuCtrl',{$scope:this.scope});
+        });
+        it('user',function(){
+            expect(this.scope.user).toBeDefined();
         });
     });
     describe("LibraryCtrl", function() {
@@ -45,4 +73,5 @@ describe("playground", function() {
             });
         });
     });
+
 });

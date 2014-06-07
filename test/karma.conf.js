@@ -8,6 +8,7 @@ module.exports = function(config) {
         files: [
             'bower_components/es5-shim/es5-shim.js',
             'bower_components/jquery/dist/jquery.min.js',
+            'bower_components/bootstrap/dist/js/bootstrap.min.js',
             "bower_components/js-beautify/js/lib/beautify.js",
             "bower_components/js-beautify/js/lib/beautify-html.js",
             "bower_components/js-beautify/js/lib/beautify-css.js",

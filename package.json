@@ -7,7 +7,7 @@
     "scripts": {
         "start": "node bin/server.js",
         "test": "karma start test/karma.conf.js --single-run ",
-        "test-continuous": "karma start test/karma.conf.js"
+        "test-continuous": "karma start test/karma.conf.dev.js"
     },
     "author": "mparaiso <mparaiso@online.fr>",
     "license": "GPL",
