@@ -3,24 +3,23 @@
     @description playground the web tech playground
     @copyright 2014 mparaiso <mparaiso@online.fr>
     @license GPL
--->
-<div class="collapse navbar-collapse" id="navigation-collapsed">
-    <ul class="navbar-nav nav navbar-right" id="rightMenu">
-    <!--     <li class="navbar-text text-small" ng-class="Notification.current.type">{{Notification.current.text}}&nbsp;<span
-            ng-show="Notification.notifications.length>2" class="badge">{{Notification.notifications.length}}</span>
-        </li> -->
-        <li><a href="#/">New</a></li>
-        <li ng-show="!User.isAuthenticated()">
-            <a id="signin" href="#/signin">Signin</a>
-        </li>
-        <li ng-show="!User.isAuthenticated()">
-            <a id="signup" href="#/signup">Signup</a>
-        </li>
-        <li ng-show="User.isAuthenticated()">
-        <a id="youraccount" href="#/gist">Your gists, {{user.username|limitTo:30}}</a></li>
-        <li  ng-show="User.isAuthenticated()">
-        <a id="signout" ng-click="signOut()" href="javascript:void 0;">Signout</a></li>
-    </ul>
-    <ul class="navbar-nav nav navbar-left" id="leftMenu" ng-include="rightMenuTemplate">
-    </ul>
-</div>
+    -->
+    <div class="collapse navbar-collapse" id="navigation-collapsed">
+        <ul class="navbar-nav nav navbar-right" id="rightMenu">
+            <li><a href="#/">New</a></li>
+            <li><a href="#/public-gist">Explore</a></li>
+            <li ng-show="!User.isAuthenticated()">
+                <a id="signin" href="#/signin">Signin</a>
+            </li>
+            <li ng-show="!User.isAuthenticated()">
+                <a id="signup" href="#/signup">Signup</a>
+            </li>
+            <li ng-show="User.isAuthenticated()">
+                <a id="youraccount" href="#/gist">Your gists, {{user.username|limitTo:30}}</a></li>
+            <li  ng-show="User.isAuthenticated()">
+                <a id="signout" ng-click="signOut()" href="javascript:void 0;">Signout</a></li>
+            <li><a ng-href="#/help">Help</a></li>
+        </ul>
+        <ul class="navbar-nav nav navbar-left" id="leftMenu" ng-include="rightMenuTemplate">
+        </ul>
+    </div>

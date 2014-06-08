@@ -10,7 +10,8 @@
 angular.module('editor', ["linter",'formatter'])
 .constant('EditorEvent', {
     CURRENT_EDITOR_CHANGE: 'CURRENT_EDITOR_CHANGE',
-    CURRENT_EDITOR_FORMAT: 'FORMAT'
+    CURRENT_EDITOR_FORMAT: 'FORMAT',
+    EDITOR_SETTINGS_CHANGE:'EditorEvent.EDITOR_SETTINGS_CHANGE'
 })
 .service('Editor', function(EditorSettings) {
     this.EditorSettings=EditorSettings;
@@ -92,7 +93,7 @@ angular.module('editor', ["linter",'formatter'])
     ].sort();
     this.selectedTheme="default";
 })
-.directive('codeEditor', function($timeout, $compile,Linter, Formatter,EditorEvent, Editor, EditorTypes) {
+.directive('codeEditor', function($timeout, $compile,Linter, Formatter,EditorEvent, Editor,EditorSettings, EditorTypes) {
     /**
     * DIRECTIVE FOR CODEMIRROR EDITOR
     */
@@ -112,7 +113,6 @@ angular.module('editor', ["linter",'formatter'])
         },
         link: function($scope, el, attr, ngModel) {
             var change_selected, editor, timeout;
-            console.log('editor');
             function isCurrentEditor() {
                 return Editor.selected === $scope.type;
             }
@@ -121,11 +121,12 @@ angular.module('editor', ["linter",'formatter'])
                     mode: EditorTypes[$scope.language].mode,
                     syntax: EditorTypes[$scope.language].syntax,
                     placeholder: $scope.placeholder,
+                    wrap:EditorSettings.lineWrapping,
                     autoCloseBrackets: true,
                     lineNumbers: true,
                     lint:Linter.getLinter(EditorTypes[$scope.language].lint),
                     foldGutter:true,
-                    theme: 'monokai',
+                    theme: EditorSettings.theme,
                     profile: EditorTypes[$scope.language].syntax,
                     matchBrackets: true,
                     matchTags: true,
@@ -137,6 +138,7 @@ angular.module('editor', ["linter",'formatter'])
                     },
                     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter","CodeMirror-lint-markers"]
                 });
+                //Set font size
                 /** on editor.value change modify the directive model */
                 editor.on('change', function(editor, changeObj) {
                     $timeout.cancel(timeout);
@@ -144,6 +146,9 @@ angular.module('editor', ["linter",'formatter'])
                         ngModel.$setViewValue(editor.getValue());
                     }, 500);
                 });
+                $timeout(function(){
+                    editor.getWrapperElement().style.fontSize=EditorSettings.fontSize+"px";
+                },500);
                 ngModel.$render = function() {
                     editor.setValue(ngModel.$viewValue);
                 };
@@ -157,8 +162,9 @@ angular.module('editor', ["linter",'formatter'])
                     }
                 });
                 /** watch configuration */
-                $scope.$on('EditorSettingsChange',function(event,args){
+                $scope.$on(EditorEvent.EDITOR_SETTINGS_CHANGE,function(event,args){
                     editor.setOption('theme',args.theme);
+                    editor.setOption('wrap',args.lineWrapping);
                     editor.getWrapperElement().style.fontSize=args.fontSize+"px";
                 });
                 /** watch for language change , modify editor mode accordingly */
@@ -176,7 +182,6 @@ angular.module('editor', ["linter",'formatter'])
                 }, true);
                 /** on format event , format the editor content */
                 $scope.$on(EditorEvent.CURRENT_EDITOR_FORMAT, function() {
-                    console.log('format');
                     if (!isCurrentEditor()) {
                         return;
                     }

@@ -216,3 +216,47 @@ input.search::-webkit-search-cancel-button {
     font-weight: inherit!important;
 }
 
+/**
+ * SOCIAL
+ */
+
+.glyphicon-social{
+    width:2em;
+    height:2em;
+    opacity: 0.3;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 2px 2px;
+}
+.glyphicon-social:hover{
+    opacity: 0.5;
+}
+.glyphicon-github{
+    background-image: url('../images/glyphicons_social_21_github.png') ;
+}
+.glyphicon-twitter{
+    background-image: url('../images/glyphicons_social_31_twitter.png')  ;
+}
+.glyphicon-facebook{
+    background-image: url('../images/glyphicons_social_30_facebook.png') ;
+}
+.glyphicon-rss{
+    background-image: url('../images/glyphicons_social_37_rss.png') ;
+}
+.glyphicon-email{
+    background-image: url('../images/glyphicons_social_39_e-mail.png')  ;
+}
+/**
+ * TYPOGRAPHY
+ */
+.ellipsis{
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+pre.prettify{
+    color: #FFF;
+    background-color: #000;
+}

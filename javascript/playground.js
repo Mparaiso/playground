@@ -1,5 +1,5 @@
-/*jslint browser:true,node:true,white:true*/
-/*global angular,CoffeeScript,less,markdown,md5 */
+/*jslint browser:true,node:true,white:true,nomen:true*/
+/*global _,angular,CoffeeScript,less,markdown,md5 */
 
 /**
  * @description playground the web tech playground
@@ -46,6 +46,10 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
                 return Gist.findGistById($route.current.params.id);
             }
         }
+    })
+    .when('/help',{
+        controller:'HelpCtrl',
+        templateUrl:'templates/help.html'
     });
     $routeProvider.otherwise({
         redirectTo: '/'
@@ -53,9 +57,6 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     //@note @angular enabling CORS requests
     $httpProvider.defaults.useXDomain = true;
     CompilerProvider
-    .addScriptCompiler('markdown', function(value) {
-        return markdown.toHTML(value);
-    })
     .addScriptCompiler('coffeescript', function(value) {
         return CoffeeScript.compile(value);
     })
@@ -98,6 +99,10 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     });
 })
 .controller('MainCtrl', function($rootScope, $scope, EditorSettings,EditorEvent, Editor, $route,User, Notification, RendererEvent, ShortCutsEvent) {
+    $scope.globals={
+        email:'<mparaiso@online.fr>',
+        year:(new Date()).getFullYear()
+    };
     $scope.Notification = Notification;
     $scope.User = User;
     $rootScope.$on(ShortCutsEvent.SHORTCUTS_SAVE, function(event, message) {
@@ -207,7 +212,6 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
 .controller('GistEditCtrl', function($rootScope,$scope, Editor, Gist, gist, $location, $routeParams, Notification,$timeout) {
     var saving = false;
     $scope.Editor = Editor;
-    console.log(gist);
     $scope.Gist = Gist;
     Gist.current = gist;
     Editor.editors = gist.files;
@@ -266,7 +270,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     $scope.gists = gists;
     $scope.orderByDate=function(gist){
         return Date.parse(gist.createdAt);
-    }
+    };
 })
 .controller('AccountCtrl', function($scope, User) {
     $scope.user = User.getCurrentUser();
@@ -280,11 +284,19 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         }
     }, true);
 })
-.controller('EditorSettingsCtrl',function  (EditorSettings,$scope,$rootScope) {
+.controller('EditorSettingsCtrl',function  (EditorEvent,Setting,EditorSettings,$scope,$rootScope) {
+    var self=this;
+    this.saveEditorSettings = _.throttle(function (settings){
+        console.debug('settings');
+        return Setting.save(settings);
+    },2000);
     $scope.EditorSettings=EditorSettings;
     $scope.$watch('EditorSettings',function(newValue,oldValue){
-        $rootScope.$broadcast('EditorSettingsChange',newValue);
+        $rootScope.$broadcast(EditorEvent.EDITOR_SETTINGS_CHANGE,newValue);
+        self.saveEditorSettings(newValue);
     },true);
+
+
 })
 .controller('EditorMenuCtrl', function($scope, Gist, Editor) {
     $scope.Editor = Editor;
@@ -310,13 +322,19 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         return $scope.timeout;
     };
 })
+.controller('HelpCtrl',function  ($scope,$http,$sce) {
+    $http.get('assets/help.md',{type:'text'}).then(function(xhr){
+        console.log($sce);
+        $scope.help=$sce.trustAsHtml(markdown.toHTML(xhr.data,'Maruku'));
+    }) ;
+})
 .constant('AppEvent', {
     SAVE_PRESSED: 'SAVE_PRESSED',
     RUN_PRESSED: 'RUN_PRESSED',
     FORK_PRESSED: 'FORK_PRESSED',
     FORMAT_PRESSED: 'FORMAT_PRESSED'
 })
-.run(function(User, $rootScope,$anchorScroll, $location) {
+.run(function(User, $rootScope,$anchorScroll, $location,Setting,EditorSettings) {
     //debugger
     $rootScope.$on('$routeChangeStart', function(event, route) {
         if (!User.isAuthenticated()) {
@@ -333,5 +351,13 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     });
     $rootScope.$on('$routeChangeSuccess',function(event,route){
         $anchorScroll();
+    });
+    //load settings if user authenticated
+    Setting.get().then(function(settings){
+        _.extend(EditorSettings,settings);
+        console.log("ed settings",EditorSettings);
+        console.log("settings",settings);
+    }).catch(function(err){
+        console.warn(err);
     });
 });

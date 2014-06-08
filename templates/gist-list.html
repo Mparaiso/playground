@@ -12,22 +12,23 @@
         <h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
         <div class="gist-list">
         <article class="gist" ng-show="gists.length>0" ng-repeat="gist in gists |orderBy:orderByDate:true track by $index">
-            <h4>
-                <a  href="#/gist/{{gist.id}}">
-                {{gist.description}}
-                </a><button class="btn btn-link btn-xs" ng-click="remove(gist)">
-                <i class="glyphicon glyphicon-trash"></i>
-                </button>
-            </h4>
+                <div>
+                     <a  href="#/gist/{{gist.id}}" class="ellipsis" style="display:inline-block;max-width:100%;">
+                    {{gist.description}}
+                    </a>
+                </div>
             <div>{{gist.createdAt|date}}&nbsp;
                 <span class="text-muted">
                     <span ng-repeat="file in gist.files">
                     {{file.language}}
                     <span ng-show="!$last">, </span>
                     </span>
+                    <button title="delete gist" class="btn btn-link btn-xs" ng-click="remove(gist)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
                 </span>
             </div>
-<pre ng-show="file.value" ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
+<pre ng-cloak ng-show="file.value" ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
 <code>{{ file.value|limitLinesTo:5}}</code></pre>
 <hr />
 </article>

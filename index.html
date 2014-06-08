@@ -19,6 +19,7 @@
         <script defer src="bower_components/js-beautify/js/lib/beautify.js"></script>
         <script defer src="bower_components/js-beautify/js/lib/beautify-html.js"></script>
         <script defer src="bower_components/js-beautify/js/lib/beautify-css.js"></script>
+        <script defer src="bower_components/markdown/lib/markdown.js"></script>
         <script defer src="vendor/csslint.js"></script>
         <script defer src="vendor/highlight.min.js"></script>
         <script defer src="bower_components/jshint/dist/jshint.js"></script>
@@ -40,12 +41,13 @@
         <script defer src="bower_components/codemirror/addon/fold/xml-fold.js"></script>
         <script defer src="bower_components/codemirror/addon/edit/matchtags.js"></script>
         <script defer src="bower_components/codemirror/addon/hint/show-hint.js"></script>
-        <script defer src="bower_components/codemirror/addon/hint/anyword-hint.js"></script>
+        <script defer src="bower_components/codemirror/addon/hint/xml-hint.js"></script>
+        <script defer src="bower_components/codemirror/addon/hint/html-hint.js"></script>
+        <script defer src="bower_components/codemirror/addon/hint/css-hint.js"></script>
         <script defer src="bower_components/codemirror/addon/lint/lint.js"></script>
         <script defer src="bower_components/codemirror/addon/lint/javascript-lint.js"></script>
         <script defer src="bower_components/codemirror/addon/lint/coffeescript-lint.js"></script>
         <script defer src="bower_components/codemirror/addon/lint/css-lint.js"></script>
-        <script defer src="bower_components/markdown/lib/markdown.js"></script>
         <script defer src="bower_components/less/dist/less-1.7.0.min.js"></script>
         <script defer src="bower_components/angular/angular.min.js"></script>
         <script defer src="bower_components/angular-route/angular-route.min.js"></script>
@@ -120,13 +122,54 @@
         </article>
         </main>
         <hr>
-        <footer class="container-fluid text-small">
-            <div class="row">
-                <p>&nbsp;</p>
-                <div class="col-md-12">
-                    &copy; mparaiso &lt;mparaiso@online.fr&gt;
-                </div>
-            </div>
+        <footer class="bg-misc text-gray">
+            <section class="container-fluid">
+                <section class="row">
+                    <div class="col-md-10">
+                        <p>&nbsp;</p>
+                        <p>
+                            &copy; {{globals.year}} mparaiso {{globals.email}}
+                        </p>
+                        <p>
+                            Playground is an opensource project under GPL license
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p>&nbsp;</p>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="{{globals.projectUrl}}">
+                                    <span class='glyphicon glyphicon-social glyphicon-facebook'></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="twitter" href="https://twitter.com/intent/tweet?text=">
+                                    <script type="text/javascript" charset="utf-8">
+                                        (function(){
+                                            var twitter=document.querySelector('#twitter');
+                                            twitter.href=twitter.href+location.href;
+                                        }())
+                                    </script>
+                                    <span class='glyphicon glyphicon-social glyphicon-twitter'></span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="https://github.com/Mparaiso/fluxreader">
+                                    <span class='glyphicon glyphicon-social glyphicon-github'></span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a href="mailto:mparaiso@online.fr">
+                                    <span class='glyphicon glyphicon-social glyphicon-email'></span>
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
         </footer>
         <nav class="navbar navbar-inverse navbar-fixed-bottom"
             role="notifications" ng-show="Notification.current"

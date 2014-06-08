@@ -73,5 +73,11 @@ describe("playground", function() {
             });
         });
     });
+    describe('HelpCtrl',function(){
+        it('HelpCtrl is defined',inject(function($controller,$rootScope){
+            this.scope=$rootScope.$new();
+            this.HelpCtrl=$controller('HelpCtrl',{$scope:this.scope});
+        }));
+    });
 
 });

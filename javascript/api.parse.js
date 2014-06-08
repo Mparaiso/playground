@@ -127,4 +127,27 @@ angular.module('api.parse', [])
 		this.signOut = function() {
 			return Parse.User.logOut();
 		};
-	});
+        this.save=function(userData){
+            if(this.isAuthenticated){
+
+            }
+        }
+    })
+    .service('Setting',function(User,$q){
+        this.save=function(settings){
+            if(User.isAuthenticated()){
+                var user=Parse.User.current();
+                user.set('settings',settings);
+                return user.save();
+            }
+            return $q.reject("User is not authenticated");
+        };
+        this.get=function(){
+            if(User.isAuthenticated()){
+                return $q.when(User.getCurrentUser().settings);
+            }
+            return $q.reject(new Error('Current User not found'));
+        };
+    });
+
+

@@ -1,5 +1,6 @@
 /*jslint eqeq:true,node:true,es5:true,white:true,plusplus:true,nomen:true,unparam:true,devel:true,regexp:true */
 /*global angular,CodeMirror */
+/*Copyright © 2014 mparaiso <mparaiso@online.fr>. All Rights Reserved.*/
 angular.module('linter',[])
 .service('Linter',function(){
     "use strict";

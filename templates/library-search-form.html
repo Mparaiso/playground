@@ -1,0 +1,17 @@
+<form ng-controller="LibraryCtrl" role="form" class="form row">
+    <div class="col-xs-12">
+        <label for="">Search for a library :
+        </label>
+        <input ng-change="query(q)" type="search" class="form-control input-sm" ng-model="q">
+    </div>
+    <h3>
+        &nbsp;  
+    </h3>
+    <div class="col-xs-12" ng-show="searchResults.length===0">No result for library {{q}}</div> 
+    <div class="col-xs-12" ng-show="timeout">Searching for library {{q}}</div> 
+    <div class="col-xs-12" ng-show="searchResults.length>0 && !timeout">
+        <label for="">Results :</label>
+        <div type="text" class="form-control input-sm"  ng-repeat="searchResult in searchResults track by $index">{{searchResult}}</div>
+    </div>
+    <div readonly>&nbsp;</div>
+</form>

@@ -38,37 +38,7 @@
                 Settings &nbsp; <i class="glyphicon glyphicon-chevron-down text-micro"></i>
             </button>
             <ul class="dropdown-menu" role="menu" >
-                <li class="dropdown-header " style="min-width:500px;"  stop-propagation="click">
-                    <form class="form" name="editorSettingsForm" role="form" ng-controller="EditorSettingsCtrl" >
-                        <div class="form-group ">
-                            <label>Editor Settings:</label>
-                        </div>
-                        <div class="form-group ">
-                            <label >Theme:</label>
-                            <select  ng-model="EditorSettings.theme" ng-options="theme for theme in Editor.themes" class="form-control"> </select>
-                        </div>
-                        <div class="form-group " >
-                            <label for="">Tab size:</label>
-                            <input mix="1" max="8" class="form-control input-xs" type="number" ng-model="EditorSettings.tabSize"/>
-                        </div>
-                        <div class="form-group ">
-                            <label for="">Font size:</label>
-                            <input min="9" max="25" class="form-control input-xs" type="number" ng-model="EditorSettings.fontSize"/>
-                        </div>
-                        <div class="form-group ">
-                            <input type="checkbox" name="" ng-model="EditorSettings.lineWrapping"/>
-                           <label for="">Line wrapping</label> 
-                       </div>
-                       <div class="form-group">
-                           <label for="">Refresh interval</label>
-                           <input type="number" min="1000"  max="10000" class="form-control input-xs" ng-model="EditorSettings.refreshInterval"/>
-                       </div>
-                       <div class="form-group ">
-                           <input type="checkbox" ng-model="EditorSettings.autoRefresh" class=" input-xs"/>
-                           <label for="">Auto Refresh</label> 
-                       </div>
-                    </form>
-                </li>
+                <li class="dropdown-header " style="min-width:500px;"  stop-propagation="click" ng-include="'templates/settings-form.html'"></li>
             </ul>
         </li>
             
@@ -79,24 +49,7 @@
             <i class="glyphicon glyphicon-chevron-down text-micro"></i>
         </button>
         <ul  class="dropdown-menu" role="menu"  stop-propagation="click" style="min-width:600px;" >
-            <li class="dropdown-header libraries">
-            <form ng-controller="LibraryCtrl" role="form" class="form row">
-                <div class="col-xs-12">
-                    <label for="">Search for a library :
-                    </label>
-                    <input ng-change="query(q)" type="search" class="form-control input-sm" ng-model="q">
-                </div>
-                <h3>
-                    &nbsp;  
-                </h3>
-                <div class="col-xs-12" ng-show="searchResults.length===0">No result for library {{q}}</div> 
-                <div class="col-xs-12" ng-show="timeout">Searching for library {{q}}</div> 
-                <div class="col-xs-12" ng-show="searchResults.length>0 && !timeout">
-                    <label for="">Results :</label>
-                    <div type="text" class="form-control input-sm"  ng-repeat="searchResult in searchResults track by $index">{{searchResult}}</div>
-                </div>
-                <div readonly>&nbsp;</div>
-            </form>
+            <li class="dropdown-header libraries" ng-include="'templates/library-search-form.html'">
             </li>
         </ul>
         </li>

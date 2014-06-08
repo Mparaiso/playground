@@ -78,4 +78,31 @@ describe("api.parse", function() {
             });
         });
     });
+    describe('Setting',function(){
+        beforeEach(inject(function(Setting,$q){
+            this.Setting=Setting;
+            this.settings={};
+            spyOn(Parse.User,'current').and.returnValue({
+                toJSON:function(){return {settings:{}}},
+                set:function(){},
+                authenticated:function(){return true},
+                save:function(){return $q.when(this.toJSON()); }
+            });
+        }));
+        describe('#save',function(){
+            it('when User saves settings',function(done){
+                this.Setting.save(this.setting).then(done);
+                this.$rootScope.$apply();
+            });
+        });
+        describe('#get',function(){
+            it('when User gets settings ',function(done){
+                this.Setting.get().then(function(settings){
+                    expect(settings).toBeDefined();
+                })
+                .then(done);
+                this.$rootScope.$apply();
+            });
+        });
+    });
 });

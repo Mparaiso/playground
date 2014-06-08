@@ -1,5 +1,5 @@
 {
-    "libs":["browser"],
+    "libs":["browser","underscore"],
     "plugins":{
         "node":{},
         "angular":{}

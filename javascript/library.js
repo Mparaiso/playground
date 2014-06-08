@@ -1,4 +1,5 @@
 /*global angular*/
+/*Copyright © 2014 mparaiso <mparaiso@online.fr>. All Rights Reserved.*/
 angular.module('library', [])
 .service('Library', function($http,$q) {
     /** manage cdn integration */
