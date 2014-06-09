@@ -141,12 +141,12 @@ angular.module('backend', [])
 		this.signIn = function(credentials) {
 			return Parse.User.logIn(credentials.username, credentials.password);
 		};
-		this.signOut = function() {
-			return Parse.User.logOut();
-		};
+        this.signOut = function() {
+            return Parse.User.logOut();
+        };
         this.save=function(userData){
             var user;
-            if(this.isAuthenticated){
+            if(this.isAuthenticated()){
                 user=Parse.User.current();
                 user.set(userData);
                 return user.save();
