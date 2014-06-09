@@ -1,17 +1,13 @@
 <!--
     templates/gist-list.html
-	@description playground the web tech playground
-	@copyright 2014 mparaiso <mparaiso@online.fr>
-	@license GPL
+    @description playground the web tech playground
+    @copyright 2014 mparaiso <mparaiso@online.fr>
+    @license GPL
 -->
-<hr>
-<div class="row">
-    <div class="col-md-9">
-        <h2>Your Gists</h2>
-        <hr />
-        <h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
-        <div class="gist-list">
-        <article class="gist" ng-show="gists.length>0" ng-repeat="gist in gists |orderBy:orderByDate:true track by $index">
+<div ng-controller="GistListCtrl">
+    <div ng-include="'templates/pager.html'" replace=true></div>
+    <section  class="gist-list">
+        <div  class="gist" ng-show="gists.length>0" ng-repeat="gist in gists |orderBy:orderByDate:true track by $index">
                 <div>
                      <a  href="#/gist/{{gist.id}}" class="ellipsis" style="display:inline-block;max-width:100%;">
                     {{gist.description}}
@@ -23,23 +19,13 @@
                     {{file.language}}
                     <span ng-show="!$last">, </span>
                     </span>
-                    <button title="delete gist" class="btn btn-link btn-xs" ng-click="remove(gist)">
+                    <button ng-if="user.id == gist.userId" title="delete gist" class="btn btn-link btn-xs" ng-click="remove(gist)" >
                         <i class="glyphicon glyphicon-trash"></i>
                     </button>
                 </span>
             </div>
-<pre ng-cloak ng-show="file.value" ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify">
-<code>{{ file.value|limitLinesTo:5}}</code></pre>
-<hr />
-</article>
-</div>
-</div>
-<div class="col-md-3">
-		<h2>Your account</h2>
-		<img class="thumbnail" src="//www.gravatar.com/avatar/{{md5(user.email)}}?s=120&monsterid" alt="avatar">
-		<adress>
-		{{user.username}}<br>
-		{{user.email}}
-		</address>
-	</div>
+            <pre ng-cloak ng-show="file.value" ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify"><code>{{ file.value|limitLinesTo:5}}</code></pre>
+        </div>
+    </section>
+    <div ng-include="'templates/pager.html'" replace=true></div>
 </div>

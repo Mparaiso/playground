@@ -1,4 +1,4 @@
-/*jslint browser:true,node:true,white:true,nomen:true*/
+/*jslint plusplus:true,browser:true,node:true,white:true,nomen:true*/
 /*global _,angular,CoffeeScript,less,markdown,md5 */
 
 /**
@@ -7,7 +7,7 @@
  * @license GPL
  */
 "use strict";
-angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler','api.parse', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives','prettify', 'library','linter'])
+angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler','backend', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives','prettify', 'library','linter'])
 .config(function($routeProvider, $httpProvider, CompilerProvider) {
     $routeProvider
     .when("/", {
@@ -27,13 +27,24 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         mustBeAuthenticated: false,
         mustBeAnonymous: true
     })
-    .when('/gist', {
-        controller: 'GistListCtrl',
-        templateUrl: 'templates/gist-list.html',
+    .when('/explore',{
+        controller:'ExploreCtrl',
+        templateUrl:'templates/explore.html',
+        resolve:{
+            gists:function(Gist,$location){
+                console.log($location.search());
+                var skip = $location.search().skip || 0;
+                return Gist.findAllLatest(null,null,null,skip);
+            }
+        }
+    })
+    .when('/account', {
+        controller: 'AccountCtrl',
+        templateUrl: 'templates/account.html',
         mustBeAuthenticated: true,
         resolve: {
             gists: function(Gist) {
-                return Gist.findLatest();
+                return Gist.findCurrentUserLatest();
             }
         }
     })
@@ -99,6 +110,12 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     });
 })
 .controller('MainCtrl', function($rootScope, $scope, EditorSettings,EditorEvent, Editor, $route,User, Notification, RendererEvent, ShortCutsEvent) {
+    $scope.orderByDate=function(gist){
+        return Date.parse(gist.createdAt);
+    };
+    $scope.md5 = function(string) {
+        return md5(string);
+    };
     $scope.globals={
         email:'<mparaiso@online.fr>',
         year:(new Date()).getFullYear()
@@ -118,7 +135,6 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         Notification.error('renderer error =>' + message);
     });
     $rootScope.$on(RendererEvent.COMPILATION_ERROR, function(event, message) {
-        // console.log(arguments);
         Notification.error(('compil error =>' + message.toString()).substr(0, 100));
     });
     $rootScope.$on('$routeChangeSuccess', function(event, route) {
@@ -138,7 +154,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     };
     $scope.new=function(){
         Editor.editors=Editor.getDefaultEditorValues();
-    }
+    };
 })
 .controller('SignUpCtrl', function($scope, User, $location, Notification) {
     $scope.credentials = {};
@@ -193,7 +209,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     Gist.current = {
         public: true
     };
-    $scope.Editor.editors = Editor.editors ? Editor.editors : Editor.getDefaultEditorValues();
+    $scope.Editor.editors = Editor.editors ||  Editor.getDefaultEditorValues();
     $scope.$on('save', function(event) {
         if (!Editor.isEmpty() && !saving) {
             saving = true;
@@ -202,7 +218,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
                 Notification.success('Gist created Successfully');
                 $scope.$apply($location.path.bind($location, '/gist/' + gist.id));
             }).fail(function(e) {
-                console.log('fail');
+                console.warn('fail');
                 $timeout(function(){
                     return Notification.error('Gist creation failed : ' + typeof e === 'string' ? e : '');
                 });
@@ -255,8 +271,11 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         $rootScope.$broadcast('run',Editor.editors);
     });
 })
-.controller('GistListCtrl', function($scope, gists, Gist, Notification, User) {
-    $scope.user = User.getCurrentUser();
+.controller('ExploreCtrl',function  ($scope,gists,Gist) {
+    $scope.gists=gists;
+})
+.controller('GistListCtrl', function($scope, Gist, Notification,$location) {
+    $scope.skip= +$location.search().skip ||0;
     $scope.remove = function(gist) {
         Gist.deleteById(gist.id).then(function() {
             var index = $scope.gists.indexOf(gist);
@@ -267,22 +286,32 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
             Notification.error(error);
         });
     };
-    $scope.md5 = function(string) {
-        return md5(string);
+    $scope.hasPrevious=function  () {
+        return $scope.skip>0;
     };
-    $scope.gists = gists;
-    $scope.orderByDate=function(gist){
-        return Date.parse(gist.createdAt);
+    $scope.hasNext=function(){
+        return $scope.gists.length>=Gist.gistPerPage;
+    };
+    $scope.previous=function(){
+        if($scope.hasPrevious()){
+            $location.search('skip',--$scope.skip);
+        }
+    };
+    $scope.next=function(){
+        if($scope.hasNext()){
+            $location.search('skip',++$scope.skip);
+        }
     };
 })
-.controller('AccountCtrl', function($scope, User) {
+.controller('AccountCtrl', function($scope, gists, Gist, Notification, User) {
     $scope.user = User.getCurrentUser();
+    console.log($scope.user);
+    $scope.gists = gists;
 })
 .controller('EditorCtrl', function($scope, $rootScope,Editor, EditorEvent) {
     $scope.Editor = Editor;
     $scope.$watch('Editor.selected', function(newValue, oldValue) {
         if (newValue !== oldValue) {
-            //console.info(arguments);
             $rootScope.$broadcast(EditorEvent.CURRENT_EDITOR_CHANGE, newValue);
         }
     }, true);
@@ -290,7 +319,6 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
 .controller('EditorSettingsCtrl',function  (EditorEvent,Setting,EditorSettings,$scope,$rootScope) {
     var self=this;
     this.saveEditorSettings = _.throttle(function (settings){
-        console.debug('settings');
         return Setting.save(settings);
     },2000);
     $scope.EditorSettings=EditorSettings;
@@ -327,7 +355,6 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
 })
 .controller('HelpCtrl',function  ($scope,$http,$sce) {
     $http.get('assets/help.md',{type:'text'}).then(function(xhr){
-        console.log($sce);
         $scope.help=$sce.trustAsHtml(markdown.toHTML(xhr.data,'Maruku'));
     }) ;
 })
@@ -358,8 +385,6 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     //load settings if user authenticated
     Setting.get().then(function(settings){
         _.extend(EditorSettings,settings);
-        console.log("ed settings",EditorSettings);
-        console.log("settings",settings);
     }).catch(function(err){
         console.warn(err);
     });

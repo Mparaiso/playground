@@ -1,11 +1,63 @@
+<section class="container-fluid">
+    <section class="row">
+        <div class="col-md-10">
+            <p>&nbsp;</p>
+            <p>
+                &copy; {{globals.year}} mparaiso {{globals.email}}
+            </p>
+            <p>
+                Playground is an opensource project under GPL license
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p>&nbsp;</p>
+            <ul class="list-inline">
+                <li>
+                    <a href="{{globals.projectUrl}}">
+                        <span class='glyphicon glyphicon-social glyphicon-facebook'></span>
+                    </a>
+                </li>
+                <li>
+                    <a  target="_blank" id="twitter" href="https://twitter.com/intent/tweet?text=">
+                        <script type="text/javascript" charset="utf-8">
+                            (function(){
+                                var twitter=document.querySelector('#twitter');
+                                twitter.href=twitter.href+location.href;
+                            }())
+                        </script>
+                        <span class='glyphicon glyphicon-social glyphicon-twitter'></span>
+                    </a>
+
+                </li>
+                <li>
+                    <a target="_blank" href="https://github.com/Mparaiso/playground">
+                        <span class='glyphicon glyphicon-social glyphicon-github'></span>
+                    </a>
+
+                </li>
+                <li>
+                    <a href="mailto:mparaiso@online.fr">
+                        <span class='glyphicon glyphicon-social glyphicon-email'></span>
+                    </a>
+
+                </li>
+            </ul>
+        </div>
+    </section>
+</section>
 <!-- footer.html -->
-<div class="container-fluid">
-	<div class="navbar-header">
-		<ul class="navbar-nav nav" >
-			<!-- NOTIFICATIONS -->
-			<li class="navbar-text" ng-class="Notification.current.type">{{Notification.current.text}}&nbsp;<span
-				ng-show="Notification.notifications.length>2" class="badge">{{Notification.notifications.length}}</span>
-			</li>
-		</ul>
-	</div>
-</div>
+<nav class="navbar navbar-inverse navbar-fixed-bottom"
+    role="notifications" ng-show="Notification.current"
+    >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="navbar-nav nav" >
+                <!-- NOTIFICATIONS -->
+                <li class="navbar-text" ng-class="Notification.current.type">{{Notification.current.text}}&nbsp;<span
+                        ng-show="Notification.notifications.length>2" class="badge">{{Notification.notifications.length}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+

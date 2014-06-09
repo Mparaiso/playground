@@ -1,7 +1,7 @@
 /*global describe,beforeEach,inject,expect,spyOn,jasmine,angular,module,it,beforeEach*/
-describe("api.parse", function() {
+describe("backend", function() {
     "use strict";
-    beforeEach(module('api.parse'));
+    beforeEach(module('backend'));
     beforeEach(inject(function($injector,$q){
         this.$injector=$injector;
         this.$q=$q;

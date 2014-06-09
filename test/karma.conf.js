@@ -9,6 +9,7 @@ module.exports = function(config) {
             'bower_components/es5-shim/es5-shim.js',
             'bower_components/jquery/dist/jquery.min.js',
             'bower_components/underscore/underscore.js',
+            "bower_components/Keypress/keypress.js",
             'bower_components/bootstrap/dist/js/bootstrap.min.js',
             "bower_components/js-beautify/js/lib/beautify.js",
             "bower_components/js-beautify/js/lib/beautify-html.js",

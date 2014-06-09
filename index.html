@@ -60,7 +60,7 @@
         <script defer src="javascript/editor.js"></script>
         <script defer src="javascript/renderer.js"></script>
         <script defer src="javascript/compiler.js"></script>
-        <script defer src="javascript/api.parse.js"></script>
+        <script defer src="javascript/backend.js"></script>
         <script defer src="javascript/mp.widgets.js"></script>
         <script defer src="javascript/formatter.js"></script>
         <script defer src="javascript/notification.js"></script>
@@ -89,7 +89,7 @@
         <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="css/styles.css" media="all">
     </head>
-    <body ng-app="playground" ng-controller="MainCtrl">
+    <body ng-app="playground" shortcuts ng-controller="MainCtrl">
         <noscript>
         <div class="container">
             <h1 class="text-danger">Playground is an online scratchpad for web developpers
@@ -118,62 +118,11 @@
         </nav>
         <!-- END NAVIGATION -->
         <main class="container-fluid clearfix clear-fix">
-        <article ng-view class="view shortcuts">
+        <article ng-view class="view">
         </article>
         </main>
         <hr>
-        <footer class="bg-misc text-gray">
-            <section class="container-fluid">
-                <section class="row">
-                    <div class="col-md-10">
-                        <p>&nbsp;</p>
-                        <p>
-                            &copy; {{globals.year}} mparaiso {{globals.email}}
-                        </p>
-                        <p>
-                            Playground is an opensource project under GPL license
-                        </p>
-                    </div>
-                    <div class="col-md-2">
-                        <p>&nbsp;</p>
-                        <ul class="list-inline">
-                            <li>
-                                <a href="{{globals.projectUrl}}">
-                                    <span class='glyphicon glyphicon-social glyphicon-facebook'></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a id="twitter" href="https://twitter.com/intent/tweet?text=">
-                                    <script type="text/javascript" charset="utf-8">
-                                        (function(){
-                                            var twitter=document.querySelector('#twitter');
-                                            twitter.href=twitter.href+location.href;
-                                        }())
-                                    </script>
-                                    <span class='glyphicon glyphicon-social glyphicon-twitter'></span>
-                                </a>
-
-                            </li>
-                            <li>
-                                <a href="https://github.com/Mparaiso/fluxreader">
-                                    <span class='glyphicon glyphicon-social glyphicon-github'></span>
-                                </a>
-
-                            </li>
-                            <li>
-                                <a href="mailto:mparaiso@online.fr">
-                                    <span class='glyphicon glyphicon-social glyphicon-email'></span>
-                                </a>
-
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-            </section>
+        <footer class="bg-misc text-gray" ng-include="'templates/footer.html'">
         </footer>
-        <nav class="navbar navbar-inverse navbar-fixed-bottom"
-            role="notifications" ng-show="Notification.current"
-            ng-include="'templates/footer.html'">
-        </nav>
     </body>
 </html>

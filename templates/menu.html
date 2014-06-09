@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navigation-collapsed">
         <ul class="navbar-nav nav navbar-right" id="rightMenu">
             <li><a ng-click="new()" href="#/">New</a></li>
-            <li><a href="#/public-gist">Explore</a></li>
+            <li><a href="#/explore">Explore</a></li>
             <li ng-show="!User.isAuthenticated()">
                 <a id="signin" href="#/signin">Signin</a>
             </li>
@@ -15,7 +15,7 @@
                 <a id="signup" href="#/signup">Signup</a>
             </li>
             <li ng-show="User.isAuthenticated()">
-                <a id="youraccount" href="#/gist">Your gists, {{user.username|limitTo:30}}</a></li>
+                <a id="youraccount" href="#/account">Your gists, {{user.username|limitTo:30}}</a></li>
             <li  ng-show="User.isAuthenticated()">
                 <a id="signout" ng-click="signOut()" href="javascript:void 0;">Signout</a></li>
             <li><a ng-href="#/help">Help</a></li>

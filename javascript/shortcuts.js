@@ -16,6 +16,7 @@ angular.module('shortcuts', [])
 			restrict: 'AEC',
 			link: function() {
 				$timeout(function() {
+                    console.log('shortcuts');
 					var listener = new keypress.Listener();
 					listener.simple_combo("ctrl s", function(e) {
 						$rootScope.$emit(ShortCutsEvent.SHORTCUTS_SAVE);

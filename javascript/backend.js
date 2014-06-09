@@ -1,11 +1,11 @@
 /*jslint eqeq:true,node:true,es5:true,white:true,plusplus:true,nomen:true,unparam:true,devel:true,regexp:true */
-/*global angular,Parse*/
+/*global angular,Parse,_*/
 /**
  * @description playground the web tech playground
  * @copyright 2014 mparaiso <mparaiso@online.fr>
  * @license GPL
  */
-angular.module('api.parse', [])
+angular.module('backend', [])
 	.constant('PARSE_APPID', 'swulsuJQGERVpgCuDw7l4lvc2ClWEnzbMiDxgLqC')
 	.constant('PARSE_CLIENTID', 'fSsqxQQ9cZZOzTtq2rU6QC89aAZE7xGVilYccMhN')
 	.factory('Parse', function(PARSE_APPID, PARSE_CLIENTID) {
@@ -16,34 +16,48 @@ angular.module('api.parse', [])
 	.service('Gist', function(Parse, User, $q) {
 		"use strict";
 		/** Gist model definition */
+        this.gistPerPage=10;
 		var Gist = Parse.Object.extend('Gist', {
 			initialize: function(params) {
 				params = params || {};
 				this.set('description', params.description || 'playground-gist-' + Date.now() + '-html');
 			},
 			defaults: {
-				public: true,
-			},
-			toJSON: function() {
-				var res = Object.create(Parse.Object.prototype).toJSON.apply(this, arguments);
-				res.id = this.id;
-				return res;
-			}
-		});
+                public: true,
+            },
+            toJSON: function() {
+                var res = Object.create(Parse.Object.prototype).toJSON.apply(this, arguments);
+                res.id = this.id;
+                res.userId=this.get('user').id;
+                return res;
+            }
+        });
+        this.findAllLatest=function(where,sort,limit,skip){
+            console.log('args',arguments);
+            var defaults,query;
+            query=new Parse.Query(Gist);
+            query.limit(limit||10);
+            query.skip(( skip|| 0) * this.gistPerPage);
+            query.descending('createdAt');
+            query.equalTo('public',true);
+            return query.find().then(function(results){
+                return _.invoke(results,'toJSON');
+            });
+        };
 		/** find 50 latests gists */
-		this.findLatest = function() {
-			if (!User.isAuthenticated()) {
-				return $q.reject('Please sigin or signup.');
-			}
-			var query = new Parse.Query(Gist);
-			return query.descending('created_at').limit(50)
-				.equalTo('user', Parse.User.current())
-				.find().then(function(results) {
-					return results.map(function(res) {
-						return res.toJSON();
-					});
-				});
-		};
+        this.findLatest=this.findCurrentUserLatest = function() {
+            if (!User.isAuthenticated()) {
+                return $q.reject('Please sigin or signup.');
+            }
+            var query = new Parse.Query(Gist);
+            return query.descending('created_at').limit(50)
+            .equalTo('user', Parse.User.current())
+            .find().then(function(results) {
+                return results.map(function(res) {
+                    return res.toJSON();
+                });
+            });
+        };
 		/** find by id */
 		this.findGistById = function(id) {
 			var query = new Parse.Query(Gist);
@@ -109,9 +123,11 @@ angular.module('api.parse', [])
 			return false;
 		};
 		this.getCurrentUser = function() {
-			var u = Parse.User.current();
+			var user,u = Parse.User.current();
 			if (u) {
-				return u.toJSON();
+				user= u.toJSON();
+                user.id=user.objectId;
+                return user;
 			}
 		};
 		this.signUp = function(credentials) {
@@ -128,19 +144,19 @@ angular.module('api.parse', [])
 			return Parse.User.logOut();
 		};
         this.save=function(userData){
+            var user;
             if(this.isAuthenticated){
-
-            }
-        }
-    })
-    .service('Setting',function(User,$q){
-        this.save=function(settings){
-            if(User.isAuthenticated()){
-                var user=Parse.User.current();
-                user.set('settings',settings);
+                user=Parse.User.current();
+                user.set(userData);
                 return user.save();
             }
             return $q.reject("User is not authenticated");
+        };
+    })
+    .service('Setting',function(User,$q){
+        "use strict";
+        this.save=function(settings){
+            return User.save({settings:settings});
         };
         this.get=function(){
             if(User.isAuthenticated()){

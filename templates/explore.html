@@ -6,18 +6,10 @@
 -->
 <hr>
 <div class="row">
-    <div class="col-md-9">
-        <h2>Your Gists</h2>
+    <div class="col-md-12">
+        <h2>Public Gists</h2>
         <hr />
         <h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
         <div ng-include="'templates/gist-list.html'"></div>
-    </div>
-    <div class="col-md-3">
-        <h2>Your account</h2>
-        <img class="thumbnail" src="//www.gravatar.com/avatar/{{md5(user.email)}}?s=120&monsterid" alt="avatar">
-        <address>
-            {{user.username}}<br>
-            {{user.email}}
-        </address>
     </div>
 </div>

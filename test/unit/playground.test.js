@@ -1,3 +1,4 @@
+/*jslint eqeq:true,node:true,es5:true,white:true,plusplus:true,nomen:true,unparam:true,devel:true,regexp:true */
 /*global xdescribe,describe,angular,it,spyOn,inject,expect,jasmine,beforeEach */
 describe("playground", function() {
     "use strict";
@@ -79,5 +80,33 @@ describe("playground", function() {
             this.HelpCtrl=$controller('HelpCtrl',{$scope:this.scope});
         }));
     });
-
+    describe('GistCreatCtrl',function  () {
+        beforeEach(inject(function  ($controller,$rootScope) {
+            this.scope=$rootScope.$new();
+            this.GistCreateCtrl=$controller('GistCreateCtrl',{$scope:this.scope});
+        }));
+        it('$scope.current.public should be true',function  () {
+            expect(this.scope.Editor).toBeDefined();
+        });
+    });
+    describe('GistListCtrl',function  () {
+        beforeEach(inject(function($controller){
+            this.scope=this.$rootScope.$new();
+            this.scope.gists=[];
+            while(this.scope.gists.length<15){
+                this.scope.gists.push({});
+            }
+            this.GistListCtrl=$controller('GistListCtrl',{$scope:this.scope});
+        }));
+        it('#!hasPrevious',function  () {
+            expect(this.scope.hasPrevious()).toBe(false);
+        });
+        it('#hasNext',function(){
+            expect(this.scope.hasNext()).toBe(true);
+        });
+        it('shouldnt throw',function  () {
+            this.scope.previous();
+            this.scope.next();
+        });
+    });
 });
