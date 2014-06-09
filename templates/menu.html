@@ -6,7 +6,7 @@
     -->
     <div class="collapse navbar-collapse" id="navigation-collapsed">
         <ul class="navbar-nav nav navbar-right" id="rightMenu">
-            <li><a href="#/">New</a></li>
+            <li><a ng-click="new()" href="#/">New</a></li>
             <li><a href="#/public-gist">Explore</a></li>
             <li ng-show="!User.isAuthenticated()">
                 <a id="signin" href="#/signin">Signin</a>

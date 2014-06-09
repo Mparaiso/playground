@@ -136,6 +136,9 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     $scope.fork = function() {
         $rootScope.$broadcast('fork');
     };
+    $scope.new=function(){
+        Editor.editors=Editor.getDefaultEditorValues();
+    }
 })
 .controller('SignUpCtrl', function($scope, User, $location, Notification) {
     $scope.credentials = {};
@@ -190,7 +193,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     Gist.current = {
         public: true
     };
-    $scope.Editor.editors = Editor.getDefaultEditorValues();
+    $scope.Editor.editors = Editor.editors ? Editor.editors : Editor.getDefaultEditorValues();
     $scope.$on('save', function(event) {
         if (!Editor.isEmpty() && !saving) {
             saving = true;
