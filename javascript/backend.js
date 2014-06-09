@@ -32,25 +32,26 @@ angular.module('backend', [])
                 return res;
             }
         });
-        this.findAllLatest=function(where,sort,limit,skip){
+        this.findAllLatest=function(where,sort,skip){
             console.log('args',arguments);
             var defaults,query;
             query=new Parse.Query(Gist);
-            query.limit(limit||10);
+            query.limit(this.gistPerPage);
             query.skip(( skip|| 0) * this.gistPerPage);
-            query.descending('createdAt');
+            query.descending('created_at');
             query.equalTo('public',true);
             return query.find().then(function(results){
                 return _.invoke(results,'toJSON');
             });
         };
 		/** find 50 latests gists */
-        this.findLatest=this.findCurrentUserLatest = function() {
+        this.findLatest=this.findCurrentUserLatest = function(where,sort,skip) {
             if (!User.isAuthenticated()) {
                 return $q.reject('Please sigin or signup.');
             }
             var query = new Parse.Query(Gist);
-            return query.descending('created_at').limit(50)
+            return query.descending('created_at').limit(this.gistPerPage)
+            .skip((skip||0)*this.gistPerPage)
             .equalTo('user', Parse.User.current())
             .find().then(function(results) {
                 return results.map(function(res) {

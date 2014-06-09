@@ -34,7 +34,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
             gists:function(Gist,$location){
                 console.log($location.search());
                 var skip = $location.search().skip || 0;
-                return Gist.findAllLatest(null,null,null,skip);
+                return Gist.findAllLatest(null,null,skip);
             }
         }
     })
@@ -43,8 +43,9 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         templateUrl: 'templates/account.html',
         mustBeAuthenticated: true,
         resolve: {
-            gists: function(Gist) {
-                return Gist.findCurrentUserLatest();
+            gists: function(Gist,$location) {
+                var skip = $location.search().skip || 0;
+                return Gist.findCurrentUserLatest(null,null,skip);
             }
         }
     })
