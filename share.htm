@@ -41,7 +41,7 @@
         <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="css/styles.css" media="all">
     </head>
-    <body ng-app="share" class="share" shortcuts ng-controller="ShareCtrl">
+    <body ng-app="share" class="share" ng-cloak shortcuts ng-controller="ShareCtrl">
         <noscript>
         <div class="container">
             <h1 class="text-danger">Playground is an online scratchpad for web developpers
@@ -72,7 +72,7 @@
         <main class="container-fluid">
             <section ng-show="gist"  bg-pane min-size="50" renderer  class=" row output right-side" >
             </section>
-            <h2 class="text-warning" ng-show="error">{{error}}</h2>
+            <h2 class="text-warning" ng-show="error" ng-bind="error"></h2>
         </main>
     </body>
 </html>
