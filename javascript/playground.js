@@ -237,7 +237,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     var saving = false;
     $scope.Editor = Editor;
     $scope.Gist = Gist;
-    $scope.shareUrl = $window.location.origin+$window.location.pathname+"share.htm?id="+gist.id;
+    $scope.shareUrl = $window.location.origin+($window.location.pathname).replace('index.html','')+"share.htm?id="+gist.id;
     $scope.embed = "<iframe width='100%' height='300' frameborder=0 src='"+$scope.shareUrl+" allowfullscreen='allowfullscreen'></iframe>";
     $scope.pristine=false;
     Gist.current = gist;
