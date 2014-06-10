@@ -4,6 +4,9 @@
     "use strict";
     angular.module('share',['backend','renderer'])
     .controller('ShareCtrl',function($scope,$location,$window,$rootScope,Gist){
+        $scope.makeEditName=function(gistId){
+           return $window.location.origin+$window.location.pathname.replace('share.htm','')+"#gist/"+gistId;
+        };
         $scope.request=Gist.findGistById(url.id)
         .then(function(gist){
             $scope.gist=gist;

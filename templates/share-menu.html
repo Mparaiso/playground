@@ -6,7 +6,7 @@
 -->
 <div class="collapse navbar-collapse" id="navigation-collapsed">
     <ul class="navbar-nav nav navbar-right" id="rightMenu">
-        <li ><a ng-href="index.html#/gist/{{gist.id}}">{{gist.description}}</a></li>
-        <li ng-if="gist"><a ng-href="index.html#/gist/{{gist.id}}">Edit</a></li>
+        <li ><a ng-href="{{makeEditName(gist.id)}}">{{gist.description}}</a></li>
+        <li ng-if="gist"><a ng-href="{{makeEditName(gist.id)}}">Edit</a></li>
     </ul>
 </div>
