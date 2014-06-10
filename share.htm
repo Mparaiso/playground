@@ -1,0 +1,78 @@
+<!doctype html>
+<!-- share.html -->
+<!--
+@description playground the web tech playground
+@copyright 2014 mparaiso <mparaiso@online.fr>
+@license GPL
+-->
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Playground</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="images/favicon.png"/>
+        <script defer src="bower_components/url/url.js"></script>
+        <script defer src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script defer src="//www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+        <script defer src="vendor/coffee-script.js"></script>
+        <script defer src="bower_components/markdown/lib/markdown.js"></script>
+        <script defer src="vendor/csslint.js"></script>
+        <script defer src="vendor/highlight.min.js"></script>
+        <script defer src="bower_components/jshint/dist/jshint.js"></script>
+        <script defer src="bower_components/less/dist/less-1.7.0.min.js"></script>
+        <script defer src="bower_components/angular/angular.min.js"></script>
+        <script defer src="bower_components/angular-route/angular-route.min.js"></script>
+        <script defer src="bower_components/angular-resource/angular-resource.min.js"></script>
+        <script defer src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script defer src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script defer src="bower_components/js-md5/js/md5.min.js"></script>
+        <script defer src="bower_components/Keypress/keypress.js"></script>
+        <script defer src="javascript/share.js"></script>
+        <script defer src="javascript/renderer.js"></script>
+        <script defer src="javascript/compiler.js"></script>
+        <script defer src="javascript/backend.js"></script>
+        <script defer src="javascript/mp.widgets.js"></script>
+        <script defer src="javascript/filters.js"></script>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="vendor/style.css">
+        <link href='//fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'/>
+        <link href='//fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'/>
+        <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="css/styles.css" media="all">
+    </head>
+    <body ng-app="share" class="share" shortcuts ng-controller="ShareCtrl">
+        <noscript>
+        <div class="container">
+            <h1 class="text-danger">Playground is an online scratchpad for web developpers
+            <small>that relies on javascript,please enable javascript.</small></h1>
+            <h2>Interactively create web pages right here!</h2>
+            <h3>Textpad supports javascript, coffeescript, lisp, ruby , ecmascript 6, typescript, less and css.
+            </h3>
+        </div>
+        </noscript>
+        <!-- NAVIGATION -->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#navigation-collapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand brand" ng-href="index.html#/gist/{{gist.id}}">&lt;Playground&gt;</a>
+                </div>
+                <span ng-controller="MenuCtrl" ng-include='"templates/share-menu.html"'></span>
+            </div>
+        </nav>
+        <!-- END NAVIGATION -->
+        <main class="container-fluid">
+            <section ng-show="gist"  bg-pane min-size="50" renderer  class=" row output right-side" >
+            </section>
+            <h2 class="text-warning" ng-show="error">{{error}}</h2>
+        </main>
+    </body>
+</html>

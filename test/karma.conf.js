@@ -6,6 +6,7 @@ module.exports = function(config) {
         basePath: '../',
 
         files: [
+            'bower_components/url/url.js',
             'bower_components/es5-shim/es5-shim.js',
             'bower_components/jquery/dist/jquery.min.js',
             'bower_components/underscore/underscore.js',

@@ -23,6 +23,7 @@
         <script defer src="vendor/csslint.js"></script>
         <script defer src="vendor/highlight.min.js"></script>
         <script defer src="bower_components/jshint/dist/jshint.js"></script>
+        <script defer src="bower_components/less/dist/less-1.7.0.min.js"></script>
         <script defer src="bower_components/codemirror/lib/codemirror.js"></script>
         <script defer src="bower_components/codemirror/addon/fold/foldcode.js"></script>
         <script defer src="bower_components/codemirror/addon/fold/foldgutter.js"></script>
@@ -41,6 +42,7 @@
         <script defer src="bower_components/codemirror/addon/fold/xml-fold.js"></script>
         <script defer src="bower_components/codemirror/addon/edit/matchtags.js"></script>
         <script defer src="bower_components/codemirror/addon/hint/show-hint.js"></script>
+        <script defer src="bower_components/codemirror/addon/hint/anyword-hint.js"></script>
         <script defer src="bower_components/codemirror/addon/hint/xml-hint.js"></script>
         <script defer src="bower_components/codemirror/addon/hint/html-hint.js"></script>
         <script defer src="bower_components/codemirror/addon/hint/css-hint.js"></script>
@@ -48,7 +50,6 @@
         <script defer src="bower_components/codemirror/addon/lint/javascript-lint.js"></script>
         <script defer src="bower_components/codemirror/addon/lint/coffeescript-lint.js"></script>
         <script defer src="bower_components/codemirror/addon/lint/css-lint.js"></script>
-        <script defer src="bower_components/less/dist/less-1.7.0.min.js"></script>
         <script defer src="bower_components/angular/angular.min.js"></script>
         <script defer src="bower_components/angular-route/angular-route.min.js"></script>
         <script defer src="bower_components/angular-resource/angular-resource.min.js"></script>
@@ -89,7 +90,7 @@
         <link href='//fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="css/styles.css" media="all">
     </head>
-    <body ng-app="playground" shortcuts ng-controller="MainCtrl">
+    <body ng-app="playground" class="index" shortcuts ng-controller="MainCtrl">
         <noscript>
         <div class="container">
             <h1 class="text-danger">Playground is an online scratchpad for web developpers
@@ -121,7 +122,6 @@
         <article ng-view class="view">
         </article>
         </main>
-        <hr>
         <footer class="bg-misc text-gray" ng-include="'templates/footer.html'">
         </footer>
     </body>

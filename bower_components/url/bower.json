@@ -1,0 +1,11 @@
+{
+  "name": "url",
+  "version": "1.0.0",
+  "main": "url.js",
+  "description": "Parses arguments from your URL",
+  "authors": ["George Michael Brower"],
+  "license": "MIT",
+  "ignore": [
+    "test.html"
+  ]
+}

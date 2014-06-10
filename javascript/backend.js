@@ -33,12 +33,11 @@ angular.module('backend', [])
             }
         });
         this.findAllLatest=function(where,sort,skip){
-            console.log('args',arguments);
             var defaults,query;
             query=new Parse.Query(Gist);
             query.limit(this.gistPerPage);
             query.skip(( skip|| 0) * this.gistPerPage);
-            query.descending('created_at');
+            query.descending('createdAt');
             query.equalTo('public',true);
             return query.find().then(function(results){
                 return _.invoke(results,'toJSON');
@@ -50,7 +49,7 @@ angular.module('backend', [])
                 return $q.reject('Please sigin or signup.');
             }
             var query = new Parse.Query(Gist);
-            return query.descending('created_at').limit(this.gistPerPage)
+            return query.descending('createdAt').limit(this.gistPerPage)
             .skip((skip||0)*this.gistPerPage)
             .equalTo('user', Parse.User.current())
             .find().then(function(results) {

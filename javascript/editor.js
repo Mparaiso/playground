@@ -98,7 +98,7 @@ angular.module('editor', ["linter",'formatter'])
     * DIRECTIVE FOR CODEMIRROR EDITOR
     */
     /** register a command for autocomplete */
-    CodeMirror.commands.autocomplete = function(cm) {
+    CodeMirror.commands.wordcompletion = function(cm) {
         CodeMirror.showHint(cm, CodeMirror.hint.anyword);
     };
     CodeMirror.modeURL = "bower_components/codemirror/mode/%N/%N.js";
@@ -133,7 +133,7 @@ angular.module('editor', ["linter",'formatter'])
                     highlightSelectionMatches: true,
                     extraKeys: {
                         "Ctrl-Space": "autocomplete",
-                        "Ctrl-K": 'autocomplete',
+                        "Ctrl-K": 'wordcompletion',
                         "Ctrl-Q":'foldCode'
                     },
                     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter","CodeMirror-lint-markers"]

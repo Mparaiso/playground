@@ -1,0 +1,23 @@
+{
+  "name": "url",
+  "main": "url.js",
+  "description": "Parses arguments from your URL",
+  "authors": [
+    "George Michael Brower"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "test.html"
+  ],
+  "homepage": "https://github.com/georgealways/url.js",
+  "_release": "1f548486bd",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1f548486bd2a3c0c2002c4e3ce0fe8fc42b96637"
+  },
+  "_source": "git://github.com/georgealways/url.js.git",
+  "_target": "*",
+  "_originalSource": "url",
+  "_direct": true
+}

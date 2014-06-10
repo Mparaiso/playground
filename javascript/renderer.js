@@ -6,7 +6,7 @@
  * @license GPL
  */
 "use strict";
-angular.module('renderer', [])
+angular.module('renderer', ['compiler'])
 .constant('RendererEvent', {
     COMPILATION_ERROR: 'COMPILATION_ERROR',
     RENDERER_ERROR: 'RENDERER_ERROR'

@@ -33,4 +33,9 @@ Sprint 4:
 -[X] Javascript supports linting
 -[X] Traceur supports linting
 -[X] editor content can be folded
--[ ] a user can share the url of a gist
+-[X] a user can share the url of a gist
+-[ ] figure out how to test keypress
+
+Sprint 5:
+-[ ] A search form allow users to query gists by description or content
+-[ ] Editor input can be stacked at viewed at once,like codepen.io

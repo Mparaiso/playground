@@ -76,7 +76,11 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         var parser,result;
         parser = new less.Parser();
         parser.parse(value, function(a, b) {
-            result = b.toCSS();
+            if(b){
+                result = b.toCSS();
+            }else{
+                result="";
+            }
         });
         return result;
     })
@@ -229,10 +233,13 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         }
     });
 })
-.controller('GistEditCtrl', function($rootScope,$scope, Editor, Gist, gist, $location, $routeParams, Notification,$timeout) {
+.controller('GistEditCtrl', function($window,$rootScope,$scope, Editor, Gist, gist, $location, $routeParams, Notification,$timeout) {
     var saving = false;
     $scope.Editor = Editor;
     $scope.Gist = Gist;
+    $scope.shareUrl = $window.location.origin+$window.location.pathname+"share.htm?id="+gist.id;
+    $scope.embed = "<iframe width='100%' height='300'frameborder=0 src='"+$scope.shareUrl+" allowfullscreen='allowfullscreen'></iframe>";
+    $scope.pristine=false;
     Gist.current = gist;
     Editor.editors = gist.files;
     $scope.$on('fork', function(event) {

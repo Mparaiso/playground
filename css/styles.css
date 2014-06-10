@@ -13,17 +13,22 @@ html{
     width: 100%;
 }
 
+
 body {
-    padding-top: 51px;
     font-family: 'Droid Sans', Arial, sans-serif;
     background-color: #E5ECF6;
     color: #424147;
-    /*height: 700px;*/
-    height: 100%;
     clear: both;
     position: relative;
 }
 form{
+    height: 100%;
+}
+.share{
+    overflow:hidden!important;
+}
+.index{
+    padding-top: 51px;
     height: 100%;
 }
 .signup{

@@ -1,7 +1,15 @@
-###Emmet / ZenCoding
 
+###keybindings
 
-#####keybindings
+#####Global
+
+* `Cmd-K` : Complete Word
+* `Cmd-space` : AutoCompletion
+* `Cmd-S` : Save
+* `Cmd-R` : Run
+* `Shift-Cmd-F` : Format
+
+#####Emmet / ZenCoding
 
 * `Cmd-E` or `Tab`: Expand abbreviation
 * `Cmd-D`: Balance Tag (matches opening and closing tag pair)

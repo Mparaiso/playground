@@ -54,13 +54,21 @@
         </ul>
         </li>
         <!-- END LIBRARIES -->
+        <li class="btn-group" ng-if="shareUrl">
+            <button type="button" class="btn btn-link dropdown-toggle" mp-tooltip title="Share" data-toggle="dropdown">
+                Share &nbsp; <i class="glyphicon glyphicon-chevron-down text-micro"></i>
+            </button>
+            <ul class="dropdown-menu" role="menu" >
+                <li class="dropdown-header " style="min-width:500px;"  stop-propagation="click" ng-include="'templates/share-form.html'"></li>
+            </ul>
+        </li>
         <li class="btn-group">
-        <div class="btn-form btn btn-link">
-            <label>Description
-                &nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
-                <input type="text" ng-model="Gist.current.description">
-            </label>
-        </div>
+            <div class="btn-form btn btn-link">
+                <label>Description
+                    &nbsp;<i class="glyphicon glyphicon-edit"></i>&nbsp;
+                    <input type="text" ng-model="Gist.current.description">
+                </label>
+            </div>
         </li>
     </ul>
     <!-- TAB CONTENT -->
