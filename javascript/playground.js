@@ -220,15 +220,15 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
             saving = true;
             Gist.current.files = angular.copy(Editor.editors);
             Gist.create(Gist.current).then(function(gist) {
+                saving=false;
                 Notification.success('Gist created Successfully');
                 $scope.$apply($location.path.bind($location, '/gist/' + gist.id));
             }).fail(function(e) {
                 console.warn('fail');
+                saving=false;
                 $timeout(function(){
                     return Notification.error('Gist creation failed : ' + typeof e === 'string' ? e : '');
                 });
-            }).finally(function() {
-                saving = false;
             });
         }
     });
