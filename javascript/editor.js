@@ -228,7 +228,7 @@ angular.module('editor', ["linter",'formatter'])
     },
     typescript: {
         syntax: 'javascript',
-        mode: 'text/typescript',
+        mode: 'javascript',
         lint:'typescript'
     },
     markdown: {
