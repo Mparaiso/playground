@@ -9,7 +9,7 @@
     <div class="col-md-12">
         <div ng-include="'templates/gist-search-form.html'">
         </div>
-        <h2>Public Gists</h2>
+        <h2>Search results for &quot;{{query}}&quot; : </h2>
         <hr />
         <h3 ng-hide="gists.length>0">No Gist yet , please <a href="#/">create a new one</a></h3>
         <div ng-include="'templates/gist-list.html'"></div>

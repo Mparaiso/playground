@@ -109,4 +109,67 @@ describe("playground", function() {
             this.scope.next();
         });
     });
+    describe('SearchCtrl',function(){
+        beforeEach(function(){
+            this.$routeParams=this.$injector.get('$routeParams');
+            this.$routeParams.query="foo";
+            this.gists=[];
+            this.$scope=this.$rootScope.$new();
+            //spyOn(Parse.Query.prototype,'find').and.returnValue(Parse.Promise.when([new Parse.Collection()]));
+            this.SearchCtrl=this.$controller('SearchCtrl',{$scope:this.$scope,gists:this.gists});
+        });
+        it('has query',function(){
+            expect(this.$scope.query).toBeDefined();
+        });
+    });
+    describe('EditorCtrl',function(){
+        beforeEach(function(){
+            this.EditorCtrl=this.$controller('EditorCtrl',{$scope:this.$rootScope});
+        });
+        it('it doesnt throw',function(){
+            expect(this.$rootScope.Editor).toBeDefined();
+        });
+    });
+    describe('AccountCtrl',function(){
+        beforeEach(function(){
+            this.gists=[];
+            this.AccountCtrl=this.$controller('AccountCtrl',{gists:this.gists,$scope:this.$rootScope});
+        });
+        it('it doesnt throw',function(){
+            expect(this.$rootScope.gists).toBeDefined();
+        });
+    });
+    describe('EditorSettingsCtrl',function(){
+        beforeEach(function(){
+            this.EditorSettingsCtrl=this.$controller('EditorSettingsCtrl',{$scope:this.$rootScope});
+        });
+        it('it doesnt throw',function(){
+            expect(this.$rootScope.EditorSettings).toBeDefined();
+        });
+    });
+    describe('EditorMenuCtrl',function(){
+        beforeEach(function(){
+            this.EditorMenuCtrl=this.$controller('EditorMenuCtrl',{$scope:this.$rootScope});
+        });
+        it('it doesnt throw',function(){
+            expect(this.$rootScope.Editor).toBeDefined();
+        });
+    });
+    describe('EditorMenuCtrl',function(){
+        beforeEach(function(){
+            this.EditorMenuCtrl=this.$controller('EditorMenuCtrl',{$scope:this.$rootScope});
+        });
+        it('it doesnt throw',function(){
+            expect(this.$rootScope.Editor).toBeDefined();
+        });
+    });
+    describe('ExploreCtrl',function(){
+        beforeEach(function(){
+            this.gists=[];
+            this.ExploreCtrl=this.$controller('ExploreCtrl',{gists:this.gists,$scope:this.$rootScope});
+        });
+        it('gists  ',function(){
+            expect(this.$rootScope.gists).toBeDefined();
+        });
+    });
 });

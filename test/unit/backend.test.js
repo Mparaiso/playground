@@ -1,4 +1,5 @@
-/*global describe,beforeEach,inject,expect,spyOn,jasmine,angular,module,it,beforeEach*/
+/*jslint eqeq:true,node:true,es5:true,white:true,plusplus:true,nomen:true,unparam:true,devel:true,regexp:true */
+/*global describe,beforeEach,inject,expect,spyOn,jasmine,angular,module,it,beforeEach,Parse*/
 describe("backend", function() {
     "use strict";
     beforeEach(module('backend'));
@@ -15,7 +16,7 @@ describe("backend", function() {
             return Parse.Promise.when({id:'foo'});
         });
         Parse.initialize.and.callThrough(function(){
-            console.log('initialize',arguments);
+            //console.log('initialize',arguments);
         });
         Parse.initialize("foo",'bar');
     }));
@@ -38,13 +39,13 @@ describe("backend", function() {
         describe('#create',function(){
             it('creates gist',function(done){
                 spyOn(Parse.User,'current').and.returnValue({});
-                this.Gist.create({id:'foo',public:true}).then(done)
+                this.Gist.create({id:'foo',public:true}).then(done);
             });
         });
         describe('#update',function(){
             it('creates gist',function(done){
                 this.Gist.update('foo',{id:'foo',public:true}).then(done,function(err){
-                    console.log('arguments',err);
+                    //console.log('arguments',err);
                     done();
                 });
             });
@@ -52,8 +53,22 @@ describe("backend", function() {
         describe('#deleteById',function(){
             it('delete a gist',function(done){
                 this.Gist.deleteById('foo').fail(done);
-            })
-        })
+            });
+        });
+        describe('#search',function(){
+            beforeEach(function(){
+                spyOn(Parse.Query.prototype,'find').and.returnValue({
+                    then:function(fun){
+                        return Parse.Promise.when([fun([new Parse.Object({description:"foo"})])]);
+                    }});
+            });
+            it('#find should have been called',function(done){
+                this.Gist.search('foo bar baz').then(function(gists){
+                    //console.log("args",gists);
+                    expect(gists[0].description).toEqual("foo");
+                }).then(done);
+            });
+        });
     });
     describe("User", function() {
         beforeEach(function() {
@@ -83,9 +98,9 @@ describe("backend", function() {
             this.Setting=Setting;
             this.settings={};
             spyOn(Parse.User,'current').and.returnValue({
-                toJSON:function(){return {settings:{}}},
+                toJSON:function(){return {settings:{}};},
                 set:function(){},
-                authenticated:function(){return true},
+                authenticated:function(){return true;},
                 save:function(){return $q.when(this.toJSON()); }
             });
         }));

@@ -4,7 +4,6 @@
 /**
  * @description playground the web tech playground
  * @copyright 2014 mparaiso <mparaiso@online.fr>
- * @license GPL
  */
 "use strict";
 angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'compiler','backend', 'notification', 'mp.widgets', 'shortcuts', 'bgDirectives','prettify', 'library','linter'])
@@ -56,6 +55,15 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         resolve: {
             gist: function(Gist, $route) {
                 return Gist.findGistById($route.current.params.id);
+            }
+        }
+    })
+    .when('/search/:query',{
+        controller:"SearchCtrl",
+        templateUrl:"templates/search-result.html",
+        resolve:{
+            gists:function(Gist,$route){
+                return Gist.search($route.current.params.query);
             }
         }
     })
@@ -279,8 +287,9 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         $rootScope.$broadcast('run',Editor.editors);
     });
 })
-.controller('ExploreCtrl',function  ($scope,gists,Gist) {
+.controller('ExploreCtrl',function  ($location,$scope,gists,Gist) {
     $scope.gists=gists;
+    $scope.$location=$location;
 })
 .controller('GistListCtrl', function($scope, Gist, Notification,$location) {
     $scope.skip= +$location.search().skip ||0;
@@ -334,8 +343,6 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         $rootScope.$broadcast(EditorEvent.EDITOR_SETTINGS_CHANGE,newValue);
         self.saveEditorSettings(newValue);
     },true);
-
-
 })
 .controller('EditorMenuCtrl', function($scope, Gist, Editor) {
     $scope.Editor = Editor;
@@ -365,6 +372,12 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     $http.get('assets/help.md',{type:'text'}).then(function(xhr){
         $scope.help=$sce.trustAsHtml(markdown.toHTML(xhr.data,'Maruku'));
     }) ;
+})
+.controller('SearchCtrl',function  ($location,$scope,gists,$routeParams,Gist) {
+    $scope.q=$routeParams.query;
+    $scope.query=$routeParams.query;
+    $scope.gists=gists;
+    $scope.$location=$location;
 })
 .constant('AppEvent', {
     SAVE_PRESSED: 'SAVE_PRESSED',

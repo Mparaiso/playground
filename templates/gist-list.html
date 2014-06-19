@@ -5,7 +5,7 @@
     @license GPL
 -->
 <div ng-controller="GistListCtrl">
-    <div ng-include="'templates/pager.html'" replace=true></div>
+    <div ng-if="gists.length>0" ng-include="'templates/pager.html'" replace=true></div>
     <section  class="gist-list">
         <div  class="gist" ng-show="gists.length>0" ng-repeat="gist in gists |orderBy:orderByDate:true track by $index">
                 <div>
@@ -27,5 +27,5 @@
             <pre ng-cloak ng-show="file.value" ng-repeat="file in gist.files"  ng-init="v=file.value.length" class="prettify"><code>{{ file.value|limitLinesTo:5}}</code></pre>
         </div>
     </section>
-    <div ng-include="'templates/pager.html'" replace=true></div>
+    <div ng-if="gists.length>0" ng-include="'templates/pager.html'" replace=true></div>
 </div>

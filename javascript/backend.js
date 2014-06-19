@@ -32,6 +32,18 @@ angular.module('backend', [])
                 return res;
             }
         });
+        /**
+         * @param {string} words
+         */
+        this.search=function(words){
+            words=words||"";
+            var query=new Parse.Query(Gist);
+            query.limit(this.gistPerPage);
+            query.matches('description',new RegExp("("+words.trim().split(/\s+/).join('|')+")","i"));
+            return query.find().then(function(gists){
+                return _.invoke(gists,'toJSON');
+            });
+        };
         this.findAllLatest=function(where,sort,skip){
             var defaults,query;
             query=new Parse.Query(Gist);

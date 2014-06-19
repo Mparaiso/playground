@@ -2,7 +2,6 @@
 /**
  * @description playground the web tech playground
  * @copyright 2014 mparaiso <mparaiso@online.fr>
- * @license GPL
  */
 angular.module('shortcuts', [])
 	.constant('ShortCutsEvent', {

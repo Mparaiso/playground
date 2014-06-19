@@ -43,7 +43,7 @@ describe('editor',function(){
             this.scope.foo="bar";
             this.scope.$digest();
             this.$timeout.flush();
-            console.log(this.el);
+            //console.log(this.el);
         });
     });
 });

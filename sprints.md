@@ -34,8 +34,10 @@ Sprint 4:
 -[X] Traceur supports linting
 -[X] editor content can be folded
 -[X] a user can share the url of a gist
--[ ] figure out how to test keypress
 
 Sprint 5:
--[ ] A search form allow users to query gists by description or content
+-[X] A search form allow users to query gists by description or content
+
+Sprint6:
 -[ ] Editor input can be stacked at viewed at once,like codepen.io
+-[ ] figure out how to test keypress
