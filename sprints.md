@@ -1,7 +1,6 @@
 Requirements:
 - the application is purely client-side,no server script.
 - the application uses angularjs
-- the application uses gists api as a repository for gists
 
 Scrum
 =====
