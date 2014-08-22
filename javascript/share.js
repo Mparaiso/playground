@@ -34,12 +34,6 @@
             userScript = '<script type="module">\n' + value + '\n</script>';
             html.innerHTML += traceurScript + optionScript + userScript;
         })
-        .addAppendScriptStrategy('ruby', function(html, value) {
-            var script = '<script src="vendor/opal.js"></script>\n' +
-                '<script src="vendor/opal-parser.js"></script>\n' +
-                '<script type="text/ruby">\n' + value + '\n</script>';
-            html.innerHTML += script;
-        })
         .addAppendScriptStrategy('typescript', function(html, value) {
             html.innerHTML += '<script type="text/typescript">\n' + value + '\n</script>\n' +
                 '<script src="//niutech.github.io/typescript-compile/js/typescript.min.js"></script>' +

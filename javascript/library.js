@@ -29,7 +29,7 @@ angular.module('library', [])
                 return library.mainfile.length < nextLibrary.mainfile.length? -1 : 1; // sort library by mainfile length
             }).map(function(library){
                 //takes the first version of each library and construct an url for each file
-                var assets = library.assets.shift();
+                var assets = library.assets.pop();
                 var version = assets.version;
                 // returns an array of files
                 return assets.files.map(function(file){
