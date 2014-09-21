@@ -125,5 +125,20 @@
         <article ng-view class="view">
         </article>
         </main>        
+        <!-- NOTIFICATIONS -->
+        <nav class="navbar navbar-inverse navbar-fixed-bottom"
+            role="notifications" ng-show="Notification.current"
+            >
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <ul class="navbar-nav nav" >
+                        <!-- NOTIFICATIONS -->
+                        <li class="navbar-text" ng-class="Notification.current.type">{{Notification.current.text}}&nbsp;<span
+                                ng-show="Notification.notifications.length>2" class="badge">{{Notification.notifications.length}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </body>
 </html>

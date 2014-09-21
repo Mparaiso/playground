@@ -191,15 +191,22 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         });
     };
 })
-.controller('SignInCtrl', function($scope, User, $location, Notification) {
+.controller('SignInCtrl', function($rootScope,$scope, User,EditorSettings,EditorEvent, $location,Setting, Notification) {
     $scope.credentials = {};
     $scope.error = null;
     $scope.signIn = function() {
         $scope.sending = true;
-        User.signIn($scope.credentials).then(function() {
+        User.signIn($scope.credentials)
+        .then(function() {
             Notification.success('Sign in successfull');
-            $scope.$apply($location.path.bind($location, '/gist'));
-        }).fail(function(err) {
+            return Setting.get();
+        })
+        .then(function(settings){
+            _.extend(EditorSettings,settings);
+            //$rootScope.$broadcast(EditorEvent.EDITOR_SETTINGS_CHANGE,settings);
+            return  $location.path('/gist');
+        })
+        .fail(function() {
             $scope.sending = false;
             $scope.error = "Bad Credentials";
             $scope.$apply('error');
@@ -320,9 +327,8 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         }
     };
 })
-.controller('AccountCtrl', function($scope, gists, Gist, Notification, User) {
+.controller('AccountCtrl', function($scope, gists, User) {
     $scope.user = User.getCurrentUser();
-    console.log($scope.user);
     $scope.gists = gists;
 })
 .controller('EditorCtrl', function($scope, $rootScope,Editor, EditorEvent) {
@@ -335,9 +341,9 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
 })
 .controller('EditorSettingsCtrl',function  (EditorEvent,Setting,EditorSettings,$scope,$rootScope) {
     var self=this;
-    this.saveEditorSettings = _.throttle(function (settings){
+    this.saveEditorSettings = _.debounce(function (settings){
         return Setting.save(settings);
-    },2000);
+    },1000);
     $scope.EditorSettings=EditorSettings;
     $scope.$watch('EditorSettings',function(newValue,oldValue){
         $rootScope.$broadcast(EditorEvent.EDITOR_SETTINGS_CHANGE,newValue);
@@ -396,17 +402,11 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
             //user not authenticated but requires a protected route
             $location.path('/');
         } else if (route.mustBeAnonymous && User.isAuthenticated()) {
-            //user is authenticated by route requires anonymouse
+            //user is authenticated by route requires anonymous
             $location.path('/gist');
         }
     });
     $rootScope.$on('$routeChangeSuccess',function(event,route){
         $anchorScroll();
     });
-    //load settings if user authenticated
-    Setting.get().then(function(settings){
-        _.extend(EditorSettings,settings);
-    }).catch(function(err){
-        console.warn(err);
     });
-});
