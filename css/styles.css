@@ -93,6 +93,11 @@ main {
     -ms-column-break-inside:avoid;
     -o-column-break-inside:avoid;
     column-break-inside:avoid;
+    padding-top: 1.5em;
+    font-size: 1.5em;
+}
+.gist .info{
+    font-size: .7em;
 }
 .CodeMirror pre.CodeMirror-placeholder {
     color: #999;
