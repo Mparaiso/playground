@@ -41,5 +41,5 @@ Sprint 5:
 
 Sprint6:
 
-- [ ] Editor input can be stacked at viewed at once,like codepen.io
-- [ ] figure out how to test keypress
+- [ ] Editor input can be stacked and viewed at the same time,like codepen.io
+- [ ] figure out how to test keypresses

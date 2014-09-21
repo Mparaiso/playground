@@ -97,9 +97,9 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     })
     .addAppendScriptStrategy("traceur", function(html, value) {
         var traceurScript,optionScript,userScript;
-        traceurScript = '<script src="//traceur-compiler.googlecode.com/git/bin/traceur.js"' +
+        traceurScript = '<script src="vendor/traceur.js"' +
             'type="text/javascript"></script>\n' +
-            '<script src="//traceur-compiler.googlecode.com/git/src/bootstrap.js"' +
+            '<script src="vendor/traceur-bootstrap.js"' +
             'type="text/javascript"></script>\n';
         optionScript = '<script>traceur.options.experimental = true;</script>';
         userScript = '<script type="module">\n' + value + '\n</script>';
@@ -391,7 +391,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
     FORK_PRESSED: 'FORK_PRESSED',
     FORMAT_PRESSED: 'FORMAT_PRESSED'
 })
-.run(function(User, $rootScope,$anchorScroll, $location,Setting,EditorSettings) {
+.run(function(User, $rootScope,$anchorScroll, $location) {
     //debugger
     $rootScope.$on('$routeChangeStart', function(event, route) {
         if (!User.isAuthenticated()) {
