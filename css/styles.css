@@ -20,6 +20,7 @@ body {
     color: #424147;
     clear: both;
     position: relative;
+    height:100%;
 }
 form{
     height: 100%;
@@ -271,4 +272,12 @@ input.search::-webkit-search-cancel-button {
 pre.prettify{
     color: #FFF;
     background-color: #000;
+}
+
+/**
+ * SHARE PAGE
+ */
+
+[ng-app=share] .output>iframe{
+    padding-bottom:52px;
 }
