@@ -203,7 +203,7 @@ angular.module('playground', ['ngRoute', 'ngResource', 'editor', 'renderer', 'co
         })
         .then(function(settings){
             _.extend(EditorSettings,settings);
-            //$rootScope.$broadcast(EditorEvent.EDITOR_SETTINGS_CHANGE,settings);
+            $rootScope.$broadcast(EditorEvent.EDITOR_SETTINGS_CHANGE,settings);
             return  $location.path('/gist');
         })
         .fail(function() {
